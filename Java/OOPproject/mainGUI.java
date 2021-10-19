@@ -6,8 +6,10 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout; 
 import java.awt.GridLayout; 
-import java.awt.event.*; 
+import java.awt.event.*;
 
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -31,17 +33,18 @@ public class mainGUI {
     private static JPanel loginPanel;
     private static JPanel basePanel;
     private static JComboBox providerBox;
-    private static JLabel passwordLabel;
     private static JPasswordField passwordText;
     private static JTextField phoneText;
     private static JToggleButton adminButton;
     private static JButton loginButton;
     private static JLabel Welcome;
+    private static JButton exitButton;
 
     
 
     public mainGUI()  {
 
+        Icon icon = new ImageIcon("C:/Users/sptic/Desktop/exit.png");
         String[] providors = {"Digicel", "Flow"};
 
         frame = new JFrame();
@@ -54,6 +57,23 @@ public class mainGUI {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setTitle("");
         frame.setLayout(null);
+
+        exitButton = new JButton(icon);
+        exitButton.setBounds(965, 10, 25, 25);
+        exitButton.setLayout(new GridLayout(1,1));
+        exitButton.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
+            }
+
+        });
+        exitButton.setBorderPainted(false); 
+        exitButton.setContentAreaFilled(false); 
+        exitButton.setFocusPainted(false); 
+        exitButton.setOpaque(false);
+        frame.add(exitButton);
 
         adminButton = new JToggleButton("Admin");
         adminButton.setBounds(450, 500, 100, uih);
@@ -143,8 +163,6 @@ public class mainGUI {
         frame.setVisible(true);
         
     }
-
-
 
     protected void adminPressed(ItemEvent itemEvent) {
 
