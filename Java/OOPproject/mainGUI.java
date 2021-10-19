@@ -2,11 +2,15 @@ package OOPproject;
 import OOPproject.adminGui;
 import OOPproject.customerGui;
 
+import java.awt.geom.RoundRectangle2D;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout; 
 import java.awt.GridLayout; 
 import java.awt.event.*;
+import java.awt.Component;
+import java.awt.Graphics;
+import java.awt.Insets;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -19,6 +23,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 import javax.swing.SwingConstants;
+import javax.swing.border.Border;
 
 
 
@@ -58,8 +63,8 @@ public class mainGUI {
         frame.setTitle("");
         frame.setLayout(null);
 
-        exitButton = new JButton(icon);
-        exitButton.setBounds(965, 10, 25, 25);
+        exitButton = new JButton("X");
+        exitButton.setBounds(955, 0, 45, 45);
         exitButton.setLayout(new GridLayout(1,1));
         exitButton.addActionListener(new ActionListener(){
 
@@ -87,7 +92,8 @@ public class mainGUI {
           } );
 
         frame.add(adminButton);
-        
+
+        frame.setBackground(null);
         frame.add(basePanel);
         basePanel.setBounds(0, 0, panelw, panelh);
         basePanel.setLayout(new GridLayout(1,2));
@@ -158,6 +164,7 @@ public class mainGUI {
         loginPanel.setBackground(Color.blue); 
 
         frame.setUndecorated(true);
+        frame.setShape(new RoundRectangle2D.Double(0, 0, panelw, panelh, 30, 30));
         frame.setSize(panelw, panelh);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
@@ -186,6 +193,5 @@ public class mainGUI {
         
     }
 
-    
-
+   
 }
