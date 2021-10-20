@@ -4,20 +4,24 @@ import OOPproject.adminGui;
 import OOPproject.customerGui;
 
 import java.awt.geom.RoundRectangle2D;
-import java.text.ParseException;
-import java.awt.Color;
+
+import java.awt.*;
+import java.awt.event.*;
+/*import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Insets;
-import java.awt.event.*;
-
 import java.awt.Graphics;
+import java.awt.Shape;*/
 
-import java.awt.Shape;
+import java.text.ParseException;
 
+import javax.swing.*;
 import javax.swing.BorderFactory;
-import javax.swing.Icon;
+import javax.swing.text.MaskFormatter;
+import javax.swing.border.Border;
+/*import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -30,9 +34,8 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 import javax.swing.SwingConstants;
-import javax.swing.border.Border;
-import javax.swing.text.DefaultFormatterFactory;
-import javax.swing.text.MaskFormatter;
+import javax.swing.border.Border;*/
+
 
 public class mainGUI {
 
@@ -66,7 +69,7 @@ public class mainGUI {
     private static JTextField userText;
     private static JTextArea adminSwap;
 
-    private static JComboBox providerBox;
+    private static JComboBox<String> providerBox;
     private static JPasswordField passwordText;
 
     private static JToggleButton adminButton;
@@ -245,15 +248,18 @@ public class mainGUI {
         passwordText.addFocusListener(new FocusListener() {
             @Override
             public void focusGained(FocusEvent e) {
-                if (passwordText.getText().equals("Password")) {
+                char[] passwordchar = passwordText.getPassword();
+                    String password = String.valueOf(passwordchar);
+                if (password.equals("Password")) {
                     passwordText.setText(null);
                 }
-
             }
-
+            
             @Override
             public void focusLost(FocusEvent e) {
-                if (passwordText.getText().equals("")) {
+                char[] passwordchar = passwordText.getPassword();
+                    String password = String.valueOf(passwordchar);
+                if (password.equals("")) {
                     passwordText.setText("Password");
                 }
 
@@ -307,7 +313,7 @@ public class mainGUI {
         });
 
         //Creates Combo Bocx to select Service Providor account
-        providerBox = new JComboBox(providors);
+        providerBox = new JComboBox<String>(providors);
         //Sets the ComboBox to the style of the ui
         providerBox.setBounds(125, 270, 250, uih);
         providerBox.setVisible(false);
@@ -365,7 +371,8 @@ public class mainGUI {
 
                     String username = userText.getText();
                     String phone = phoneText.getText();
-                    String password = passwordText.getText();
+                    char[] passwordchar = passwordText.getPassword();
+                    String password = String.valueOf(passwordchar);
 
                     System.out.println("Customer Information\n" + "Username:\t" + username + "\n" + "Password:\t"
                             + password + "\n" + "Phone Number:\t" + phone);
@@ -373,7 +380,8 @@ public class mainGUI {
                 } else if (panelStatus == admin) {
 
                     int providor = providerBox.getSelectedIndex();
-                    String password = passwordText.getText();
+                    char[] passwordchar = passwordText.getPassword();
+                    String password = String.valueOf(passwordchar);
 
                     switch (providor) {
                     case 0:
