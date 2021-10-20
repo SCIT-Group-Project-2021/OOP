@@ -41,6 +41,10 @@ public class mainGUI {
     final int uih = 25;
     final int admin = 1;
     final int customer = 0;
+    final int adminsetX = 125;
+    final int adminsetY = 470;
+    final int adminoffsetX = adminsetX + 5;
+    final int adminoffsetY = adminsetY + 9;
 
     private static Font Oswald;
 
@@ -79,39 +83,51 @@ public class mainGUI {
         tech = new ImageIcon("C:/Users/sptic/Desktop/tech1.png");
         server = new ImageIcon("C:/Users/sptic/Desktop/server1.png");
 
+        // Calls Function To create main background Plate
         createFrame();
 
+        //Sets the Primary Panel Layout to a 2x1 Grid to auto align the two sections(loginPanel and imagePanel)
         basePanel.setLayout(new GridLayout(1, 2));
 
         imagePanel = new JPanel();
         loginPanel = new JPanel();
 
+        //Assigns default image to variable
         picLabel = new JLabel(tech);
+        //Sets size and location of picLabel in fomat of ( x, y, width, height)
         picLabel.setBounds(10, 10, 480, 580);
 
+        //adds created panels to main Panel
         basePanel.add(imagePanel);
         basePanel.add(loginPanel);
 
+        //sets layout to be null, to allow for free placement of JAttributes 
         imagePanel.setLayout(null);
         loginPanel.setLayout(null);
 
+        //Calls Function To create and add Exit Button
         addExitButton();
 
+        //Calls Function To create and add User Login interface
         addUserLogin();
 
+        //Calls Function To create and add Admin functionalities to the user interface
         addAdminLogin();
 
+        //Calls Function To create and add Login button
         addLoginButton();
 
+        //Creates and defines Welcome! message
         Welcome = new JLabel("WELCOME!", SwingConstants.CENTER);
         Welcome.setBounds(150, 150, 200, 50);
         Welcome.setForeground(Color.white);
         Welcome.setFont(new Font("Oswald", Font.TYPE1_FONT, 34));
 
+        //adds Welcome! message and adds picture to left panel
         loginPanel.add(Welcome);
-
         imagePanel.add(picLabel);
 
+        //set Panel Backgrounds
         imagePanel.setBackground(new Color(250, 245, 255));
         loginPanel.setBackground(new Color(120, 25, 255));
 
@@ -120,6 +136,7 @@ public class mainGUI {
     public void createPanel() {
 
         basePanel = new JPanel();
+        //adds Base panel to the background frame for everything else to be mounted to
         frame.add(basePanel);
 
         basePanel.setBounds(0, 0, panelw, panelh);
@@ -131,16 +148,22 @@ public class mainGUI {
 
         frame = new JFrame();
 
+        //Sets the default opereaction when the exit button is clicked
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        //Sets layout to null to allow free placement
         frame.setLayout(null);
 
         frame.setBackground(null);
+        //Calls Creat Panel Function to create and add base panel
         createPanel();
 
+        //Removes title bar, rounds the edge of the frame and sets default size
         frame.setUndecorated(true);
         frame.setShape(new RoundRectangle2D.Double(0, 0, panelw, panelh, 30, 30));
         frame.setSize(panelw, panelh);
+        //sets location of the frame to the center of the screen
         frame.setLocationRelativeTo(null);
+        //makes frame visible
         frame.setVisible(true);
 
     }
@@ -148,19 +171,15 @@ public class mainGUI {
     public void addUserLogin() {
 
         MaskFormatter fmt;
-        
-
         try {
-            fmt = new MaskFormatter("###-###-####");
-            DefaultFormatterFactory factory = new DefaultFormatterFactory(fmt);
+            fmt = new MaskFormatter("876-###-####");
             phoneText = new JFormattedTextField(fmt);
-            //phoneText.set
+            phoneText.setText("876-111-1111");
         } catch (ParseException e1) {
             // TODO Auto-generated catch block
             e1.printStackTrace();
         }
 
-        // phoneText = new JTextField(11);
         phoneText.setText("User Phone number");
         phoneText.setBounds(125, 250, 250, uih);
         phoneText.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.BLACK));
@@ -168,13 +187,10 @@ public class mainGUI {
         phoneText.setForeground(Color.white);
         phoneText.setFont(Oswald);
 
-        // phoneText.setBorder(javax.swing.BorderFactory.createEmptyBorder());
-        // phoneText.setOpaque(false);
-
         phoneText.addFocusListener(new FocusListener() {
             @Override
             public void focusGained(FocusEvent e) {
-                if (phoneText.getText().equals("User Phone number")) {
+                if (phoneText.getText().equals("876-111-1111")) {
                     phoneText.setText(null);
                 }
             }
@@ -182,8 +198,8 @@ public class mainGUI {
             @Override
             public void focusLost(FocusEvent e) {
 
-                if (phoneText.getText().equals("")) {
-                    phoneText.setText("User Phone number");
+                if (phoneText.getText().equals("876-   -    ")) {
+                    phoneText.setText("876-111-1111");
 
                 }
 
@@ -198,9 +214,6 @@ public class mainGUI {
         userText.setBackground(null);
         userText.setForeground(Color.white);
         userText.setFont(Oswald);
-
-        // userText.setBorder(javax.swing.BorderFactory.createEmptyBorder());
-        // phoneText.setOpaque(false);
 
         userText.addFocusListener(new FocusListener() {
             @Override
@@ -254,11 +267,6 @@ public class mainGUI {
 
     }
 
-    final int adminsetX = 125;
-    final int adminsetY = 470;
-    final int adminoffsetX = adminsetX + 5;
-    final int adminoffsetY = adminsetY + 9;
-
     public void addAdminLogin() {
 
         Font oswald_Small = new Font("Oswald", Font.TYPE1_FONT, 10);
@@ -266,19 +274,29 @@ public class mainGUI {
         adminSwap = new JTextArea("Are You and admin user at either service providor?");
         adminSwap.setEditable(false);
         adminSwap.setBounds(adminsetX, adminsetY, 200, 150);
+
+        //Sets text area so that the words wrap properly in the box
         adminSwap.setLineWrap(true);
         adminSwap.setWrapStyleWord(true);
+        //Sets the text box to the style of the ui
         adminSwap.setOpaque(false);
         adminSwap.setFont(oswald_Small);
         adminSwap.setForeground(Color.white);
         adminSwap.setBackground(null);
         adminSwap.setBorder(javax.swing.BorderFactory.createEmptyBorder());
 
+        //Adds Functionality to the button
         adminButton = new JToggleButton("<HTML><U>Admin</U></HTML>");
         adminButton.setBounds(adminoffsetX, adminoffsetY, 100, uih);
+        //Sets the button to the style of the ui
         adminButton.setForeground(Color.white);
         adminButton.setFont(oswald_Small);
+        adminButton.setBorderPainted(false);
+        adminButton.setContentAreaFilled(false);
+        adminButton.setFocusPainted(false);
+        adminButton.setOpaque(false);
 
+        //Adds Functionality to the button
         adminButton.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent itemEvent) {
@@ -287,24 +305,21 @@ public class mainGUI {
 
             }
         });
-        adminButton.setBorderPainted(false);
-        adminButton.setContentAreaFilled(false);
-        adminButton.setFocusPainted(false);
-        adminButton.setOpaque(false);
 
+        //Creates Combo Bocx to select Service Providor account
         providerBox = new JComboBox(providors);
+        //Sets the ComboBox to the style of the ui
         providerBox.setBounds(125, 270, 250, uih);
         providerBox.setVisible(false);
         providerBox.setOpaque(false);
         providerBox.setBackground(null);
         providerBox.setForeground(Color.white);
         providerBox.setFont(oswald_Small);
-        // providerBox.setBorder(new RoundedBorder(25));
+        //providerBox.setBorder(new RoundedBorder(25));
 
+        //Adds the previous attributes to the login panel
         loginPanel.add(providerBox);
-
         loginPanel.add(adminButton);
-
         loginPanel.add(adminSwap);
 
     }
