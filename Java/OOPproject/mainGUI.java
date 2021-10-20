@@ -4,21 +4,24 @@ import OOPproject.adminGui;
 import OOPproject.customerGui;
 
 import java.awt.geom.RoundRectangle2D;
-
+import java.text.ParseException;
 import java.awt.Color;
-
+import java.awt.Component;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Insets;
 import java.awt.event.*;
 
 import java.awt.Graphics;
 
 import java.awt.Shape;
 
+import javax.swing.BorderFactory;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -27,6 +30,9 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 import javax.swing.SwingConstants;
+import javax.swing.border.Border;
+import javax.swing.text.DefaultFormatterFactory;
+import javax.swing.text.MaskFormatter;
 
 public class mainGUI {
 
@@ -35,6 +41,8 @@ public class mainGUI {
     final int uih = 25;
     final int admin = 1;
     final int customer = 0;
+
+    private static Font Oswald;
 
     private int panelStatus = 0;
 
@@ -65,6 +73,8 @@ public class mainGUI {
     private static String[] providors = { "Digicel", "Flow" };
 
     public mainGUI() {
+
+        Oswald = new Font("Oswald", Font.TYPE1_FONT, 15);
 
         tech = new ImageIcon("C:/Users/sptic/Desktop/tech1.png");
         server = new ImageIcon("C:/Users/sptic/Desktop/server1.png");
@@ -137,24 +147,42 @@ public class mainGUI {
 
     public void addUserLogin() {
 
-        phoneText = new JTextField(25);
+        MaskFormatter fmt;
+        
+
+        try {
+            fmt = new MaskFormatter("###-###-####");
+            DefaultFormatterFactory factory = new DefaultFormatterFactory(fmt);
+            phoneText = new JFormattedTextField(fmt);
+            //phoneText.set
+        } catch (ParseException e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
+
+        // phoneText = new JTextField(11);
         phoneText.setText("User Phone number");
         phoneText.setBounds(125, 250, 250, uih);
+        phoneText.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.BLACK));
+        phoneText.setBackground(null);
+        phoneText.setForeground(Color.white);
+        phoneText.setFont(Oswald);
 
-        phoneText.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+        // phoneText.setBorder(javax.swing.BorderFactory.createEmptyBorder());
         // phoneText.setOpaque(false);
 
         phoneText.addFocusListener(new FocusListener() {
             @Override
             public void focusGained(FocusEvent e) {
-
-                phoneText.setText(null);
+                if (phoneText.getText().equals("User Phone number")) {
+                    phoneText.setText(null);
+                }
             }
 
             @Override
             public void focusLost(FocusEvent e) {
 
-                if (phoneText.getText() == null) {
+                if (phoneText.getText().equals("")) {
                     phoneText.setText("User Phone number");
 
                 }
@@ -166,21 +194,26 @@ public class mainGUI {
         userText = new JTextField(25);
         userText.setText("User First Name");
         userText.setBounds(125, 310, 250, uih);
+        userText.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.BLACK));
+        userText.setBackground(null);
+        userText.setForeground(Color.white);
+        userText.setFont(Oswald);
 
-        userText.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+        // userText.setBorder(javax.swing.BorderFactory.createEmptyBorder());
         // phoneText.setOpaque(false);
 
         userText.addFocusListener(new FocusListener() {
             @Override
             public void focusGained(FocusEvent e) {
-                // TODO Auto-generated method stub
-                userText.setText(null);
+                if (userText.getText().equals("User First Name")) {
+                    userText.setText(null);
+                }
+
             }
 
             @Override
             public void focusLost(FocusEvent e) {
-                // TODO Auto-generated method stub
-                if (userText.getText() == null) {
+                if (userText.getText().equals("")) {
                     userText.setText("User First Name");
 
                 }
@@ -192,15 +225,22 @@ public class mainGUI {
         passwordText = new JPasswordField("Password");
         passwordText.setBounds(125, 370, 250, uih);
         passwordText.setVisible(true);
+        passwordText.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.BLACK));
+        passwordText.setBackground(null);
+        passwordText.setForeground(Color.white);
+        passwordText.setFont(Oswald);
         passwordText.addFocusListener(new FocusListener() {
             @Override
             public void focusGained(FocusEvent e) {
-                passwordText.setText(null);
+                if (passwordText.getText().equals("Password")) {
+                    passwordText.setText(null);
+                }
+
             }
 
             @Override
             public void focusLost(FocusEvent e) {
-                if (passwordText.getText() == null) {
+                if (passwordText.getText().equals("")) {
                     passwordText.setText("Password");
                 }
 
@@ -221,21 +261,23 @@ public class mainGUI {
 
     public void addAdminLogin() {
 
+        Font oswald_Small = new Font("Oswald", Font.TYPE1_FONT, 10);
+
         adminSwap = new JTextArea("Are You and admin user at either service providor?");
         adminSwap.setEditable(false);
         adminSwap.setBounds(adminsetX, adminsetY, 200, 150);
         adminSwap.setLineWrap(true);
         adminSwap.setWrapStyleWord(true);
         adminSwap.setOpaque(false);
-        adminSwap.setFont(new Font("Oswald", Font.TYPE1_FONT, 10));
+        adminSwap.setFont(oswald_Small);
         adminSwap.setForeground(Color.white);
-        adminSwap.setBackground(new Color(0, 0, 0, 0));
+        adminSwap.setBackground(null);
         adminSwap.setBorder(javax.swing.BorderFactory.createEmptyBorder());
 
         adminButton = new JToggleButton("<HTML><U>Admin</U></HTML>");
         adminButton.setBounds(adminoffsetX, adminoffsetY, 100, uih);
         adminButton.setForeground(Color.white);
-        adminButton.setFont(new Font("Oswald", Font.TYPE1_FONT, 10));
+        adminButton.setFont(oswald_Small);
 
         adminButton.addItemListener(new ItemListener() {
             @Override
@@ -253,6 +295,11 @@ public class mainGUI {
         providerBox = new JComboBox(providors);
         providerBox.setBounds(125, 270, 250, uih);
         providerBox.setVisible(false);
+        providerBox.setOpaque(false);
+        providerBox.setBackground(null);
+        providerBox.setForeground(Color.white);
+        providerBox.setFont(oswald_Small);
+        // providerBox.setBorder(new RoundedBorder(25));
 
         loginPanel.add(providerBox);
 
@@ -289,6 +336,12 @@ public class mainGUI {
         loginButton = new JButton("Login");
         loginButton.setBounds(125, 425, 100, uih);
         loginPanel.add(loginButton);
+        loginButton.setOpaque(false);
+        loginButton.setFocusPainted(false);
+        loginButton.setContentAreaFilled(false);
+        loginButton.setForeground(Color.white);
+        loginButton.setFont(Oswald);
+        loginButton.setBorder(new RoundedBorder(25));
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -300,7 +353,7 @@ public class mainGUI {
                     String password = passwordText.getText();
 
                     System.out.println("Customer Information\n" + "Username:\t" + username + "\n" + "Password:\t"
-                            + password + "\n"+ "Phone Number:\t" + phone);
+                            + password + "\n" + "Phone Number:\t" + phone);
 
                 } else if (panelStatus == admin) {
 
@@ -310,12 +363,24 @@ public class mainGUI {
                     switch (providor) {
                     case 0:
 
+                        if (password.equals("TheBiggerBetterNetwork2021")) {
+                            System.out.println("Successfully Logged in!");
+                        } else {
+                            System.out.println("Incorrect Password!");
+                        }
+
                         System.out.println(
                                 "Admin Information\n" + "Providor:\t" + "Digicel" + "\n" + "Password:\t" + password);
 
                         break;
 
                     case 1:
+
+                        if (password.equals("TheWayIFlow2021")) {
+                            System.out.println("Successfully Logged in!");
+                        } else {
+                            System.out.println("Incorrect Password!");
+                        }
 
                         System.out.println(
                                 "Admin Information\n" + "Providor:\t" + "Flow" + "\n" + "Password:\t" + password);
@@ -344,6 +409,8 @@ public class mainGUI {
             passwordText.setBounds(125, 350, 250, uih);
             providerBox.setVisible(true);
 
+            passwordText.setText("Password");
+
             picLabel.setIcon(server);
 
             // passwordText.setVisible(true);
@@ -358,6 +425,8 @@ public class mainGUI {
             userText.setVisible(true);
             passwordText.setBounds(125, 370, 250, uih);
             providerBox.setVisible(false);
+
+            passwordText.setText("Password");
 
             picLabel.setIcon(tech);
 
@@ -396,6 +465,27 @@ public class mainGUI {
                 shape = new RoundRectangle2D.Float(0, 0, getWidth() - 1, getHeight() - 1, 15, 15);
             }
             return shape.contains(x, y);
+        }
+    }
+
+    private static class RoundedBorder implements Border {
+
+        private int radius;
+
+        RoundedBorder(int radius) {
+            this.radius = radius;
+        }
+
+        public Insets getBorderInsets(Component c) {
+            return new Insets(this.radius + 1, this.radius + 1, this.radius + 2, this.radius);
+        }
+
+        public boolean isBorderOpaque() {
+            return true;
+        }
+
+        public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
+            g.drawRoundRect(x, y, width - 1, height - 1, radius, radius);
         }
     }
 
