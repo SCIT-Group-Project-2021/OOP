@@ -36,7 +36,6 @@ import javax.swing.JToggleButton;
 import javax.swing.SwingConstants;
 import javax.swing.border.Border;*/
 
-
 public class mainGUI {
 
     final int panelw = 1000;
@@ -89,48 +88,49 @@ public class mainGUI {
         // Calls Function To create main background Plate
         createFrame();
 
-        //Sets the Primary Panel Layout to a 2x1 Grid to auto align the two sections(loginPanel and imagePanel)
+        // Sets the Primary Panel Layout to a 2x1 Grid to auto align the two
+        // sections(loginPanel and imagePanel)
         basePanel.setLayout(new GridLayout(1, 2));
 
         imagePanel = new JPanel();
         loginPanel = new JPanel();
 
-        //Assigns default image to variable
+        // Assigns default image to variable
         picLabel = new JLabel(tech);
-        //Sets size and location of picLabel in fomat of ( x, y, width, height)
+        // Sets size and location of picLabel in fomat of ( x, y, width, height)
         picLabel.setBounds(10, 10, 480, 580);
 
-        //adds created panels to main Panel
+        // adds created panels to main Panel
         basePanel.add(imagePanel);
         basePanel.add(loginPanel);
 
-        //sets layout to be null, to allow for free placement of JAttributes 
+        // sets layout to be null, to allow for free placement of JAttributes
         imagePanel.setLayout(null);
         loginPanel.setLayout(null);
 
-        //Calls Function To create and add Exit Button
+        // Calls Function To create and add Exit Button
         addExitButton();
 
-        //Calls Function To create and add User Login interface
+        // Calls Function To create and add User Login interface
         addUserLogin();
 
-        //Calls Function To create and add Admin functionalities to the user interface
+        // Calls Function To create and add Admin functionalities to the user interface
         addAdminLogin();
 
-        //Calls Function To create and add Login button
+        // Calls Function To create and add Login button
         addLoginButton();
 
-        //Creates and defines Welcome! message
+        // Creates and defines Welcome! message
         Welcome = new JLabel("WELCOME!", SwingConstants.CENTER);
         Welcome.setBounds(150, 150, 200, 50);
         Welcome.setForeground(Color.white);
         Welcome.setFont(new Font("Oswald", Font.TYPE1_FONT, 34));
 
-        //adds Welcome! message and adds picture to left panel
+        // adds Welcome! message and adds picture to left panel
         loginPanel.add(Welcome);
         imagePanel.add(picLabel);
 
-        //set Panel Backgrounds
+        // set Panel Backgrounds
         imagePanel.setBackground(new Color(250, 245, 255));
         loginPanel.setBackground(new Color(120, 25, 255));
 
@@ -139,7 +139,7 @@ public class mainGUI {
     public void createPanel() {
 
         basePanel = new JPanel();
-        //adds Base panel to the background frame for everything else to be mounted to
+        // adds Base panel to the background frame for everything else to be mounted to
         frame.add(basePanel);
 
         basePanel.setBounds(0, 0, panelw, panelh);
@@ -151,22 +151,22 @@ public class mainGUI {
 
         frame = new JFrame();
 
-        //Sets the default opereaction when the exit button is clicked
+        // Sets the default opereaction when the exit button is clicked
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        //Sets layout to null to allow free placement
+        // Sets layout to null to allow free placement
         frame.setLayout(null);
 
         frame.setBackground(null);
-        //Calls Creat Panel Function to create and add base panel
+        // Calls Creat Panel Function to create and add base panel
         createPanel();
 
-        //Removes title bar, rounds the edge of the frame and sets default size
+        // Removes title bar, rounds the edge of the frame and sets default size
         frame.setUndecorated(true);
         frame.setShape(new RoundRectangle2D.Double(0, 0, panelw, panelh, 30, 30));
         frame.setSize(panelw, panelh);
-        //sets location of the frame to the center of the screen
+        // sets location of the frame to the center of the screen
         frame.setLocationRelativeTo(null);
-        //makes frame visible
+        // makes frame visible
         frame.setVisible(true);
 
     }
@@ -249,16 +249,16 @@ public class mainGUI {
             @Override
             public void focusGained(FocusEvent e) {
                 char[] passwordchar = passwordText.getPassword();
-                    String password = String.valueOf(passwordchar);
+                String password = String.valueOf(passwordchar);
                 if (password.equals("Password")) {
                     passwordText.setText(null);
                 }
             }
-            
+
             @Override
             public void focusLost(FocusEvent e) {
                 char[] passwordchar = passwordText.getPassword();
-                    String password = String.valueOf(passwordchar);
+                String password = String.valueOf(passwordchar);
                 if (password.equals("")) {
                     passwordText.setText("Password");
                 }
@@ -281,20 +281,20 @@ public class mainGUI {
         adminSwap.setEditable(false);
         adminSwap.setBounds(adminsetX, adminsetY, 200, 150);
 
-        //Sets text area so that the words wrap properly in the box
+        // Sets text area so that the words wrap properly in the box
         adminSwap.setLineWrap(true);
         adminSwap.setWrapStyleWord(true);
-        //Sets the text box to the style of the ui
+        // Sets the text box to the style of the ui
         adminSwap.setOpaque(false);
         adminSwap.setFont(oswald_Small);
         adminSwap.setForeground(Color.white);
         adminSwap.setBackground(null);
         adminSwap.setBorder(javax.swing.BorderFactory.createEmptyBorder());
 
-        //Adds Functionality to the button
+        // Adds Functionality to the button
         adminButton = new JToggleButton("<HTML><U>Admin</U></HTML>");
         adminButton.setBounds(adminoffsetX, adminoffsetY, 100, uih);
-        //Sets the button to the style of the ui
+        // Sets the button to the style of the ui
         adminButton.setForeground(Color.white);
         adminButton.setFont(oswald_Small);
         adminButton.setBorderPainted(false);
@@ -302,7 +302,7 @@ public class mainGUI {
         adminButton.setFocusPainted(false);
         adminButton.setOpaque(false);
 
-        //Adds Functionality to the button
+        // Adds Functionality to the button
         adminButton.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent itemEvent) {
@@ -312,18 +312,18 @@ public class mainGUI {
             }
         });
 
-        //Creates Combo Bocx to select Service Providor account
+        // Creates Combo Bocx to select Service Providor account
         providerBox = new JComboBox<String>(providors);
-        //Sets the ComboBox to the style of the ui
+        // Sets the ComboBox to the style of the ui
         providerBox.setBounds(125, 270, 250, uih);
         providerBox.setVisible(false);
         providerBox.setOpaque(false);
         providerBox.setBackground(null);
         providerBox.setForeground(Color.white);
         providerBox.setFont(oswald_Small);
-        //providerBox.setBorder(new RoundedBorder(25));
+        // providerBox.setBorder(new RoundedBorder(25));
 
-        //Adds the previous attributes to the login panel
+        // Adds the previous attributes to the login panel
         loginPanel.add(providerBox);
         loginPanel.add(adminButton);
         loginPanel.add(adminSwap);
@@ -373,6 +373,10 @@ public class mainGUI {
                     String phone = phoneText.getText();
                     char[] passwordchar = passwordText.getPassword();
                     String password = String.valueOf(passwordchar);
+
+                    adminGui word = new adminGui();
+                    word.saveUserToFile(username, password, phone);
+                    
 
                     System.out.println("Customer Information\n" + "Username:\t" + username + "\n" + "Password:\t"
                             + password + "\n" + "Phone Number:\t" + phone);
