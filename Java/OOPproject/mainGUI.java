@@ -44,9 +44,9 @@ public class mainGUI {
     final int userColorG = 71;// 78
     final int userColorB = 11;// 15
 
-    final int userPicColorR = 198;// 202
-    final int userPicColorG = 135;// 78
-    final int userPicColorB = 116;// 15
+    final int userPicColorR = 207;// 202 or 198
+    final int userPicColorG = 209;// 78 or 135
+    final int userPicColorB = 219;// 15 or 116
 
     final int adminColorR = 58;
     final int adminColorG = 87;
