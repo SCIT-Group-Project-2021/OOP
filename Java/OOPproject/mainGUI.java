@@ -90,8 +90,8 @@ public class mainGUI {
 
         Oswald = new Font("Oswald", Font.TYPE1_FONT, 15);
 
-        tech = new ImageIcon(new ImageIcon("OOPproject/Images/tech6.png").getImage().getScaledInstance(500, 550, Image.SCALE_DEFAULT));
-        server = new ImageIcon(new ImageIcon("OOPproject/Images/server6.png").getImage().getScaledInstance(500,380, Image.SCALE_DEFAULT));
+        tech = new ImageIcon(new ImageIcon(mainGUI.class.getResource("/OOPproject/Images/tech6.png")).getImage().getScaledInstance(500, 550, Image.SCALE_DEFAULT));
+        server = new ImageIcon(new ImageIcon(mainGUI.class.getResource("/OOPproject/Images/server6.png")).getImage().getScaledInstance(500,380, Image.SCALE_DEFAULT));
 
         //tech = new ImageIcon("OOPproject/Images/tech1.png");
         //server = new ImageIcon("OOPproject/Images/server3.png");
