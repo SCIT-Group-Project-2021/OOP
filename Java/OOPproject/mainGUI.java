@@ -38,14 +38,22 @@ import javax.swing.border.Border;*/
 
 public class mainGUI {
 
+    final int userColorR = 202;
+    final int userColorG = 78;
+    final int userColorB = 15;
+
+    final int adminColorR = 58;
+    final int adminColorG = 87;
+    final int adminColorB = 128;
+
     final int panelw = 1000;
     final int panelh = 600;
     final int uih = 25;
     final int admin = 1;
     final int customer = 0;
-    final int adminsetX = 125;
-    final int adminsetY = 470;
-    final int adminoffsetX = adminsetX + 5;
+    final int adminsetX = 140;
+    final int adminsetY = 520;//was 470
+    final int adminoffsetX = adminsetX + 60;
     final int adminoffsetY = adminsetY + 9;
 
     private static Font Oswald;
@@ -82,8 +90,11 @@ public class mainGUI {
 
         Oswald = new Font("Oswald", Font.TYPE1_FONT, 15);
 
-        tech = new ImageIcon("C:/Users/sptic/Desktop/tech1.png");
-        server = new ImageIcon("C:/Users/sptic/Desktop/server1.png");
+        tech = new ImageIcon(new ImageIcon("OOPproject/Images/tech6.png").getImage().getScaledInstance(500, 550, Image.SCALE_DEFAULT));
+        server = new ImageIcon(new ImageIcon("OOPproject/Images/server6.png").getImage().getScaledInstance(500,380, Image.SCALE_DEFAULT));
+
+        //tech = new ImageIcon("OOPproject/Images/tech1.png");
+        //server = new ImageIcon("OOPproject/Images/server3.png");
 
         // Calls Function To create main background Plate
         createFrame();
@@ -97,8 +108,9 @@ public class mainGUI {
 
         // Assigns default image to variable
         picLabel = new JLabel(tech);
+        
         // Sets size and location of picLabel in fomat of ( x, y, width, height)
-        picLabel.setBounds(10, 10, 480, 580);
+        picLabel.setBounds(0, 0, 500, 600);
 
         // adds created panels to main Panel
         basePanel.add(imagePanel);
@@ -131,8 +143,8 @@ public class mainGUI {
         imagePanel.add(picLabel);
 
         // set Panel Backgrounds
-        imagePanel.setBackground(new Color(250, 245, 255));
-        loginPanel.setBackground(new Color(120, 25, 255));
+        imagePanel.setBackground(new Color(222,235,252));
+        loginPanel.setBackground(new Color(userColorR,userColorG,userColorB));
 
     }
 
@@ -185,7 +197,7 @@ public class mainGUI {
 
         phoneText.setText("User Phone number");
         phoneText.setBounds(125, 250, 250, uih);
-        phoneText.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.BLACK));
+        phoneText.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.white));
         phoneText.setBackground(null);
         phoneText.setForeground(Color.white);
         phoneText.setFont(Oswald);
@@ -213,7 +225,7 @@ public class mainGUI {
         userText = new JTextField(25);
         userText.setText("User First Name");
         userText.setBounds(125, 310, 250, uih);
-        userText.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.BLACK));
+        userText.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.white));
         userText.setBackground(null);
         userText.setForeground(Color.white);
         userText.setFont(Oswald);
@@ -241,7 +253,7 @@ public class mainGUI {
         passwordText = new JPasswordField("Password");
         passwordText.setBounds(125, 370, 250, uih);
         passwordText.setVisible(true);
-        passwordText.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.BLACK));
+        passwordText.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.white));
         passwordText.setBackground(null);
         passwordText.setForeground(Color.white);
         passwordText.setFont(Oswald);
@@ -277,9 +289,10 @@ public class mainGUI {
 
         Font oswald_Small = new Font("Oswald", Font.TYPE1_FONT, 10);
 
-        adminSwap = new JTextArea("Are You and admin user at either service providor?");
+        adminSwap = new JTextArea("Are you an admin user at either service providor?");
+        
         adminSwap.setEditable(false);
-        adminSwap.setBounds(adminsetX, adminsetY, 200, 150);
+        adminSwap.setBounds(adminsetX, adminsetY, 220, 150);
 
         // Sets text area so that the words wrap properly in the box
         adminSwap.setLineWrap(true);
@@ -292,7 +305,7 @@ public class mainGUI {
         adminSwap.setBorder(javax.swing.BorderFactory.createEmptyBorder());
 
         // Adds Functionality to the button
-        adminButton = new JToggleButton("<HTML><U>Admin</U></HTML>");
+        adminButton = new JToggleButton("<HTML><U>Click Here</U></HTML>");
         adminButton.setBounds(adminoffsetX, adminoffsetY, 100, uih);
         // Sets the button to the style of the ui
         adminButton.setForeground(Color.white);
@@ -355,7 +368,7 @@ public class mainGUI {
     public void addLoginButton() {
 
         loginButton = new JButton("Login");
-        loginButton.setBounds(125, 425, 100, uih);
+        loginButton.setBounds(200, 425, 100, uih);
         loginPanel.add(loginButton);
         loginButton.setOpaque(false);
         loginButton.setFocusPainted(false);
@@ -436,6 +449,9 @@ public class mainGUI {
             passwordText.setBounds(125, 350, 250, uih);
             providerBox.setVisible(true);
 
+            picLabel.setBounds(-20, 0, 500, 600);
+            loginPanel.setBackground(new Color(adminColorR,adminColorG,adminColorB));
+
             passwordText.setText("Password");
 
             picLabel.setIcon(server);
@@ -444,7 +460,7 @@ public class mainGUI {
             // Welcome.setVisible(false);
             Welcome.setText("Admin Panel");
             adminSwap.setText("Are you a Customer at either service providor?");
-            adminButton.setText("<HTML><U>User</U></HTML>");
+            //adminButton.setText("<HTML><U>User</U></HTML>");
 
             panelStatus = admin;
         } else {
@@ -453,6 +469,9 @@ public class mainGUI {
             passwordText.setBounds(125, 370, 250, uih);
             providerBox.setVisible(false);
 
+            picLabel.setBounds(0, 0, 500, 600);
+            loginPanel.setBackground(new Color(userColorR,userColorG,userColorB));
+
             passwordText.setText("Password");
 
             picLabel.setIcon(tech);
@@ -460,7 +479,7 @@ public class mainGUI {
             // passwordText.setVisible(false);
             // Welcome.setVisible(true);
             Welcome.setText("Welcome!");
-            adminButton.setText("<HTML><U>Admin</U></HTML>");
+            //adminButton.setText("<HTML><U>Admin</U></HTML>");
             adminSwap.setText("Are you an Admin user at either service providor?");
 
             panelStatus = customer;
