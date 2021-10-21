@@ -39,7 +39,7 @@ import javax.swing.border.Border;*/
 
 public class mainGUI {
 
-    //#region Constants
+    // #region Constants
     final int userColorR = 190;// 202
     final int userColorG = 71;// 78
     final int userColorB = 11;// 15
@@ -65,9 +65,9 @@ public class mainGUI {
     final int adminsetY = 520;// was 470
     final int adminoffsetX = adminsetX + 60;
     final int adminoffsetY = adminsetY + 9;
-    //#endregion
+    // #endregion
 
-    //#region Variables
+    // #region Variables
     private static Color userPicColor;
     private static Color userLogColor;
 
@@ -105,11 +105,11 @@ public class mainGUI {
     private static JButton exitButton;
 
     private static String[] providors = { "Digicel", "Flow" };
-    //#endregion
+    // #endregion
 
     public mainGUI() {
 
-        //#region Are for variables to be assigned
+        // #region Are for variables to be assigned
         // Shoul i just leave this as the values and remove the individual rgb constants
         // or not?
         userPicColor = new Color(userPicColorR, userPicColorG, userPicColorB);
@@ -125,9 +125,9 @@ public class mainGUI {
         server = new ImageIcon(new ImageIcon(mainGUI.class.getResource("/OOPproject/Images/server6.png")).getImage()
                 .getScaledInstance(500, 380, Image.SCALE_DEFAULT));
 
-        //#endregion
+        // #endregion
 
-        //#region Try Catch block For frame creation
+        // #region Try Catch block For frame creation
         // Calls Function To create main background Plate
         try {
             createFrame();
@@ -135,11 +135,13 @@ public class mainGUI {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        //#endregion
+        // #endregion
 
-        //#region Basic panel setup
-        /* Sets the Primary Panel Layout to a 2x1 Grid to auto align the two
-        sections(loginPanel and imagePanel)*/
+        // #region Basic panel setup
+        /*
+         * Sets the Primary Panel Layout to a 2x1 Grid to auto align the two
+         * sections(loginPanel and imagePanel)
+         */
         basePanel.setLayout(new GridLayout(1, 2));
 
         imagePanel = new JPanel();
@@ -158,9 +160,9 @@ public class mainGUI {
         // sets layout to be null, to allow for free placement of JAttributes
         imagePanel.setLayout(null);
         loginPanel.setLayout(null);
-        //#endregion
+        // #endregion
 
-        //#region Calling other methods to build ui
+        // #region Calling other methods to build ui
         // Calls Function To create and add Exit Button
         addExitButton();
 
@@ -172,23 +174,29 @@ public class mainGUI {
 
         // Calls Function To create and add Login button
         addLoginButton();
-        //#endregion
+        // #endregion
 
-        //#region  For Welcome Message
-        //Creates and defines Welcome! message
+        // #region For Welcome Message
+        // Creates and defines Welcome! message
         Welcome = new JLabel("WELCOME!", SwingConstants.CENTER);
         Welcome.setBounds(150, 150, 200, 50);
         Welcome.setForeground(Color.white);
         Welcome.setFont(new Font("Oswald", Font.TYPE1_FONT, 34));
-        
-        //adds Welcome! message and adds picture to left panel
+
+        // adds Welcome! message and adds picture to left panel
         loginPanel.add(Welcome);
         imagePanel.add(picLabel);
-        //#endregion
+        // #endregion
 
-        //#region set Panel Backgrounds
+        // #region set Panel Backgrounds
         imagePanel.setBackground(userPicColor);// was 222,235,252
         loginPanel.setBackground(userLogColor);
+        // #endregion
+
+        //#region Enables Undecorated Frame drag movement
+        FrameDragListener frameDragListener = new FrameDragListener(frame);
+        frame.addMouseListener(frameDragListener);
+        frame.addMouseMotionListener(frameDragListener);
         //#endregion
 
     }
@@ -234,7 +242,7 @@ public class mainGUI {
 
     public void addUserLogin() {
 
-        //#region Phone Number input Box Setup
+        // #region Phone Number input Box Setup
         MaskFormatter fmt;
         try {
             fmt = new MaskFormatter("876-###-####");
@@ -270,9 +278,9 @@ public class mainGUI {
             }
 
         });
-        //#endregion
+        // #endregion
 
-        //#region Username input Box Setup
+        // #region Username input Box Setup
         userText = new JTextField(25);
         userText.setText("User First Name");
         userText.setBounds(125, 310, 250, uih);
@@ -299,9 +307,9 @@ public class mainGUI {
             }
 
         });
-        //#endregion
+        // #endregion
 
-        //#region Password input Box Setup
+        // #region Password input Box Setup
         passwordText = new JPasswordField("Password");
         passwordText.setBounds(125, 370, 250, uih);
         passwordText.setVisible(true);
@@ -330,7 +338,7 @@ public class mainGUI {
             }
 
         });
-        //#endregion
+        // #endregion
 
         loginPanel.add(phoneText);
         loginPanel.add(userText);
@@ -514,7 +522,7 @@ public class mainGUI {
             adminSwap.setText("Are you a Customer at either service providor?");
 
             panelStatus = admin;
-            
+
         } else {
             phoneText.setVisible(true);
             userText.setVisible(true);
@@ -562,6 +570,7 @@ public class mainGUI {
             }
             return shape.contains(x, y);
         }
+        //got from https://stackoverflow.com/questions/8515601/java-swing-rounded-border-for-jtextfield
     }
 
     private static class RoundedBorder implements Border {
@@ -583,6 +592,30 @@ public class mainGUI {
         public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
             g.drawRoundRect(x, y, width - 1, height - 1, radius, radius);
         }
+        //got from https://stackoverflow.com/questions/8515601/java-swing-rounded-border-for-jtextfield
     }
 
+    public static class FrameDragListener extends MouseAdapter {
+
+        private final JFrame frame;
+        private Point mouseDownCompCoords = null;
+
+        public FrameDragListener(JFrame frame) {
+            this.frame = frame;
+        }
+
+        public void mouseReleased(MouseEvent e) {
+            mouseDownCompCoords = null;
+        }
+
+        public void mousePressed(MouseEvent e) {
+            mouseDownCompCoords = e.getPoint();
+        }
+
+        public void mouseDragged(MouseEvent e) {
+            Point currCoords = e.getLocationOnScreen();
+            frame.setLocation(currCoords.x - mouseDownCompCoords.x, currCoords.y - mouseDownCompCoords.y);
+        }
+        //got from https://stackoverflow.com/questions/16046824/making-a-java-swing-frame-movable-and-setundecorated
+    }
 }
