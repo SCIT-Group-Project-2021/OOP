@@ -4,7 +4,7 @@ import OOPproject.adminGui;
 import OOPproject.customerGui;
 
 import java.awt.geom.RoundRectangle2D;
-
+import java.io.IOException;
 import java.awt.*;
 import java.awt.event.*;
 /*import java.awt.Color;
@@ -17,6 +17,7 @@ import java.awt.Shape;*/
 
 import java.text.ParseException;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.BorderFactory;
 import javax.swing.text.MaskFormatter;
@@ -69,6 +70,8 @@ public class mainGUI {
     private static JLabel Welcome;
     private static JLabel picLabel;
 
+    private static Image mainIcon;
+
     private static Icon tech;
     private static Icon server;
 
@@ -88,6 +91,8 @@ public class mainGUI {
 
     public mainGUI() {
 
+        
+
         Oswald = new Font("Oswald", Font.TYPE1_FONT, 15);
 
         tech = new ImageIcon(new ImageIcon(mainGUI.class.getResource("/OOPproject/Images/tech6.png")).getImage().getScaledInstance(500, 550, Image.SCALE_DEFAULT));
@@ -97,7 +102,12 @@ public class mainGUI {
         //server = new ImageIcon("OOPproject/Images/server3.png");
 
         // Calls Function To create main background Plate
-        createFrame();
+        try {
+            createFrame();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
 
         // Sets the Primary Panel Layout to a 2x1 Grid to auto align the two
         // sections(loginPanel and imagePanel)
@@ -159,9 +169,13 @@ public class mainGUI {
 
     }
 
-    public void createFrame() {
+    public void createFrame() throws IOException {
 
         frame = new JFrame();
+
+        mainIcon = ImageIO.read(getClass().getResource("/OOPproject/Images/tech2.png"));
+
+        frame.setIconImage(mainIcon);
 
         // Sets the default opereaction when the exit button is clicked
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
