@@ -39,13 +39,22 @@ import javax.swing.border.Border;*/
 
 public class mainGUI {
 
-    final int userColorR = 202;
-    final int userColorG = 78;
-    final int userColorB = 15;
+    //#region Constants
+    final int userColorR = 190;// 202
+    final int userColorG = 71;// 78
+    final int userColorB = 11;// 15
+
+    final int userPicColorR = 198;// 202
+    final int userPicColorG = 135;// 78
+    final int userPicColorB = 116;// 15
 
     final int adminColorR = 58;
     final int adminColorG = 87;
     final int adminColorB = 128;
+
+    final int adminPicColorR = 216;
+    final int adminPicColorG = 227;
+    final int adminPicColorB = 241;
 
     final int panelw = 1000;
     final int panelh = 600;
@@ -53,9 +62,17 @@ public class mainGUI {
     final int admin = 1;
     final int customer = 0;
     final int adminsetX = 140;
-    final int adminsetY = 520;//was 470
+    final int adminsetY = 520;// was 470
     final int adminoffsetX = adminsetX + 60;
     final int adminoffsetY = adminsetY + 9;
+    //#endregion
+
+    //#region Variables
+    private static Color userPicColor;
+    private static Color userLogColor;
+
+    private static Color adminPicColor;
+    private static Color adminLogColor;
 
     private static Font Oswald;
 
@@ -88,19 +105,29 @@ public class mainGUI {
     private static JButton exitButton;
 
     private static String[] providors = { "Digicel", "Flow" };
+    //#endregion
 
     public mainGUI() {
 
-        
+        //#region Are for variables to be assigned
+        // Shoul i just leave this as the values and remove the individual rgb constants
+        // or not?
+        userPicColor = new Color(userPicColorR, userPicColorG, userPicColorB);
+        userLogColor = new Color(userColorR, userColorG, userColorB);
+
+        adminPicColor = new Color(adminPicColorR, adminPicColorG, adminPicColorB);
+        adminLogColor = new Color(adminColorR, adminColorG, adminColorB);
 
         Oswald = new Font("Oswald", Font.TYPE1_FONT, 15);
 
-        tech = new ImageIcon(new ImageIcon(mainGUI.class.getResource("/OOPproject/Images/tech6.png")).getImage().getScaledInstance(500, 550, Image.SCALE_DEFAULT));
-        server = new ImageIcon(new ImageIcon(mainGUI.class.getResource("/OOPproject/Images/server6.png")).getImage().getScaledInstance(500,380, Image.SCALE_DEFAULT));
+        tech = new ImageIcon(new ImageIcon(mainGUI.class.getResource("/OOPproject/Images/tech6.png")).getImage()
+                .getScaledInstance(500, 550, Image.SCALE_DEFAULT));
+        server = new ImageIcon(new ImageIcon(mainGUI.class.getResource("/OOPproject/Images/server6.png")).getImage()
+                .getScaledInstance(500, 380, Image.SCALE_DEFAULT));
 
-        //tech = new ImageIcon("OOPproject/Images/tech1.png");
-        //server = new ImageIcon("OOPproject/Images/server3.png");
+        //#endregion
 
+        //#region Try Catch block For frame creation
         // Calls Function To create main background Plate
         try {
             createFrame();
@@ -108,9 +135,11 @@ public class mainGUI {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+        //#endregion
 
-        // Sets the Primary Panel Layout to a 2x1 Grid to auto align the two
-        // sections(loginPanel and imagePanel)
+        //#region Basic panel setup
+        /* Sets the Primary Panel Layout to a 2x1 Grid to auto align the two
+        sections(loginPanel and imagePanel)*/
         basePanel.setLayout(new GridLayout(1, 2));
 
         imagePanel = new JPanel();
@@ -118,7 +147,7 @@ public class mainGUI {
 
         // Assigns default image to variable
         picLabel = new JLabel(tech);
-        
+
         // Sets size and location of picLabel in fomat of ( x, y, width, height)
         picLabel.setBounds(0, 0, 500, 600);
 
@@ -129,7 +158,9 @@ public class mainGUI {
         // sets layout to be null, to allow for free placement of JAttributes
         imagePanel.setLayout(null);
         loginPanel.setLayout(null);
+        //#endregion
 
+        //#region Calling other methods to build ui
         // Calls Function To create and add Exit Button
         addExitButton();
 
@@ -141,20 +172,24 @@ public class mainGUI {
 
         // Calls Function To create and add Login button
         addLoginButton();
+        //#endregion
 
-        // Creates and defines Welcome! message
+        //#region  For Welcome Message
+        //Creates and defines Welcome! message
         Welcome = new JLabel("WELCOME!", SwingConstants.CENTER);
         Welcome.setBounds(150, 150, 200, 50);
         Welcome.setForeground(Color.white);
         Welcome.setFont(new Font("Oswald", Font.TYPE1_FONT, 34));
-
-        // adds Welcome! message and adds picture to left panel
+        
+        //adds Welcome! message and adds picture to left panel
         loginPanel.add(Welcome);
         imagePanel.add(picLabel);
+        //#endregion
 
-        // set Panel Backgrounds
-        imagePanel.setBackground(new Color(222,235,252));
-        loginPanel.setBackground(new Color(userColorR,userColorG,userColorB));
+        //#region set Panel Backgrounds
+        imagePanel.setBackground(userPicColor);// was 222,235,252
+        loginPanel.setBackground(userLogColor);
+        //#endregion
 
     }
 
@@ -199,6 +234,7 @@ public class mainGUI {
 
     public void addUserLogin() {
 
+        //#region Phone Number input Box Setup
         MaskFormatter fmt;
         try {
             fmt = new MaskFormatter("876-###-####");
@@ -215,7 +251,6 @@ public class mainGUI {
         phoneText.setBackground(null);
         phoneText.setForeground(Color.white);
         phoneText.setFont(Oswald);
-
         phoneText.addFocusListener(new FocusListener() {
             @Override
             public void focusGained(FocusEvent e) {
@@ -235,7 +270,9 @@ public class mainGUI {
             }
 
         });
+        //#endregion
 
+        //#region Username input Box Setup
         userText = new JTextField(25);
         userText.setText("User First Name");
         userText.setBounds(125, 310, 250, uih);
@@ -243,7 +280,6 @@ public class mainGUI {
         userText.setBackground(null);
         userText.setForeground(Color.white);
         userText.setFont(Oswald);
-
         userText.addFocusListener(new FocusListener() {
             @Override
             public void focusGained(FocusEvent e) {
@@ -263,7 +299,9 @@ public class mainGUI {
             }
 
         });
+        //#endregion
 
+        //#region Password input Box Setup
         passwordText = new JPasswordField("Password");
         passwordText.setBounds(125, 370, 250, uih);
         passwordText.setVisible(true);
@@ -292,6 +330,7 @@ public class mainGUI {
             }
 
         });
+        //#endregion
 
         loginPanel.add(phoneText);
         loginPanel.add(userText);
@@ -304,7 +343,7 @@ public class mainGUI {
         Font oswald_Small = new Font("Oswald", Font.TYPE1_FONT, 10);
 
         adminSwap = new JTextArea("Are you an admin user at either service providor?");
-        
+
         adminSwap.setEditable(false);
         adminSwap.setBounds(adminsetX, adminsetY, 220, 150);
 
@@ -382,7 +421,7 @@ public class mainGUI {
     public void addLoginButton() {
 
         loginButton = new JButton("Login");
-        loginButton.setBounds(200, 425, 100, uih);
+        loginButton.setBounds(200, 440, 100, uih);
         loginPanel.add(loginButton);
         loginButton.setOpaque(false);
         loginButton.setFocusPainted(false);
@@ -403,7 +442,6 @@ public class mainGUI {
 
                     adminGui word = new adminGui();
                     word.saveUserToFile(username, password, phone);
-                    
 
                     System.out.println("Customer Information\n" + "Username:\t" + username + "\n" + "Password:\t"
                             + password + "\n" + "Phone Number:\t" + phone);
@@ -458,25 +496,25 @@ public class mainGUI {
         int state = itemEvent.getStateChange();
 
         if (state == ItemEvent.SELECTED) {
+
             phoneText.setVisible(false);
             userText.setVisible(false);
             passwordText.setBounds(125, 350, 250, uih);
             providerBox.setVisible(true);
 
             picLabel.setBounds(-20, 0, 500, 600);
-            loginPanel.setBackground(new Color(adminColorR,adminColorG,adminColorB));
+            imagePanel.setBackground(adminPicColor);
+            loginPanel.setBackground(adminLogColor);
 
             passwordText.setText("Password");
 
             picLabel.setIcon(server);
 
-            // passwordText.setVisible(true);
-            // Welcome.setVisible(false);
             Welcome.setText("Admin Panel");
             adminSwap.setText("Are you a Customer at either service providor?");
-            //adminButton.setText("<HTML><U>User</U></HTML>");
 
             panelStatus = admin;
+            
         } else {
             phoneText.setVisible(true);
             userText.setVisible(true);
@@ -484,16 +522,14 @@ public class mainGUI {
             providerBox.setVisible(false);
 
             picLabel.setBounds(0, 0, 500, 600);
-            loginPanel.setBackground(new Color(userColorR,userColorG,userColorB));
+            imagePanel.setBackground(userPicColor);
+            loginPanel.setBackground(userLogColor);
 
             passwordText.setText("Password");
 
             picLabel.setIcon(tech);
 
-            // passwordText.setVisible(false);
-            // Welcome.setVisible(true);
             Welcome.setText("Welcome!");
-            //adminButton.setText("<HTML><U>Admin</U></HTML>");
             adminSwap.setText("Are you an Admin user at either service providor?");
 
             panelStatus = customer;
