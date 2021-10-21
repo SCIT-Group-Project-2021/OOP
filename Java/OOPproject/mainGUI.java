@@ -40,21 +40,6 @@ import javax.swing.border.Border;*/
 public class mainGUI {
 
     // #region Constants
-    final int userColorR = 190;// 202
-    final int userColorG = 71;// 78
-    final int userColorB = 11;// 15
-
-    final int userPicColorR = 207;// 202 or 198
-    final int userPicColorG = 209;// 78 or 135
-    final int userPicColorB = 219;// 15 or 116
-
-    final int adminColorR = 58;
-    final int adminColorG = 87;
-    final int adminColorB = 128;
-
-    final int adminPicColorR = 216;
-    final int adminPicColorG = 227;
-    final int adminPicColorB = 241;
 
     final int panelw = 1000;
     final int panelh = 600;
@@ -112,11 +97,11 @@ public class mainGUI {
         // #region Are for variables to be assigned
         // Shoul i just leave this as the values and remove the individual rgb constants
         // or not?
-        userPicColor = new Color(userPicColorR, userPicColorG, userPicColorB);
-        userLogColor = new Color(userColorR, userColorG, userColorB);
+        userPicColor = new Color(207, 209, 219);
+        userLogColor = new Color(190, 71, 11);
 
-        adminPicColor = new Color(adminPicColorR, adminPicColorG, adminPicColorB);
-        adminLogColor = new Color(adminColorR, adminColorG, adminColorB);
+        adminPicColor = new Color(216, 227, 241);
+        adminLogColor = new Color(58, 87, 128);
 
         Oswald = new Font("Oswald", Font.TYPE1_FONT, 15);
 
