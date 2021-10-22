@@ -6,6 +6,29 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch driverfile",
+            "request": "launch",
+            "mainClass": "OOPproject.driverfile",
+            "projectName": "OOP_2e415cfb"
+        },
+        {
+            "type": "java",
+            "name": "Launch driver",
+            "request": "launch",
+            "mainClass": "OOPproject.driver",
+            "projectName": "OOP_2e415cfb"
+        },
+        {
+            "type": "java",
+            "name": "Launch driver",
+            "request": "launch",
+            "mainClass": "OOPproject.guiPKG.driver",
+            "projectName": "OOP_2e415cfb",
+            "noDebug": true,
+            "__progressId": "1cef731c-1c0e-4554-88d5-9065690ef80e"
+        },
+        {
+            "type": "java",
             "name": "Launch Current File",
             "request": "launch",
             "mainClass": "${file}"

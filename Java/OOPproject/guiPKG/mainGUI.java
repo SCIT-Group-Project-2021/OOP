@@ -1,4 +1,4 @@
-//======OOPproject.teleCompanyPKG========================================================
+//============================================================================
 // File Name   : mainGUI.java
 // Author      : Gabriel Tickle Garcia
 // ID#         : 2007394
@@ -28,6 +28,8 @@ import javax.swing.text.MaskFormatter;
 
 import OOPproject.guiPKG.adminGui;
 import OOPproject.guiPKG.customerGui;
+import OOPproject.teleCompanyPKG.Digicel;
+import OOPproject.teleCompanyPKG.Flow;
 
 import javax.swing.border.Border;
 /*import javax.swing.Icon;
@@ -456,28 +458,11 @@ public class mainGUI {
                     switch (providor) {
                     case 0:
 
-                        if (password.equals("TheBiggerBetterNetwork2021")) {
-                            System.out.println("Successfully Logged in!");
-                        } else {
-                            System.out.println("Incorrect Password!");
-                        }
-
-                        System.out.println(
-                                "Admin Information\n" + "Providor:\t" + "Digicel" + "\n" + "Password:\t" + password);
-
+                        Digicel.login(password);
                         break;
-
                     case 1:
 
-                        if (password.equals("TheWayIFlow2021")) {
-                            System.out.println("Successfully Logged in!");
-                        } else {
-                            System.out.println("Incorrect Password!");
-                        }
-
-                        System.out.println(
-                                "Admin Information\n" + "Providor:\t" + "Flow" + "\n" + "Password:\t" + password);
-
+                        Flow.login(password);
                         break;
 
                     default:

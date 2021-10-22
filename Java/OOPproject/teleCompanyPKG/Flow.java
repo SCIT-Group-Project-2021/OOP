@@ -108,6 +108,19 @@ public class Flow extends ServiceProvider{
 	public String toString() {
 		return "Service Provider Name: Flow \n" + super.toString() + "Parent Company Name : " + parentCompanyName;
 	};
+
+	//Cant be inherited due to static nature
+	public static void login(String password){
 	
+	if (password.equals("TheWayIFlow2021")) {
+		System.out.println("Successfully Logged in!");
+	} else {
+		System.out.println("Incorrect Password!");
+	}
+
+	
+	System.out.println(
+			"Admin Information\n" + "Providor:\t" + "Flow" + "\n" + "Password:\t" + password);
+	}
 	
 }

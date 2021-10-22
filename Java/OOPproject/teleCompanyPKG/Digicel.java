@@ -137,6 +137,18 @@ public class Digicel extends ServiceProvider {
 	public String toString() {
 		return "Service Provider Name: Digicel \n" + super.toString() + "Number of Branches : " + numOfBranches;
 	};
+
+	//Cant be inherited due to static nature
+	public static void login(String password) {
+		if (password.equals("TheBiggerBetterNetwork2021")) {
+			System.out.println("Successfully Logged in!");
+		} else {
+			System.out.println("Incorrect Password!");
+		}
+
+		System.out.println(
+				"Admin Information\n" + "Providor:\t" + "Digicel" + "\n" + "Password:\t" + password);
+	}
 	
 	
 }
