@@ -1,4 +1,4 @@
-package OOPproject;
+package OOPproject.guiPKG;
 
 import java.io.*;
 import java.util.Scanner;

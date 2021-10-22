@@ -1,7 +1,11 @@
-package OOPproject;
+//======OOPproject.teleCompanyPKG========================================================
+// File Name   : mainGUI.java
+// Author      : Gabriel Tickle Garcia
+// ID#         : 2007394
+// Description : Primary GUI class
+//============================================================================
 
-import OOPproject.adminGui;
-import OOPproject.customerGui;
+package OOPproject.guiPKG;
 
 import java.awt.geom.RoundRectangle2D;
 import java.io.IOException;
@@ -21,6 +25,10 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.BorderFactory;
 import javax.swing.text.MaskFormatter;
+
+import OOPproject.guiPKG.adminGui;
+import OOPproject.guiPKG.customerGui;
+
 import javax.swing.border.Border;
 /*import javax.swing.Icon;
 import javax.swing.ImageIcon;
