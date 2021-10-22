@@ -13,17 +13,17 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
-public class Flow extends ServiceProvider{
+public class Flow extends ServiceProvider {
 	private String parentCompanyName;
 	private static int flowCustomerCount;
-	
-	//Primary Constructor
+
+	// Primary Constructor
 	public Flow(String companyID, String address, String pName) {
 		super(companyID, address);
 		parentCompanyName = pName;
 	}
 
-	//Getters and Setters
+	// Getters and Setters
 	public String getParentCompanyName() {
 		return parentCompanyName;
 	}
@@ -48,11 +48,11 @@ public class Flow extends ServiceProvider{
 	@Override
 	public boolean createPhoneCredit(int cardNum, int balance) {
 		int length = String.valueOf(cardNum).length();
-		if(length != 13) {
+		if (length != 13) {
 			System.out.println("Card number must be 13 digits long");
 			return false;
 		}
-		
+
 		try {
 			String status = "Available";
 			FileWriter outFileStream = new FileWriter(new File("Flow_CardInformation.txt"), true);
@@ -60,16 +60,14 @@ public class Flow extends ServiceProvider{
 			outFileStream.write(record);
 			outFileStream.close();
 			return true;
-		} 
-		catch (IOException e) {
+		} catch (IOException e) {
+			e.printStackTrace();
+			return false;
+		} catch (Exception e) {
 			e.printStackTrace();
 			return false;
 		}
-		catch (Exception e) {
-			e.printStackTrace();
-			return false;
-		}
-		
+
 	}
 
 	@Override
@@ -80,47 +78,46 @@ public class Flow extends ServiceProvider{
 		String status = "";
 		try {
 			inFileStream = new Scanner(new File("Flow_CardInfomation.txt"));
-			while(inFileStream.hasNext()) {
+			while (inFileStream.hasNext()) {
 				creditNum = inFileStream.nextInt();
 				balance = inFileStream.nextFloat();
 				status = inFileStream.next();
-				
+
 				System.out.println(creditNum + "\t" + balance + "\t" + status);
 			}
-			if(creditNum == 0) {
+			if (creditNum == 0) {
 				System.out.println("No records found.");
 			}
-		}
-		catch(FileNotFoundException e) {
+		} catch (FileNotFoundException e) {
 			e.printStackTrace();
-		}
-		catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
 	@Override
 	public void viewCustomerBase() {
-		
+
 	}
-	
+
 	@Override
 	public String toString() {
 		return "Service Provider Name: Flow \n" + super.toString() + "Parent Company Name : " + parentCompanyName;
 	};
 
-	//Cant be inherited due to static nature
-	public static void login(String password){
-	
-	if (password.equals("TheWayIFlow2021")) {
-		System.out.println("Successfully Logged in!");
-	} else {
-		System.out.println("Incorrect Password!");
+	// Cant be inherited due to static nature
+	public static boolean login(String password) {
+
+		System.out.println("Admin Information\n" + "Providor:\t" + "Flow" + "\n" + "Password:\t" + password);
+
+		if (password.equals("TheWayIFlow2021")) {
+			System.out.println("Successfully Logged in!");
+			return true;
+		} else {
+			System.out.println("Incorrect Password!");
+			return false;
+		}
+
 	}
 
-	
-	System.out.println(
-			"Admin Information\n" + "Providor:\t" + "Flow" + "\n" + "Password:\t" + password);
-	}
-	
 }

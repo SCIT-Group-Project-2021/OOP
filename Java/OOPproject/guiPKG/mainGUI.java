@@ -188,11 +188,11 @@ public class mainGUI {
         loginPanel.setBackground(userLogColor);
         // #endregion
 
-        //#region Enables Undecorated Frame drag movement
+        // #region Enables Undecorated Frame drag movement
         FrameDragListener frameDragListener = new FrameDragListener(frame);
         frame.addMouseListener(frameDragListener);
         frame.addMouseMotionListener(frameDragListener);
-        //#endregion
+        // #endregion
 
     }
 
@@ -457,12 +457,23 @@ public class mainGUI {
 
                     switch (providor) {
                     case 0:
+                        if (Digicel.login(password)) {
+                            // TODO Login Successful
+                            System.out.println("Successfuly logged in confirmed");
+                        } else {
+                            // TODO Password was incorrect
+                        }
 
-                        Digicel.login(password);
                         break;
-                    case 1:
 
-                        Flow.login(password);
+                    case 1:
+                        if (Flow.login(password)) {
+                            // TODO Login Successful
+                            System.out.println("Successfuly logged in confirmed");
+                        } else {
+                            // TODO Password was incorrect
+                        }
+
                         break;
 
                     default:
@@ -548,7 +559,8 @@ public class mainGUI {
             }
             return shape.contains(x, y);
         }
-        //got from https://stackoverflow.com/questions/8515601/java-swing-rounded-border-for-jtextfield
+        // got from
+        // https://stackoverflow.com/questions/8515601/java-swing-rounded-border-for-jtextfield
     }
 
     private static class RoundedBorder implements Border {
@@ -570,7 +582,8 @@ public class mainGUI {
         public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
             g.drawRoundRect(x, y, width - 1, height - 1, radius, radius);
         }
-        //got from https://stackoverflow.com/questions/8515601/java-swing-rounded-border-for-jtextfield
+        // got from
+        // https://stackoverflow.com/questions/8515601/java-swing-rounded-border-for-jtextfield
     }
 
     public static class FrameDragListener extends MouseAdapter {
@@ -594,6 +607,7 @@ public class mainGUI {
             Point currCoords = e.getLocationOnScreen();
             frame.setLocation(currCoords.x - mouseDownCompCoords.x, currCoords.y - mouseDownCompCoords.y);
         }
-        //got from https://stackoverflow.com/questions/16046824/making-a-java-swing-frame-movable-and-setundecorated
+        // got from
+        // https://stackoverflow.com/questions/16046824/making-a-java-swing-frame-movable-and-setundecorated
     }
 }
