@@ -11,13 +11,6 @@ import java.awt.geom.RoundRectangle2D;
 import java.io.IOException;
 import java.awt.*;
 import java.awt.event.*;
-/*import java.awt.Color;
-import java.awt.Component;
-import java.awt.Font;
-import java.awt.GridLayout;
-import java.awt.Insets;
-import java.awt.Graphics;
-import java.awt.Shape;*/
 
 import java.text.ParseException;
 
@@ -26,26 +19,10 @@ import javax.swing.*;
 import javax.swing.BorderFactory;
 import javax.swing.text.MaskFormatter;
 
-import OOPproject.guiPKG.adminGui;
-import OOPproject.guiPKG.customerGui;
 import OOPproject.teleCompanyPKG.Digicel;
 import OOPproject.teleCompanyPKG.Flow;
-
-import javax.swing.border.Border;
-/*import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFormattedTextField;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import javax.swing.JToggleButton;
-import javax.swing.SwingConstants;
-import javax.swing.border.Border;*/
+import OOPproject.guiPKG.guiElements;
+import OOPproject.guiPKG.adminGui;
 
 public class mainGUI {
 
@@ -96,8 +73,6 @@ public class mainGUI {
 
     private static JToggleButton adminButton;
     private static JButton loginButton;
-
-    private static JButton exitButton;
 
     private static String[] providors = { "Digicel", "Flow" };
     // #endregion
@@ -159,7 +134,9 @@ public class mainGUI {
 
         // #region Calling other methods to build ui
         // Calls Function To create and add Exit Button
-        addExitButton();
+        guiElements.addExitButton();
+        guiElements.exitButton.setBounds(455, 0, 45, 45);
+        loginPanel.add(guiElements.exitButton);
 
         // Calls Function To create and add User Login interface
         addUserLogin();
@@ -189,7 +166,7 @@ public class mainGUI {
         // #endregion
 
         // #region Enables Undecorated Frame drag movement
-        FrameDragListener frameDragListener = new FrameDragListener(frame);
+        guiElements.FrameDragListener frameDragListener = new guiElements.FrameDragListener(frame);
         frame.addMouseListener(frameDragListener);
         frame.addMouseMotionListener(frameDragListener);
         // #endregion
@@ -399,28 +376,6 @@ public class mainGUI {
 
     }
 
-    public void addExitButton() {
-
-        exitButton = new JButton("X");
-        exitButton.setForeground(Color.white);
-        exitButton.setBounds(455, 0, 45, 45);
-        exitButton.setLayout(new GridLayout(1, 1));
-        exitButton.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.exit(0);
-            }
-
-        });
-        exitButton.setBorderPainted(false);
-        exitButton.setContentAreaFilled(false);
-        exitButton.setFocusPainted(false);
-        exitButton.setOpaque(false);
-        loginPanel.add(exitButton);
-
-    }
-
     public void addLoginButton() {
 
         loginButton = new JButton("Login");
@@ -431,7 +386,7 @@ public class mainGUI {
         loginButton.setContentAreaFilled(false);
         loginButton.setForeground(Color.white);
         loginButton.setFont(Oswald);
-        loginButton.setBorder(new RoundedBorder(25));
+        loginButton.setBorder(new guiElements.RoundedBorder(25));
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -442,9 +397,6 @@ public class mainGUI {
                     String phone = phoneText.getText();
                     char[] passwordchar = passwordText.getPassword();
                     String password = String.valueOf(passwordchar);
-
-                    adminGui word = new adminGui();
-                    word.saveUserToFile(username, password, phone);
 
                     System.out.println("Customer Information\n" + "Username:\t" + username + "\n" + "Password:\t"
                             + password + "\n" + "Phone Number:\t" + phone);
@@ -460,6 +412,9 @@ public class mainGUI {
                         if (Digicel.login(password)) {
                             // TODO Login Successful
                             System.out.println("Successfuly logged in confirmed");
+                            frame.setVisible(false);
+                            new adminGui(1);
+                            
                         } else {
                             // TODO Password was incorrect
                         }
@@ -470,6 +425,9 @@ public class mainGUI {
                         if (Flow.login(password)) {
                             // TODO Login Successful
                             System.out.println("Successfuly logged in confirmed");
+                            frame.setVisible(false);
+                            new adminGui(2);
+                            
                         } else {
                             // TODO Password was incorrect
                         }
@@ -534,80 +492,4 @@ public class mainGUI {
 
     }
 
-    class RoundedJTextField extends JTextField {
-        private Shape shape;
-
-        public RoundedJTextField(int size) {
-            super(size);
-            setOpaque(false);
-        }
-
-        protected void paintComponent(Graphics g) {
-            g.setColor(getBackground());
-            g.fillRoundRect(0, 0, getWidth() - 1, getHeight() - 1, 15, 15);
-            super.paintComponent(g);
-        }
-
-        protected void paintBorder(Graphics g) {
-            g.setColor(getForeground());
-            g.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, 15, 15);
-        }
-
-        public boolean contains(int x, int y) {
-            if (shape == null || !shape.getBounds().equals(getBounds())) {
-                shape = new RoundRectangle2D.Float(0, 0, getWidth() - 1, getHeight() - 1, 15, 15);
-            }
-            return shape.contains(x, y);
-        }
-        // got from
-        // https://stackoverflow.com/questions/8515601/java-swing-rounded-border-for-jtextfield
-    }
-
-    private static class RoundedBorder implements Border {
-
-        private int radius;
-
-        RoundedBorder(int radius) {
-            this.radius = radius;
-        }
-
-        public Insets getBorderInsets(Component c) {
-            return new Insets(this.radius + 1, this.radius + 1, this.radius + 2, this.radius);
-        }
-
-        public boolean isBorderOpaque() {
-            return true;
-        }
-
-        public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
-            g.drawRoundRect(x, y, width - 1, height - 1, radius, radius);
-        }
-        // got from
-        // https://stackoverflow.com/questions/8515601/java-swing-rounded-border-for-jtextfield
-    }
-
-    public static class FrameDragListener extends MouseAdapter {
-
-        private final JFrame frame;
-        private Point mouseDownCompCoords = null;
-
-        public FrameDragListener(JFrame frame) {
-            this.frame = frame;
-        }
-
-        public void mouseReleased(MouseEvent e) {
-            mouseDownCompCoords = null;
-        }
-
-        public void mousePressed(MouseEvent e) {
-            mouseDownCompCoords = e.getPoint();
-        }
-
-        public void mouseDragged(MouseEvent e) {
-            Point currCoords = e.getLocationOnScreen();
-            frame.setLocation(currCoords.x - mouseDownCompCoords.x, currCoords.y - mouseDownCompCoords.y);
-        }
-        // got from
-        // https://stackoverflow.com/questions/16046824/making-a-java-swing-frame-movable-and-setundecorated
-    }
 }
