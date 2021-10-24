@@ -19,10 +19,7 @@ import javax.swing.*;
 import javax.swing.BorderFactory;
 import javax.swing.text.MaskFormatter;
 
-import OOPproject.teleCompanyPKG.Digicel;
-import OOPproject.teleCompanyPKG.Flow;
-import OOPproject.guiPKG.guiElements;
-import OOPproject.guiPKG.adminGui;
+import OOPproject.teleCompanyPKG.*;
 
 public class mainGUI {
 

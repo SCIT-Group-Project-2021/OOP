@@ -4,7 +4,7 @@ import OOPproject.guiPKG.mainGUI;
 
 import java.security.Provider;
 
-import OOPproject.guiPKG.adminGui;
+import OOPproject.guiPKG.*;
 
 public class driver {
 
