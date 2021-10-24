@@ -42,8 +42,58 @@ public class Flow extends ServiceProvider {
 
 	@Override
 	public void addCustomer(Customer c) {
-		super.addCustomer(c);
+		FileWriter outFileStream = null;
+		Scanner input = null;
+		input = new Scanner(System.in);
+		try { 
+			outFileStream = new FileWriter(new File("Flow_Customers"), true);
+			String newCustomer = c.getCustID() + "\t" + c.getName() + "\t" + c.getAddress() +  
+					"\t" + c.getCreditBalance() + "\t" + c.getTelephone() +  "\n";
+			outFileStream.write(newCustomer);
+			System.out.println("Information saved successfully!");
+			super.addCustomer(c);
+		}
+		catch(Exception e) {
+			System.err.println("\nAn unexpected error occured.");
+		}
+		finally {
+			if(outFileStream != null) {
+				try {
+					outFileStream.close();
+				}catch(Exception e) {
+					System.err.println("\nAn unexpected error occured.");
+				}		
+			}
+			if(input != null) {
+				input.close();
+			}
+		}
 	}
+
+	
+	
+	//Function used to save info to new file
+	/*
+	public void updateSaveCustomerInfofile(){
+		FileWriter outFileStream = null;
+		try { 
+		outFileStream = new FileWriter(new File("DummyFile.dat"), true);
+		String newCustomer = getCustID() + "\t" + getName() + "\t" + getAddress() +  
+				"\t" + getCreditBalance() + "\t" + getTelephone() +  "\n";
+		outFileStream.write(newCustomer);
+		System.out.println("Information saved successfully!");
+		}catch(Exception e) {
+			System.out.println("\nAn unexpected error occured.");
+		}finally {
+			if(outFileStream != null) {
+				try {
+					outFileStream.close();
+				}catch(IOException e) {
+					e.printStackTrace();
+				}		
+			}
+		}
+	}*/
 
 	@Override
 	public boolean createPhoneCredit(int cardNum, int balance) {
@@ -67,7 +117,6 @@ public class Flow extends ServiceProvider {
 			e.printStackTrace();
 			return false;
 		}
-
 	}
 
 	@Override
@@ -97,7 +146,30 @@ public class Flow extends ServiceProvider {
 
 	@Override
 	public void viewCustomerBase() {
-
+		Scanner inFileStream = null;
+		String custID = "";
+	    String name = "";
+		float creditBalance = 0;
+	    String telephone = "";
+		String address = "";
+		try {
+			inFileStream = new Scanner(new File("Digicel_Customers.txt"));
+			while (inFileStream.hasNext()) {
+				custID = inFileStream.next();
+				name = inFileStream.next();
+				creditBalance = inFileStream.nextFloat();
+				telephone = inFileStream.next();
+				address = inFileStream.nextLine();
+				System.out.println(custID + "\t" + name + "\t" + creditBalance + "\t" + telephone + "\t" + address);
+			}
+			if (custID == "") {
+				System.out.println("No records found.");
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override

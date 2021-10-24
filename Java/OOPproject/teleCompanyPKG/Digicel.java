@@ -1,4 +1,4 @@
-//======OOPproject.teleCompanyPKG========================================================
+//============================================================================
 // File Name   : Digicel.java
 // Author      : Ashley Deans
 // ID#         : 2007275
@@ -90,33 +90,119 @@ public class Digicel extends ServiceProvider {
 
 	}
 
-	/*
-	 * Complete customer public void addCustomer(Customer c) { totalCustomerCount++;
-	 * }
-	 */
+	public void addCustomer(Customer c) { 
+		FileWriter outFileStream = null;
+		Scanner input = null;
+		input = new Scanner(System.in);
+		try {
+			outFileStream = new FileWriter(new File("Flow_Customers"), true);
+			checkCustomerUniqueValues(c);
+			String newCustomer = c.getCustID() + "\t" + c.getName() + "\t" + c.getCreditBalance() + "\t" + c.getTelephone() + "\t" +  c.getAddress() +  "\n";	
+			outFileStream.write(newCustomer);
+			System.out.println("Information saved successfully!");
+			super.addCustomer(c);
+		}
+		catch(UniqueValueException e){
+			e.getMessage();
+		}
+		catch(Exception e) {
+			System.err.println("\nAn unexpected error occured.");
+		}
+		finally {
+			if(outFileStream != null) {
+				try {
+					outFileStream.close();
+				}catch(Exception e) {
+					System.err.println("\nAn unexpected error occured.");
+				}		
+			}
+			if(input != null) {
+				input.close();
+			}
+		}
+	}
 
-	// change values
+	public boolean checkCustomerUniqueValues(Customer c){
+		Scanner inFileStream = null;
+		String custID = "";
+	    String name = "";
+		float creditBalance = 0;
+	    String telephone = "";
+		String address = "";
+		boolean check = true;
+		try {
+			inFileStream = new Scanner(new File("Digicel_Customers.txt"));
+			while (inFileStream.hasNext()) {
+				custID = inFileStream.next();
+				name = inFileStream.next();
+				creditBalance = inFileStream.nextFloat();
+				telephone = inFileStream.next();
+				address = inFileStream.nextLine();
+				if (custID == c.getCustID()) {
+					check = false;
+					throw new UniqueValueException("Customer ID already exists.");
+					
+				}
+				else if(telephone == c.getTelephone().toString()){
+					check = false;
+					throw new UniqueValueException("Telephone number already in use.");
+				}
+			}
+			return check;		
+		} 
+		catch (FileNotFoundException e) {
+			e.printStackTrace();
+			return false;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+		finally{
+			if(inFileStream != null) {
+				try {
+					inFileStream.close();
+				}catch(Exception e) {
+					System.err.println("\nAn unexpected error occured.");
+				}
+				return check;		
+			}
+		}
+	}
+
 	public void viewCustomerBase() {
 		Scanner inFileStream = null;
-		int creditNum = 0;
-		float balance = 0;
-		String status = "";
+		String custID = "";
+	    String name = "";
+		float creditBalance = 0;
+	    String telephone = "";
+		String address = "";
 		try {
-			inFileStream = new Scanner(new File("Digicel_CardInfomation.txt"));
+			inFileStream = new Scanner(new File("Digicel_Customers.txt"));
 			while (inFileStream.hasNext()) {
-				creditNum = inFileStream.nextInt();
-				balance = inFileStream.nextFloat();
-				status = inFileStream.next();
-
-				System.out.println(creditNum + "\t" + balance + "\t" + status);
+				custID = inFileStream.next();
+				name = inFileStream.next();
+				creditBalance = inFileStream.nextFloat();
+				telephone = inFileStream.next();
+				address = inFileStream.nextLine();
+				System.out.println(custID + "\t" + name + "\t" + creditBalance + "\t" + telephone + "\t" + address);
 			}
-			if (creditNum == 0) {
+			if (custID == "") {
 				System.out.println("No records found.");
 			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+		finally{
+			if(inFileStream != null) {
+				try {
+					inFileStream.close();
+				}catch(Exception e) {
+					System.err.println("\nAn unexpected error occured.");
+				}		
+			}
+
 		}
 	}
 
