@@ -37,7 +37,6 @@ public class mainGUI {
         // #region Try Catch block For frame creation
         // Calls Function To create main background Plate
 
-
         try {
             baseFrame baseFrame = new baseFrame();
             frame = baseFrame.getBaseFrame();
@@ -48,7 +47,6 @@ public class mainGUI {
         // #endregion
 
         new LoginGui(frame);
-
 
     }
 

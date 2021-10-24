@@ -11,10 +11,10 @@ import javax.swing.border.Border;
 
 public class guiElements {
 
-    public guiElements(){
-        
+    public guiElements() {
+
     }
-    
+
     public static JButton exitButton;
 
     public static void addExitButton() {
@@ -115,4 +115,3 @@ public class guiElements {
     }
 
 }
-

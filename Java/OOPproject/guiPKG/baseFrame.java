@@ -9,7 +9,6 @@ import javax.swing.*;
 
 import OOPproject.guiPKG.guiElements.FrameDragListener;
 
-
 public class baseFrame {
 
     // #region Constants
@@ -33,8 +32,7 @@ public class baseFrame {
 
     // #endregion
 
-
-    public baseFrame() throws IOException{
+    public baseFrame() throws IOException {
 
         frame = new JFrame();
 
@@ -70,12 +68,7 @@ public class baseFrame {
     public JFrame getBaseFrame() {
 
         return frame;
-        
+
     }
 
-    
-
-    
-
-    
 }

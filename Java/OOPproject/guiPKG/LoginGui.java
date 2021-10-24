@@ -13,52 +13,52 @@ import OOPproject.teleCompanyPKG.*;
 
 public class LoginGui {
 
-      // #region Constants
+    // #region Constants
 
-      final int panelw = 1000;
-      final int panelh = 600;
-      final int uih = 25;
-      final int admin = 1;
-      final int customer = 0;
-      final int adminsetX = 140;
-      final int adminsetY = 520;// was 470
-      final int adminoffsetX = adminsetX + 60;
-      final int adminoffsetY = adminsetY + 9;
-      // #endregion
-  
-      // #region Variables
-      private static Color userPicColor;
-      private static Color userLogColor;
-  
-      private static Color adminPicColor;
-      private static Color adminLogColor;
-  
-      private static Font Oswald;
-  
-      private int panelStatus = 0;
-  
-      private static JPanel imagePanel;
-      private static JPanel mainPanel;
-      private static JPanel loginPanel;
-  
-      private static JLabel Welcome;
-      private static JLabel picLabel;
-  
-      private static Icon tech;
-      private static Icon server;
-  
-      private static JTextField phoneText;
-      private static JTextField userText;
-      private static JTextArea adminSwap;
-  
-      private static JComboBox<String> providerBox;
-      private static JPasswordField passwordText;
-  
-      private static JToggleButton adminButton;
-      private static JButton loginButton;
-  
-      private static String[] providors = { "Digicel", "Flow" };
-      // #endregion
+    final int panelw = 1000;
+    final int panelh = 600;
+    final int uih = 25;
+    final int admin = 1;
+    final int customer = 0;
+    final int adminsetX = 140;
+    final int adminsetY = 520;// was 470
+    final int adminoffsetX = adminsetX + 60;
+    final int adminoffsetY = adminsetY + 9;
+    // #endregion
+
+    // #region Variables
+    private static Color userPicColor;
+    private static Color userLogColor;
+
+    private static Color adminPicColor;
+    private static Color adminLogColor;
+
+    private static Font Oswald;
+
+    private int panelStatus = 0;
+
+    private static JPanel imagePanel;
+    private static JPanel mainPanel;
+    private static JPanel loginPanel;
+
+    private static JLabel Welcome;
+    private static JLabel picLabel;
+
+    private static Icon tech;
+    private static Icon server;
+
+    private static JTextField phoneText;
+    private static JTextField userText;
+    private static JTextArea adminSwap;
+
+    private static JComboBox<String> providerBox;
+    private static JPasswordField passwordText;
+
+    private static JToggleButton adminButton;
+    private static JButton loginButton;
+
+    private static String[] providors = { "Digicel", "Flow" };
+    // #endregion
 
     public LoginGui(JFrame frame) {
 
@@ -135,14 +135,13 @@ public class LoginGui {
 
         frame.add(loginPanel);
 
-
     }
 
     public void createPanel(JFrame frame) {
 
         loginPanel = new JPanel();
         // adds Base panel to the background frame for everything else to be mounted to
-        
+
         loginPanel.setBounds(0, 0, panelw, panelh);
         loginPanel.setLayout(null);
 
@@ -253,7 +252,7 @@ public class LoginGui {
         mainPanel.add(passwordText);
 
     }
-    
+
     public void addAdminLogin() {
 
         Font oswald_Small = new Font("Oswald", Font.TYPE1_FONT, 10);
@@ -351,8 +350,8 @@ public class LoginGui {
                             loginPanel.setVisible(false);
                             loginPanel.removeAll();
                             frame.remove(loginPanel);
-                            new AdminGui(1,frame);
-                            
+                            new AdminGui(1, frame);
+
                         } else {
                             // TODO Password was incorrect
                         }
@@ -366,8 +365,8 @@ public class LoginGui {
                             loginPanel.setVisible(false);
                             loginPanel.removeAll();
                             frame.remove(loginPanel);
-                            new AdminGui(2,frame);
-                            
+                            new AdminGui(2, frame);
+
                         } else {
                             // TODO Password was incorrect
                         }

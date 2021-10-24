@@ -120,11 +120,9 @@ public class AdminGui {
         // adds created panels to main Panel
         sidePanel.setPreferredSize(new Dimension(200, 600));
         adminPanel.add(sidePanel, BorderLayout.WEST);
-        
+
         primaryPanel.setPreferredSize(new Dimension(800, 600));
         adminPanel.add(primaryPanel, BorderLayout.CENTER);
-
-        
 
         frame.add(adminPanel);
 
