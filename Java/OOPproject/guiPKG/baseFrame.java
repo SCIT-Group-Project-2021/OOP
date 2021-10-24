@@ -1,3 +1,9 @@
+//============================================================================
+// File Name   : baseFrame.java
+// Author      : Gabriel Tickle Garcia
+// ID#         : 2007394
+// Description : Primary baseFrame class
+//============================================================================
 package OOPproject.guiPKG;
 
 import java.awt.geom.RoundRectangle2D;

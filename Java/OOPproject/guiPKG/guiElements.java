@@ -1,3 +1,10 @@
+//============================================================================
+// File Name   : guiElements.java
+// Author      : Gabriel Tickle Garcia
+// ID#         : 2007394
+// Description : Primary guiElements class
+//============================================================================
+
 package OOPproject.guiPKG;
 
 import java.awt.geom.RoundRectangle2D;

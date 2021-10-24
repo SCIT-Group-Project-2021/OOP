@@ -1,3 +1,10 @@
+//============================================================================
+// File Name   : LoginGui.java
+// Author      : Gabriel Tickle Garcia
+// ID#         : 2007394
+// Description : Primary LoginGui class
+//============================================================================
+
 package OOPproject.guiPKG;
 
 import java.awt.*;

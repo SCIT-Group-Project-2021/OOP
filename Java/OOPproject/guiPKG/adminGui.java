@@ -1,3 +1,10 @@
+//============================================================================
+// File Name   : AdminGui.java
+// Author      : Gabriel Tickle Garcia
+// ID#         : 2007394
+// Description : Primary AdminGui class
+//============================================================================
+
 package OOPproject.guiPKG;
 
 import java.awt.*;
