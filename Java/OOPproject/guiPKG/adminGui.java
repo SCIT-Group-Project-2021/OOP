@@ -1,7 +1,5 @@
 package OOPproject.guiPKG;
 
-import java.awt.geom.RoundRectangle2D;
-import java.io.IOException;
 import java.awt.*;
 
 import javax.swing.*;
@@ -28,11 +26,9 @@ public class AdminGui {
 
     private static Font Oswald;
 
-    private static JFrame frame;
-
     private static JPanel sidePanel;
-    private static JPanel mainPanel;
-    private static JPanel basePanel;
+    private static JPanel primaryPanel;
+    private static JPanel adminPanel;
 
     private static JLabel Logo;
 
@@ -46,7 +42,9 @@ public class AdminGui {
 
     // #endregion
 
-    public AdminGui(int providor) {
+    public AdminGui(int providor, JFrame frame) {
+
+        createPanel();
 
         // #region Are for variables to be assigned
         // Shoul i just leave this as the values and remove the individual rgb constants
@@ -59,24 +57,8 @@ public class AdminGui {
 
         // #endregion
 
-        // #region Try Catch block For frame creation
-        // Calls Function To create main background Plate
-        try {
-            createFrame();
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        // #endregion
-
-        // #region Basic panel setup
-        /*
-         * Sets the Primary Panel Layout to a 2x1 Grid to auto align the two
-         * sections(loginPanel and imagePanel)
-         */
-
         sidePanel = new JPanel();
-        mainPanel = new JPanel();
+        primaryPanel = new JPanel();
 
         switch (providor) {
         case 1:
@@ -86,9 +68,9 @@ public class AdminGui {
             Logo = new JLabel(digicelLogoIcon);
 
             // #region set Panel Backgrounds
-        sidePanel.setBackground(new Color(17, 17, 215));
-        mainPanel.setBackground(digicelColor);
-        // #endregion
+            sidePanel.setBackground(new Color(17, 17, 215));
+            primaryPanel.setBackground(digicelColor);
+            // #endregion
 
             break;
 
@@ -98,9 +80,9 @@ public class AdminGui {
             Logo = new JLabel(flowLogoIcon);
 
             // #region set Panel Backgrounds
-        sidePanel.setBackground(new Color(17, 147, 215));
-        mainPanel.setBackground(flowColor);
-        // #endregion
+            sidePanel.setBackground(new Color(17, 147, 215));
+            primaryPanel.setBackground(flowColor);
+            // #endregion
 
             break;
         default:
@@ -112,7 +94,7 @@ public class AdminGui {
 
         // sets layout to be null, to allow for free placement of JAttributes
         sidePanel.setLayout(null);
-        mainPanel.setLayout(null);
+        primaryPanel.setLayout(null);
         // #endregion
 
         // #region Calling other methods to build ui
@@ -123,7 +105,7 @@ public class AdminGui {
         addViewCreditButton();
         guiElements.addExitButton();
         guiElements.exitButton.setBounds(755, 0, 45, 45);
-        mainPanel.add(guiElements.exitButton);
+        primaryPanel.add(guiElements.exitButton);
 
         // #endregion
 
@@ -136,52 +118,27 @@ public class AdminGui {
         // #endregion
 
         // adds created panels to main Panel
-        basePanel.add(sidePanel, BorderLayout.EAST);
-        sidePanel.setBounds(0, 0, 200, 600);
-        basePanel.add(mainPanel, BorderLayout.CENTER);
-        mainPanel.setBounds(200, 0, 800, 600);
+        sidePanel.setPreferredSize(new Dimension(200, 600));
+        adminPanel.add(sidePanel, BorderLayout.WEST);
+        
+        primaryPanel.setPreferredSize(new Dimension(800, 600));
+        adminPanel.add(primaryPanel, BorderLayout.CENTER);
 
-        // #region Enables Undecorated Frame drag movement
-        guiElements.FrameDragListener frameDragListener = new guiElements.FrameDragListener(frame);
-        frame.addMouseListener(frameDragListener);
-        frame.addMouseMotionListener(frameDragListener);
-        // #endregion
+        
+
+        frame.add(adminPanel);
 
     }
 
     public void createPanel() {
 
-        basePanel = new JPanel();
+        adminPanel = new JPanel();
         // adds Base panel to the background frame for everything else to be mounted to
-        frame.add(basePanel);
+        // frame.add(adminPanel);
 
-        basePanel.setBounds(0, 0, panelw, panelh);
-        basePanel.setLayout(new GridLayout());
-        basePanel.setBackground(Color.black);
-
-    }
-
-    public void createFrame() throws IOException {
-
-        frame = new JFrame();
-
-        // Sets the default opereaction when the exit button is clicked
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        // Sets layout to null to allow free placement
-        frame.setLayout(null);
-
-        frame.setBackground(null);
-        // Calls Creat Panel Function to create and add base panel
-        createPanel();
-
-        // Removes title bar, rounds the edge of the frame and sets default size
-        frame.setUndecorated(true);
-        frame.setShape(new RoundRectangle2D.Double(0, 0, panelw, panelh, 30, 30));
-        frame.setSize(panelw, panelh);
-        // sets location of the frame to the center of the screen
-        frame.setLocationRelativeTo(null);
-        // makes frame visible
-        frame.setVisible(true);
+        adminPanel.setBounds(0, 0, 1000, 600);
+        adminPanel.setLayout(new BorderLayout());
+        adminPanel.setBackground(Color.black);
 
     }
 

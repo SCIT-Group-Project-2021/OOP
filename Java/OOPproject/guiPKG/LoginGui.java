@@ -1,13 +1,10 @@
 package OOPproject.guiPKG;
 
-import java.awt.geom.RoundRectangle2D;
-import java.io.IOException;
 import java.awt.*;
 import java.awt.event.*;
 
 import java.text.ParseException;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.BorderFactory;
 import javax.swing.text.MaskFormatter;
@@ -41,8 +38,8 @@ public class LoginGui {
       private int panelStatus = 0;
   
       private static JPanel imagePanel;
+      private static JPanel mainPanel;
       private static JPanel loginPanel;
-      private static JPanel basePanel;
   
       private static JLabel Welcome;
       private static JLabel picLabel;
@@ -83,10 +80,10 @@ public class LoginGui {
         server = new ImageIcon(new ImageIcon(mainGUI.class.getResource("/OOPproject/Images/server6.png")).getImage()
                 .getScaledInstance(500, 380, Image.SCALE_DEFAULT));
 
-        basePanel.setLayout(new GridLayout(1, 2));
+        loginPanel.setLayout(new GridLayout(1, 2));
 
         imagePanel = new JPanel();
-        loginPanel = new JPanel();
+        mainPanel = new JPanel();
 
         // Assigns default image to variable
         picLabel = new JLabel(tech);
@@ -95,19 +92,19 @@ public class LoginGui {
         picLabel.setBounds(0, 0, 500, 600);
 
         // adds created panels to main Panel
-        basePanel.add(imagePanel);
-        basePanel.add(loginPanel);
+        loginPanel.add(imagePanel);
+        loginPanel.add(mainPanel);
 
         // sets layout to be null, to allow for free placement of JAttributes
         imagePanel.setLayout(null);
-        loginPanel.setLayout(null);
+        mainPanel.setLayout(null);
         // #endregion
 
         // #region Calling other methods to build ui
         // Calls Function To create and add Exit Button
         guiElements.addExitButton();
         guiElements.exitButton.setBounds(455, 0, 45, 45);
-        loginPanel.add(guiElements.exitButton);
+        mainPanel.add(guiElements.exitButton);
 
         // Calls Function To create and add User Login interface
         addUserLogin();
@@ -116,7 +113,7 @@ public class LoginGui {
         addAdminLogin();
 
         // Calls Function To create and add Login button
-        addLoginButton();
+        addLoginButton(frame);
         // #endregion
 
         // #region For Welcome Message
@@ -127,25 +124,27 @@ public class LoginGui {
         Welcome.setFont(new Font("Oswald", Font.TYPE1_FONT, 34));
 
         // adds Welcome! message and adds picture to left panel
-        loginPanel.add(Welcome);
+        mainPanel.add(Welcome);
         imagePanel.add(picLabel);
         // #endregion
 
         // #region set Panel Backgrounds
         imagePanel.setBackground(userPicColor);// was 222,235,252
-        loginPanel.setBackground(userLogColor);
+        mainPanel.setBackground(userLogColor);
         // #endregion
+
+        frame.add(loginPanel);
+
 
     }
 
     public void createPanel(JFrame frame) {
 
-        basePanel = new JPanel();
+        loginPanel = new JPanel();
         // adds Base panel to the background frame for everything else to be mounted to
-        frame.add(basePanel);
-
-        basePanel.setBounds(0, 0, panelw, panelh);
-        basePanel.setLayout(null);
+        
+        loginPanel.setBounds(0, 0, panelw, panelh);
+        loginPanel.setLayout(null);
 
     }
 
@@ -249,9 +248,9 @@ public class LoginGui {
         });
         // #endregion
 
-        loginPanel.add(phoneText);
-        loginPanel.add(userText);
-        loginPanel.add(passwordText);
+        mainPanel.add(phoneText);
+        mainPanel.add(userText);
+        mainPanel.add(passwordText);
 
     }
     
@@ -307,17 +306,17 @@ public class LoginGui {
         // providerBox.setBorder(new RoundedBorder(25));
 
         // Adds the previous attributes to the login panel
-        loginPanel.add(providerBox);
-        loginPanel.add(adminButton);
-        loginPanel.add(adminSwap);
+        mainPanel.add(providerBox);
+        mainPanel.add(adminButton);
+        mainPanel.add(adminSwap);
 
     }
 
-    public void addLoginButton() {
+    public void addLoginButton(JFrame frame) {
 
         loginButton = new JButton("Login");
         loginButton.setBounds(200, 440, 100, uih);
-        loginPanel.add(loginButton);
+        mainPanel.add(loginButton);
         loginButton.setOpaque(false);
         loginButton.setFocusPainted(false);
         loginButton.setContentAreaFilled(false);
@@ -349,8 +348,10 @@ public class LoginGui {
                         if (Digicel.login(password)) {
                             // TODO Login Successful
                             System.out.println("Successfuly logged in confirmed");
-                            basePanel.setVisible(false);
-                            new AdminGui(1);
+                            loginPanel.setVisible(false);
+                            loginPanel.removeAll();
+                            frame.remove(loginPanel);
+                            new AdminGui(1,frame);
                             
                         } else {
                             // TODO Password was incorrect
@@ -362,8 +363,10 @@ public class LoginGui {
                         if (Flow.login(password)) {
                             // TODO Login Successful
                             System.out.println("Successfuly logged in confirmed");
-                            basePanel.setVisible(false);
-                            new AdminGui(2);
+                            loginPanel.setVisible(false);
+                            loginPanel.removeAll();
+                            frame.remove(loginPanel);
+                            new AdminGui(2,frame);
                             
                         } else {
                             // TODO Password was incorrect
@@ -396,7 +399,7 @@ public class LoginGui {
 
             picLabel.setBounds(-20, 0, 500, 600);
             imagePanel.setBackground(adminPicColor);
-            loginPanel.setBackground(adminLogColor);
+            mainPanel.setBackground(adminLogColor);
 
             passwordText.setText("Password");
 
@@ -415,7 +418,7 @@ public class LoginGui {
 
             picLabel.setBounds(0, 0, 500, 600);
             imagePanel.setBackground(userPicColor);
-            loginPanel.setBackground(userLogColor);
+            mainPanel.setBackground(userLogColor);
 
             passwordText.setText("Password");
 
