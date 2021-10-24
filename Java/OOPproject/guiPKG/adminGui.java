@@ -6,7 +6,7 @@ import java.awt.*;
 
 import javax.swing.*;
 
-public class adminGui {
+public class AdminGui {
 
     // #region Constants
 
@@ -46,7 +46,7 @@ public class adminGui {
 
     // #endregion
 
-    public adminGui(int providor) {
+    public AdminGui(int providor) {
 
         // #region Are for variables to be assigned
         // Shoul i just leave this as the values and remove the individual rgb constants
@@ -81,7 +81,7 @@ public class adminGui {
         switch (providor) {
         case 1:
             digicelLogoIcon = new ImageIcon(
-                    new ImageIcon(adminGui.class.getResource("/OOPproject/Images/Digicel-Logo.png")).getImage()
+                    new ImageIcon(AdminGui.class.getResource("/OOPproject/Images/Digicel-Logo.png")).getImage()
                             .getScaledInstance(100, 60, Image.SCALE_DEFAULT));
             Logo = new JLabel(digicelLogoIcon);
 
@@ -93,7 +93,7 @@ public class adminGui {
             break;
 
         case 2:
-            flowLogoIcon = new ImageIcon(new ImageIcon(adminGui.class.getResource("/OOPproject/Images/Flow-Logo.png"))
+            flowLogoIcon = new ImageIcon(new ImageIcon(AdminGui.class.getResource("/OOPproject/Images/Flow-Logo.png"))
                     .getImage().getScaledInstance(100, 50, Image.SCALE_DEFAULT));
             Logo = new JLabel(flowLogoIcon);
 

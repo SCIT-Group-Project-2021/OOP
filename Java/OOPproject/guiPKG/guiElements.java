@@ -10,6 +10,10 @@ import javax.swing.*;
 import javax.swing.border.Border;
 
 public class guiElements {
+
+    public guiElements(){
+        
+    }
     
     public static JButton exitButton;
 
@@ -110,82 +114,5 @@ public class guiElements {
         // https://stackoverflow.com/questions/16046824/making-a-java-swing-frame-movable-and-setundecorated
     }
 
-    /*class RoundedJTextField extends JTextField {
-        private Shape shape;
-
-        public RoundedJTextField(int size) {
-            super(size);
-            setOpaque(false);
-        }
-
-        protected void paintComponent(Graphics g) {
-            g.setColor(getBackground());
-            g.fillRoundRect(0, 0, getWidth() - 1, getHeight() - 1, 15, 15);
-            super.paintComponent(g);
-        }
-
-        protected void paintBorder(Graphics g) {
-            g.setColor(getForeground());
-            g.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, 15, 15);
-        }
-
-        public boolean contains(int x, int y) {
-            if (shape == null || !shape.getBounds().equals(getBounds())) {
-                shape = new RoundRectangle2D.Float(0, 0, getWidth() - 1, getHeight() - 1, 15, 15);
-            }
-            return shape.contains(x, y);
-        }
-        // got from
-        // https://stackoverflow.com/questions/8515601/java-swing-rounded-border-for-jtextfield
-    }
-
-    private static class RoundedBorder implements Border {
-
-        private int radius;
-
-        RoundedBorder(int radius) {
-            this.radius = radius;
-        }
-
-        public Insets getBorderInsets(Component c) {
-            return new Insets(this.radius + 1, this.radius + 1, this.radius + 2, this.radius);
-        }
-
-        public boolean isBorderOpaque() {
-            return true;
-        }
-
-        public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
-            g.drawRoundRect(x, y, width - 1, height - 1, radius, radius);
-        }
-        // got from
-        // https://stackoverflow.com/questions/8515601/java-swing-rounded-border-for-jtextfield
-    }
-
-    public static class FrameDragListener extends MouseAdapter {
-
-        private final JFrame frame;
-        private Point mouseDownCompCoords = null;
-
-        public FrameDragListener(JFrame frame) {
-            this.frame = frame;
-        }
-
-        public void mouseReleased(MouseEvent e) {
-            mouseDownCompCoords = null;
-        }
-
-        public void mousePressed(MouseEvent e) {
-            mouseDownCompCoords = e.getPoint();
-        }
-
-        public void mouseDragged(MouseEvent e) {
-            Point currCoords = e.getLocationOnScreen();
-            frame.setLocation(currCoords.x - mouseDownCompCoords.x, currCoords.y - mouseDownCompCoords.y);
-        }
-        // got from
-        // https://stackoverflow.com/questions/16046824/making-a-java-swing-frame-movable-and-setundecorated
-    }
-*/
-
 }
+
