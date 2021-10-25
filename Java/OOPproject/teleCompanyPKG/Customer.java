@@ -115,6 +115,7 @@ public class Customer {
 				voucherNum = mmiCode.substring(5,17); //this should assign the voucher number to the variable credit 
 				String prefix = mmiCode.substring(22, 25);
 				
+				//Checking if the mmi code is valid
 				if(addCreditPin.equals(mmiCode.substring(0,4))) {
 					if(midSpecifier.equals(mmiCode.charAt(18))) {
 						if(endSpecifier.equals(mmiCode.charAt(length - 1)) ) {
@@ -155,6 +156,7 @@ public class Customer {
 						}
 						else{
 							check = false;
+							System.err.println("Invalid voucher number");
 						}
 					}		
 				}
@@ -181,6 +183,7 @@ public class Customer {
 					}
 					else{
 						check = false;
+						System.err.println("Invalid telephone number");
 					}		
 				}	
 			}
