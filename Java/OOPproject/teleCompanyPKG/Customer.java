@@ -90,138 +90,204 @@ public class Customer {
 	
 	
 	@SuppressWarnings("unlikely-arg-type")
-	public void addCredit(String addCredit) {
-		String voucherNum, digicelPrefixArray[] = {"301", "302", "303", "304"};  
+	public void addCredit(String mmiCode) {
+		String voucherNum = "", digicelPrefixArray[] = {"301", "302", "303", "304"};  
 		String flowPrefixArray[] = {"601", "602", "603", "604"}; 
 		String addCreditPin = "*121*", endSpecifier = "#", midSpecifier = "*";
-		String creditFileName = "", customerFileName = "";
+		File creditFile = new File(""), customerFile = new File("");
 		int length;
-		Scanner input = null;
+		//Scanner input = null;
 		Scanner inFileStream = null;
+		float voucherBalance = 0;
+		boolean check = false;
+		String userTeleNumber = "";
 		try{		
-			input = new Scanner(System.in);
-			boolean check = false;
-			length = addCredit.length();
-
-			while(addCredit != "###") {
-				if(length != 29) { //29 represents the number of digits and symbols that are in the String 
-					System.err.println("Invalid length");
-					/*addCreditPrompt();
-					addCredit = input.nextLine();
-					length = addCredit.length();*/
-				}
-                else 
-                {
-					voucherNum = addCredit.substring(5,17); //this should assign the credit number to the variable credit 
-					String prefix = addCredit.substring(22, 25);
-					
-					if(addCreditPin.equals(addCredit.substring(0,4))) {
-						if(midSpecifier.equals(addCredit.charAt(18))) {
-							if(endSpecifier.equals(addCredit.charAt(length - 1)) ) {
-                                //Check if the prefix number is valid
+			//input = new Scanner(System.in);
+			length = mmiCode.length();
+			if(length != 29) { //29 represents the number of digits and symbols that are in the String 
+				System.err.println("Invalid length");
+				/*addCreditPrompt();
+				mmiCode = input.nextLine();
+				length = mmiCode.length();*/
+			}
+			else 
+			{
+				voucherNum = mmiCode.substring(5,17); //this should assign the voucher number to the variable credit 
+				String prefix = mmiCode.substring(22, 25);
+				
+				if(addCreditPin.equals(mmiCode.substring(0,4))) {
+					if(midSpecifier.equals(mmiCode.charAt(18))) {
+						if(endSpecifier.equals(mmiCode.charAt(length - 1)) ) {
+							//Check if the prefix number is valid
+							for(int i = 0; i < 4; i++) {
+								if(prefix.equals(digicelPrefixArray[i])){
+									creditFile = new File("Digicel_CardInfomation");
+									customerFile = new File ("Digicel_Customers");
+									check = true;
+								}
+							}
+							if(check != true){
 								for(int i = 0; i < 4; i++) {
-									if(prefix.equals(digicelPrefixArray[i])){
-										creditFileName = "Digicel_CardInfomation";
-                                        customerFileName = "Digicel_Customers";
-                                        check = true;
+									if(prefix.equals(flowPrefixArray[i])){
+										creditFile = new File ("Flow_CardInformation");
+										customerFile = new File("Flow_Customers");
+										check = true;
 									}
 								}
-                                if(check != true){
-                                    for(int i = 0; i < 4; i++) {
-                                        if(prefix.equals(flowPrefixArray[i])){
-                                            creditFileName = "Flow_CardInformation";
-                                            customerFileName = "Flow_Customers";
-                                            check = true;
-                                        }
-                                    }
-                                }
 							}
 						}
 					}
-                }
+				}
+			}
 
-                //Check if the telephone number and voucher number is valid
-                //Things I need to do:
-                //Make the validation for both voucher code and telephone happen at the same time before files are updated
-                //Find a way to update files
-				if(check = true) {
-					inFileStream = new Scanner(new File ("Credit.dat"));
-					while(inFileStream.hasNext()) {
-						int creditNumber = inFileStream.nextInt();
-						float balance = inFileStream.nextFloat();
-						String status = inFileStream.nextLine();
-						
-						if(credit.equals(String.valueOf(creditNumber))) {
-							if(status != "Used" || status != "used") {
-							System.out.println("\nAn amount of $" + balance + " was added to your account.\n");
-							this.setStatus("Used");
-							}
-						}		
-
-						FileWriter outFileStream = null;
-						try { 
-						outFileStream = new FileWriter(new File("creditDummyFile.dat"), true);
-						String newCredit = getCreditNumber() + "\t" + getBalance() + "\t" + getStatus() + "\n";
-						outFileStream.write(newCredit);
-						System.out.println("\nInformation saved successfully!");
-						}catch(Exception e) {
-							System.out.println("\nAn unexpected error occured.");
-						}finally {
-							if(outFileStream != null) {
-								try {
-									outFileStream.close();
-								}catch(IOException e) {
-									e.printStackTrace();
-								}		
-							}
+			//Check if the voucher number and telephone number is valid
+			if(check = true) {
+				inFileStream = new Scanner(creditFile);
+				while(inFileStream.hasNext()) {
+					int creditNumber = inFileStream.nextInt();
+					voucherBalance = inFileStream.nextFloat();
+					String status = inFileStream.nextLine();
+					
+					if(voucherNum.equals(String.valueOf(creditNumber))) {
+						if(status != "Used" || status != "used") {
+						//System.out.println("\nAn amount of $" + balance + " was added to your account.\n");
+							check = true;
 						}
-                    //Trying to delete original file here and rename the dummy file to it's name 
-                    //delete("Customer.dat");
-                    //"creditDummyFile.dat" renameTo("Customers.dat");
-                        inFileStream = new Scanner(new File ("Customer.dat"));
-                        while(inFileStream.hasNext()) {
-                            Telephone telephone = null;
-                            String custID = inFileStream.nextLine();
-                            String lastName = inFileStream.nextLine();
-                            String address = inFileStream.nextLine();
-                            float creditBalance = inFileStream.nextFloat();
-                            telephone.setPrefix(inFileStream.nextInt());
-                            telephone.setAreacode(inFileStream.nextInt());
-                            telephone.setSerial_number(inFileStream.nextInt());
-                            
-                            String custNumber = String.valueOf(telephone.getPrefix()).concat(String.valueOf(telephone.getAreacode())).concat(String.valueOf(telephone.getSerial_number()));
-                            String TelNumber =  prefix.concat(addCredit.substring(18,27));
-                            if(TelNumber.equals(custNumber)){ 
-                                setCreditBalance(creditBalance + balance);
-                            }
+						else{
+							check = false;
+						}
+					}		
+				}
 
-                            
-                            updateSaveCustomerInfofile();
-                            //Trying to delete the file here and rename the dummy file to it's name 
-                            //delete("Customer.dat");
-                            //"DummyFile.dat".renameTo("Customers.dat");			
-                        }	
-                    }
-                }
-            }
+				//inFileStream is closed in the finally block
+				inFileStream = new Scanner(customerFile);
+				while(inFileStream.hasNext()) {
+					String custID = inFileStream.next();
+					String lastName = inFileStream.next();
+					float creditBalance = inFileStream.nextFloat();
+					int telephone = inFileStream.nextInt();
+					String address = inFileStream.nextLine();
+					
+
+					/*
+					telephone.setPrefix(inFileStream.nextInt());
+					telephone.setAreacode(inFileStream.nextInt());
+					telephone.setSerial_number(inFileStream.nextInt());
+					
+					String custNumber = String.valueOf(telephone.getPrefix()).concat(String.valueOf(telephone.getAreacode())).concat(String.valueOf(telephone.getSerial_number()));*/
+					userTeleNumber =  mmiCode.concat(mmiCode.substring(19,29));
+					if(userTeleNumber.equals(telephone)){ 
+						check = true;
+					}
+					else{
+						check = false;
+					}		
+				}	
+			}
+			else{
+				System.err.println("Invalid MMI code");
+			}
+
+			if(check = true){
+				updateCreditFile(voucherNum, creditFile);
+				updateCustomerFile(voucherBalance, customerFile, userTeleNumber);
+			}	
 		}
         catch (Exception e) {
             e.getStackTrace();
 			System.err.println("An unexpected error occured.");
-		}finally {
-			if(input != null) {
-				input.close();
-			}
+		}
+		finally {
 			if (inFileStream!= null) {
 				inFileStream.close();
 			}
 		}
 	}
+
+	public void updateCreditFile(String voucherNum, File creditFile){
+		FileWriter outFileStream = null;
+		File creditTempFile = new File("temp.txt");
+		Scanner inFileStream = null;
+		try { 
+			inFileStream = new Scanner(creditFile);
+			outFileStream = new FileWriter(creditTempFile, true);
+			while(inFileStream.hasNext()) {
+				int creditNumber = inFileStream.nextInt();
+				float recordBalance = inFileStream.nextFloat();
+				String status = inFileStream.nextLine();
+
+				if(Integer.toString(creditNumber) == voucherNum){
+					status = "Used";
+				}
+				String record = creditNumber + "\t" + recordBalance + "\t" + status +  "\n";	
+				outFileStream.write(record);
+			}
+
+			creditTempFile.renameTo(creditFile);
+		}
+		catch(FileNotFoundException e){
+			e.getStackTrace();
+		}
+		catch(Exception e) {
+			System.out.println("\nAn unexpected error occured.");
+		}
+		finally{
+			try{
+				outFileStream.close();
+			}
+			catch(Exception e){
+				e.getStackTrace();
+			}
+		}
+	}
+
+	public void updateCustomerFile(float voucherBalance, File customerFile, String userTeleNumber){
+		Scanner inFileStream = null;
+		FileWriter outFileStream = null;
+		File cusTempFile = new File("temp.txt");
+		try{
+			while(inFileStream.hasNext()){
+				inFileStream = new Scanner(customerFile);
+				outFileStream = new FileWriter(cusTempFile, true);
+				String custID = inFileStream.next();
+				String lastName = inFileStream.next();
+				float creditBalance = inFileStream.nextFloat();
+				int telephone = inFileStream.nextInt();
+				String address = inFileStream.nextLine();
+
+				if(userTeleNumber.equals(Integer.toString(telephone))){ 
+					creditBalance += voucherBalance;
+				}
+
+				String record = custID + "\t" + lastName + "\t" + creditBalance + "\t" + telephone + "\t" +  address +  "\n";	
+				outFileStream.write(record);
+			}
+			
+			cusTempFile.renameTo(customerFile);
+		}
+		catch(FileNotFoundException e) {
+			System.out.println("\nFile not found.");
+			e.getStackTrace();
+		}
+		catch(Exception e) {
+			System.out.println("\nAn unexpected error occured.");
+		}
+		finally {
+			if(outFileStream != null) {
+				try {
+					outFileStream.close();
+				}
+				catch(Exception e) {
+					e.printStackTrace();
+				}		
+			}
+		}
+	}
 	
 	
-	
+	/*
 	public float checkBalance(String balance) {
-		String TelNumber = "0000000000", prefix, prefix = "1";
+		String TelNumber = "0000000000", prefix;
 		String digicelPrefixArray[] = {"301", "302", "303", "304"};  
 		String flowPrefixArray[] = {"601", "602", "603", "604"}; 
 		
@@ -286,7 +352,7 @@ public class Customer {
 				}
 			}
 			return 0;
-		}
+		}*/
 		
 
 	public String toString() {

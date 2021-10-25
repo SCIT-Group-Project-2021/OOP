@@ -19,10 +19,9 @@ public class Digicel extends ServiceProvider {
 
 	public Digicel(String companyID, String address) {
 		super(companyID, address);
-		// TODO Auto-generated constructor stub
 	}
 
-	// Getters and Setters for the class' attributes
+	// Getters and Setters 
 	public static int getNumOfBranches() {
 		return numOfBranches;
 	}
@@ -140,8 +139,8 @@ public class Digicel extends ServiceProvider {
 				address = inFileStream.nextLine();
 				if (custID == c.getCustID()) {
 					check = false;
+					//inFileStream is closed in finally block
 					throw new UniqueValueException("Customer ID already exists.");
-					
 				}
 				else if(telephone == c.getTelephone().toString()){
 					check = false;
