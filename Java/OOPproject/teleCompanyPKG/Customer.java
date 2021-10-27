@@ -4,7 +4,7 @@ import java.util.Scanner;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
-import java.io.IOException;
+//import java.io.IOException;
 import java.lang.String;
 
 public class Customer {
@@ -121,19 +121,17 @@ public class Customer {
 						if(endSpecifier.equals(mmiCode.charAt(length - 1)) ) {
 							//Check if the prefix number is valid
 							for(int i = 0; i < 4; i++) {
-								if(prefix.equals(digicelPrefixArray[i])){
+								if(prefix.equals(digicelPrefixArray[i])) {
 									creditFile = new File("Digicel_CardInfomation");
 									customerFile = new File ("Digicel_Customers");
 									check = true;
+									break;
 								}
-							}
-							if(check != true){
-								for(int i = 0; i < 4; i++) {
-									if(prefix.equals(flowPrefixArray[i])){
-										creditFile = new File ("Flow_CardInformation");
-										customerFile = new File("Flow_Customers");
-										check = true;
-									}
+								else if(prefix.equals(flowPrefixArray[i])){
+									creditFile = new File ("Flow_CardInformation");
+									customerFile = new File("Flow_Customers");
+									check = true;
+									break;
 								}
 							}
 						}
@@ -287,77 +285,82 @@ public class Customer {
 		}
 	}
 	
-	
-	/*
-	public float checkBalance(String balance) {
-		String TelNumber = "0000000000", prefix;
-		String digicelPrefixArray[] = {"301", "302", "303", "304"};  
-		String flowPrefixArray[] = {"601", "602", "603", "604"}; 
-		
-		Scanner input = null;
+	@SuppressWarnings("unlikely-arg-type")
+	public float checkBalance(String balanceChecker) {
+		String TelNumber = "000000000", prefix, areaCode = "876", checkBalancePin = "*120*", endSpecifier = "#";
+		String digicelPrefixes[] = {"301", "302", "303", "304"}, flowPrefixes[] = {"601", "602", "603", "604"};  
+		float balance = 0;
+		//Scanner input = null;
 		Scanner inFileStream = null;
 		try {
-				input = new Scanner(System.in);
-				checkBalancePrompt();
-				balance = input.nextLine();
-				TelNumber =  prefix.concat(balance.substring(5,14));
-				int length = balance.length();
-				while(balance != "###"){
-					if(length == 15){
-							//TelNumber =  prefix.concat(balance.substring(5,14));
-							prefix = balance.substring(5,7);
+			//input = new Scanner(System.in);
+			//checkBalancePrompt();
+			//balanceChecker = input.nextLine();
+			if(balanceChecker.length() == 16){//Checking if the length of the numbers entered is the same as this -> *120*8760000000#
+				if(checkBalancePin.equals(balanceChecker.substring(0,5))) {//Checking for *120*
+					if(areaCode.equals(balanceChecker.substring(5,8))) {//Checking for area code 876
+						if(endSpecifier.equals(balanceChecker.charAt(balanceChecker.length() - 1))){//Checking for the #
+							TelNumber = balanceChecker.substring(5,15);//Assigning index 5 to 14 of the input which should resemble this -> *120*8760000000# where index 5 to 14 is 8760000000
+							prefix = balanceChecker.substring(8,11); //Assigning index 8 to 10 of the input which to the prefix variable
 							for(int i = 0; i < 4; i++) {
-								if(prefix.equals(digicelPrefixArray[i])) {
-									inFileStream = new Scanner(new File ("Digicel_Customers.dat")); //Note to self, check if this means it reads from an existing file or not
+								if(prefix.equals(digicelPrefixes[i])) {
+									inFileStream = new Scanner(new File ("Digicel_Customers.txt"));
 								}
-								else if(prefix.equals(flowPrefixArray[i])) {
-									inFileStream = new Scanner(new File ("Flow_Customers.dat"));
-								}
-								else {
-									System.err.println("The telephone number you entered is invalid.");
-									checkBalancePrompt();
-									balance = input.nextLine();
-								}					
+								else if(prefix.equals(flowPrefixes[i])) {
+									inFileStream = new Scanner(new File ("Flow_Customers.txt"));
+								}				
 							}
-						
+							if(inFileStream == null){
+								System.err.println("Telephone number entered is invalid.");
+								return 0;
+							}
+							
 							while(inFileStream.hasNext()) {
-								Telephone telephone = null;
-								String custID = inFileStream.nextLine();
-								String name = inFileStream.nextLine();
-								String address = inFileStream.nextLine();
+								//Telephone telephone = null;
+								String custID = inFileStream.next();
+								String lastName = inFileStream.next();
 								float creditBalance = inFileStream.nextFloat();
-								//NTS: Figure out how to read all the info at once 
-								telephone.setPrefix(inFileStream.nextInt());
-								telephone.setAreacode(inFileStream.nextInt());
-								telephone.setSerial_number(inFileStream.nextInt());
-								
-								String custNumber = String.valueOf(telephone.getPrefix()).concat(String.valueOf(telephone.getAreacode())).concat(String.valueOf(telephone.getSerial_number()));
-								if(TelNumber.equals(custNumber)){ 
+								int telephone = inFileStream.nextInt();
+								String address = inFileStream.nextLine();
+
+								if(TelNumber.equals(Integer.toString(telephone))){ 
 									System.out.print("\nYour Credit Balance is: ");
-									return creditBalance;
+									balance = creditBalance;
 								}
-							}	
-						}else{
-							System.err.println("\nThe information you entered is invalid.\n");
-							checkBalancePrompt();
-							balance = input.nextLine();
+								else{
+									System.out.println("Telephone Number: " + TelNumber + "is not assigned or does not exists.");
+								}
+							}
 						}
-						System.out.println("Telephone Number: " + TelNumber + "is not assigned or does not exists.");
 					}
-			}catch (Exception e) {
-				System.err.println("Sorry, an unexpected error occured.");
-			}finally {
-				if(input != null) {
-					input.close();
-				}
-				if (inFileStream!= null) {
-					inFileStream.close();
 				}
 			}
-			return 0;
-		}*/
-		
-
+			else{
+				System.err.println("Invalid MMI code");
+				return balance;
+				//checkBalancePrompt();
+				//balanceChecker = input.nextLine();
+			}
+		}
+		catch(FileNotFoundException e){
+			System.err.println("File not found.");
+			e.getStackTrace();
+			return balance;
+		}
+		catch (Exception e) {
+			System.err.println("Sorry, an unexpected error occured.");
+			return balance;
+		}
+		finally {
+			/*if(input != null) {
+				input.close();
+			}*/
+			if (inFileStream!= null) {
+				inFileStream.close();
+			}
+		}
+		return balance;
+	}
 	public String toString() {
 		return "\nCustomer ID: " + getCustID() + "\nSurname: " + getName() + "\nAddress: "
 				+ getAddress() + "\nTelephone: " + getTelephone() + "\nCredit Balance: " + getCreditBalance();

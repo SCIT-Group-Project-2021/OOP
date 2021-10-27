@@ -39,30 +39,49 @@ public class Digicel extends ServiceProvider {
 	}
 
 	// Should this be boolean?
-	public boolean createPhoneCredit(int cardNum, int balance) {
+	public boolean createPhoneCredit(int voucherNum, float balance) {
 		// Should this be removed seeing as it's traditional error handling?
-		int length = String.valueOf(cardNum).length();
+		int length = String.valueOf(voucherNum).length();
 		if (length != 13) {
-			System.out.println("Card number must be 13 digits long");
+			System.err.println("Voucher number must be 13 digits long");
 			return false;
 		}
 
+		if(balance != 100 && balance != 200 && balance != 500 && balance != 1000){
+			System.err.println("Balance can only be equal to $100, $200, $500 or $1000");
+			return false;
+		}
 		try {
-			String status = "Available";
-			FileWriter outFileStream = new FileWriter(new File("Digicel_CardInfomation.txt"), true);
-			String record = cardNum + "\t" + balance + "\t" + status;
+			Scanner inFileStream = null;
+			int creditNum = 0;
+			float recordBal = 0;
+			String status = "";
+			inFileStream = new Scanner(new File("Digicel_CardInfomation.txt"));
+
+			while (inFileStream.hasNext()) {
+				creditNum = inFileStream.nextInt();
+				recordBal = inFileStream.nextFloat();
+				status = inFileStream.next();
+
+				if (creditNum == voucherNum) {
+					throw new UniqueValueException("Voucher number already exists.");
+				}
+			}
+			status = "Available";
+			FileWriter outFileStream = new FileWriter(new File("Flow_CardInformation.txt"), true);
+			String record = voucherNum + "\t" + balance + "\t" + status;
 			outFileStream.write(record);
 			outFileStream.close();
 			return true;
-		} catch (IOException e) {
+		}
+		 catch (FileNotFoundException e) {
 			e.printStackTrace();
 			return false;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;
 		}
-
-	};
+	}
 
 	public void viewPhoneCredit() {
 		Scanner inFileStream = null;
@@ -201,7 +220,6 @@ public class Digicel extends ServiceProvider {
 					System.err.println("\nAn unexpected error occured.");
 				}		
 			}
-
 		}
 	}
 

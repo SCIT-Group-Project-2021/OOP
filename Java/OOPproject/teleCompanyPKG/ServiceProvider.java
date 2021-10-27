@@ -56,7 +56,7 @@ public abstract class ServiceProvider {
 	}
 	
 	//Phone Credit Creation Method, will be overrided in child classes
-	public boolean createPhoneCredit(int cardNum, int balance) {
+	public boolean createPhoneCredit(int cardNum, float balance) {
 		return true;
 	};
 	
