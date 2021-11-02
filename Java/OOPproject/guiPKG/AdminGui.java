@@ -12,7 +12,7 @@ import java.awt.*;
 import javax.swing.*;
 
 //Changed file name to fix mainGUI issue
-public class minGui {
+public class AdminGui {
 
     // #region Constants
 
@@ -50,7 +50,7 @@ public class minGui {
 
     // #endregion
 
-    public minGui(int providor, JFrame frame) {
+    public AdminGui(int providor, JFrame frame) {
 
         createPanel();
 
@@ -71,7 +71,7 @@ public class minGui {
         switch (providor) {
         case 1:
             digicelLogoIcon = new ImageIcon(
-                    new ImageIcon(minGui.class.getResource("/OOPproject/Images/Digicel-Logo.png")).getImage()
+                    new ImageIcon(AdminGui.class.getResource("/OOPproject/Images/Digicel-Logo.png")).getImage()
                             .getScaledInstance(100, 60, Image.SCALE_DEFAULT));
             Logo = new JLabel(digicelLogoIcon);
 
@@ -83,7 +83,7 @@ public class minGui {
             break;
 
         case 2:
-            flowLogoIcon = new ImageIcon(new ImageIcon(minGui.class.getResource("/OOPproject/Images/Flow-Logo.png"))
+            flowLogoIcon = new ImageIcon(new ImageIcon(AdminGui.class.getResource("/OOPproject/Images/Flow-Logo.png"))
                     .getImage().getScaledInstance(100, 50, Image.SCALE_DEFAULT));
             Logo = new JLabel(flowLogoIcon);
 
