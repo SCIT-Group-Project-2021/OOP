@@ -11,6 +11,7 @@ import java.awt.*;
 
 import javax.swing.*;
 
+//Changed file name to fix mainGUI issue
 public class AdminGui {
 
     // #region Constants

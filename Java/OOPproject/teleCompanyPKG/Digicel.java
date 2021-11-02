@@ -187,6 +187,7 @@ public class Digicel extends ServiceProvider {
 		}
 	}
 
+	
 	public void viewCustomerBase() {
 		Scanner inFileStream = null;
 		String custID = "";
