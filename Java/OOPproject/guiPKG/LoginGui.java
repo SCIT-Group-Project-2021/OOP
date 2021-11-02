@@ -357,7 +357,7 @@ public class LoginGui {
                             loginPanel.setVisible(false);
                             loginPanel.removeAll();
                             frame.remove(loginPanel);
-                            new AdminGui(1, frame);
+                            new minGui(1, frame);
 
                         } else {
                             // TODO Password was incorrect
@@ -372,7 +372,7 @@ public class LoginGui {
                             loginPanel.setVisible(false);
                             loginPanel.removeAll();
                             frame.remove(loginPanel);
-                            new AdminGui(2, frame);
+                            new minGui(2, frame);
 
                         } else {
                             // TODO Password was incorrect
