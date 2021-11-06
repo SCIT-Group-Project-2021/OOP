@@ -12,7 +12,6 @@ import java.awt.event.*;
 import java.text.ParseException;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 import javax.swing.text.MaskFormatter;
 
 import OOPproject.teleCompanyPKG.Flow;
@@ -30,6 +29,7 @@ public class AdminGui {
     final int panelw = 1000;
     final int panelh = 600;
     final int uih = 25;
+    final int spButtons = 220;
     final int admin = 1;
     final int customer = 0;
     final int adminsetX = 140;
@@ -44,9 +44,11 @@ public class AdminGui {
     private static Color digicelColor;
 
     private static Font Oswald;
+    private static Font Oswaldmini;
 
     private static JPanel sidePanel;
     private static JPanel primaryPanel;
+    private static JPanel generalPanel;
     private static JPanel adminPanel;
 
     private static JLabel Logo;
@@ -81,9 +83,10 @@ public class AdminGui {
         // or not?
 
         flowColor = new Color(48, 60, 120);
-        digicelColor = new Color(58, 27, 128);
-
+        digicelColor = new Color(250, 253, 255); //250, 253, 255
+        
         Oswald = new Font("Oswald", Font.TYPE1_FONT, 15);
+        Oswaldmini = new Font("Oswald", Font.PLAIN, 15);
 
         // #endregion
 
@@ -98,7 +101,7 @@ public class AdminGui {
             Logo = new JLabel(digicelLogoIcon);
             adminUser = new Digicel();
             // #region set Panel Backgrounds
-            sidePanel.setBackground(new Color(25, 110, 176));
+            sidePanel.setBackground(Color.gray);
             primaryPanel.setBackground(digicelColor);
             // #endregion
 
@@ -132,12 +135,14 @@ public class AdminGui {
         // #region Calling other methods to build ui
 
         addCreateUserButton();
-        addViewAllCustomerButtonButton();
+        addViewAllCustomerButton();
         addCreateCreditButton();
         addViewCreditButton();
         guiElements.addExitButton();
         guiElements.exitButton.setBounds(755, 0, 45, 45);
         primaryPanel.add(guiElements.exitButton);
+        // TODO Change UI Color to be correct
+        guiElements.exitButton.setForeground(Color.black);
 
         // #endregion
 
@@ -157,6 +162,12 @@ public class AdminGui {
         adminPanel.add(primaryPanel, BorderLayout.CENTER);
 
         frame.add(adminPanel);
+        
+        generalPanel = new JPanel();
+        generalPanel.setLayout(null);
+        generalPanel.setPreferredSize(new Dimension(700,500));
+        generalPanel.setBounds(50, 50, 700, 500);
+        generalPanel.setOpaque(false);
 
     }
 
@@ -175,7 +186,7 @@ public class AdminGui {
     public void addCreateUserButton() {
 
         createUserButton = new JButton("CREATE USER");
-        createUserButton.setBounds(30, 280, 140, uih);
+        createUserButton.setBounds(0, spButtons, 200, 50);
         sidePanel.add(createUserButton);
         createUserButton.setOpaque(false);
         createUserButton.setFocusPainted(false);
@@ -183,6 +194,8 @@ public class AdminGui {
         createUserButton.setForeground(Color.white);
         createUserButton.setFont(Oswald);
         //createUserButton.setBorder(new guiElements.RoundedBorder(25));
+        createUserButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        createUserButton.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.white));
 
         createUserButton.addActionListener(new ActionListener() {
             @Override
@@ -192,17 +205,19 @@ public class AdminGui {
         });
     }
 
-    public void addViewAllCustomerButtonButton() {
+    public void addViewAllCustomerButton() {
 
-        viewAllCustomerButton = new JButton("View All Users");
-        viewAllCustomerButton.setBounds(30, 340, 140, uih);
+        viewAllCustomerButton = new JButton("VIEW ALL USERS");
+        viewAllCustomerButton.setBounds(0, spButtons+60, 200, 50);
         sidePanel.add(viewAllCustomerButton);
         viewAllCustomerButton.setOpaque(false);
         viewAllCustomerButton.setFocusPainted(false);
         viewAllCustomerButton.setContentAreaFilled(false);
         viewAllCustomerButton.setForeground(Color.white);
         viewAllCustomerButton.setFont(Oswald);
-        viewAllCustomerButton.setBorder(new guiElements.RoundedBorder(25));
+        //viewAllCustomerButton.setBorder(new guiElements.RoundedBorder(25));
+        viewAllCustomerButton.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.white));
+        viewAllCustomerButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
         viewAllCustomerButton.addActionListener(new ActionListener() {
             @Override
@@ -214,55 +229,93 @@ public class AdminGui {
 
     public void addCreateCreditButton() {
 
-        createCreditButton = new JButton("Create Credit");
-        createCreditButton.setBounds(30, 400, 140, uih);
+        createCreditButton = new JButton("CREATE CREDIT");
+        createCreditButton.setBounds(0, spButtons+120, 200, 50);
         sidePanel.add(createCreditButton);
         createCreditButton.setOpaque(false);
         createCreditButton.setFocusPainted(false);
         createCreditButton.setContentAreaFilled(false);
         createCreditButton.setForeground(Color.white);
         createCreditButton.setFont(Oswald);
-        createCreditButton.setBorder(new guiElements.RoundedBorder(25));
+        //createCreditButton.setBorder(new guiElements.RoundedBorder(25));
+        createCreditButton.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.white));
+        
 
     }
 
     public void addViewCreditButton() {
-        viewCreditButton = new JButton("View Credit");
-        viewCreditButton.setBounds(30, 460, 140, uih);
+        viewCreditButton = new JButton("VIEW CREDIT");
+        viewCreditButton.setBounds(0, spButtons+180, 200, 50);
         sidePanel.add(viewCreditButton);
         viewCreditButton.setOpaque(false);
         viewCreditButton.setFocusPainted(false);
         viewCreditButton.setContentAreaFilled(false);
         viewCreditButton.setForeground(Color.white);
         viewCreditButton.setFont(Oswald);
-        viewCreditButton.setBorder(new guiElements.RoundedBorder(25));
+        //viewCreditButton.setBorder(new guiElements.RoundedBorder(25));
+        viewCreditButton.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.white));
     }
 
-
     public void showAllUsersTable() {
+        
+        generalPanel.removeAll();
+        generalPanel.revalidate();
+        generalPanel.repaint();
+        primaryPanel.remove(generalPanel);
+        primaryPanel.repaint();
+        
         //getCustID() + "\t" + c.getName() + "\t" + c.getCreditBalance() + "\t" + c.getTelephone() + "\t" +  c.getAddress() +  "\n";	
-        String columns[] = {"Customer ID", "Name", "Credit Balane", "Telephone", "Address"};
+        String columns[] = {"Customer ID", "Name", "Credit Balance", "Telephone", "Address"};
         String data[][];
         data = adminUser.viewCustomerBase();
 
         System.out.println("In Table method " + data[2][1]);
+         
+        JTable jt=new JTable(data,columns);    
+        jt.setBounds(0,0,700,500);  
+        jt.setShowGrid(true);
+        jt.setShowVerticalLines(true);        
+        JScrollPane sp=new JScrollPane();  
 
-        DefaultTableModel model = new DefaultTableModel(data, columns);
-        JTable table = new JTable(model);
-        table.setShowGrid(true);
-        table.setShowVerticalLines(true);
-        JScrollPane pane = new JScrollPane(table);
-        primaryPanel.add(pane, BorderLayout.CENTER);
+        sp.getViewport().add(jt);
+        sp.setOpaque(false);
+        sp.getViewport().setOpaque(false);
 
+        sp.setBounds(0,0,700,500);
+        sp.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 0, Color.white));
+        jt.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 0, Color.white));
+        
+        jt.setBackground(null);
+        jt.setShowGrid(false);
+        jt.setShowHorizontalLines(true);
+
+        jt.setFont(Oswaldmini);
+        jt.setForeground(Color.gray);
+        jt.getTableHeader().setFont(Oswald);
+        jt.getTableHeader().setForeground(Color.gray);
+
+        jt.setRowHeight(40);
+        jt.setOpaque(false);
+        jt.setEnabled(false);
+
+        generalPanel.add(sp); 
+        primaryPanel.add(generalPanel);
     }
 
     private void showNewUserForm() {
+
         MaskFormatter fmt;
         MaskFormatter phoneFMT;
 
+        generalPanel.removeAll();
+        generalPanel.revalidate();
+        generalPanel.repaint();
+        primaryPanel.remove(generalPanel);
+        primaryPanel.repaint();
+
         try {
             fmt = new MaskFormatter("###-###-###");
-            customerIdText = new JFormattedTextField(fmt);
+            customerIdText = new JFormattedTextField(fmt);  
 
             phoneFMT = new MaskFormatter("876-###-####");
             phoneText = new JFormattedTextField(phoneFMT);
@@ -273,17 +326,19 @@ public class AdminGui {
         }
 
         customerIdText.setBounds(60, 100, 200, 40);
-        customerIdText.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.white));
+        customerIdText.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.BLACK));
+        customerIdText.setOpaque(false);
         customerIdText.setBackground(null);
-        customerIdText.setForeground(Color.white);
+        customerIdText.setForeground(Color.gray);
         customerIdText.setFont(Oswald);
         
         lastNameText = new JTextField(25);
         lastNameText.setText("User Last Name");
         lastNameText.setBounds(300, 100, 200, 40);
-        lastNameText.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.white));
+        lastNameText.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.BLACK));
+        lastNameText.setOpaque(false);
         lastNameText.setBackground(null);
-        lastNameText.setForeground(Color.white);
+        lastNameText.setForeground(Color.gray);
         lastNameText.setFont(Oswald);
         lastNameText.addFocusListener(new FocusListener() {
             @Override
@@ -306,10 +361,11 @@ public class AdminGui {
         });
 
         //phoneText.setText("User Phone number");
-        phoneText.setBounds(60, 200, 200, 40);
-        phoneText.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.white));
+        phoneText.setBounds(60, 180, 200, 40);
+        phoneText.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.BLACK));
+        phoneText.setOpaque(false);
         phoneText.setBackground(null);
-        phoneText.setForeground(Color.white);
+        phoneText.setForeground(Color.gray);
         phoneText.setFont(Oswald);
         phoneText.addFocusListener(new FocusListener() {
             @Override
@@ -332,9 +388,10 @@ public class AdminGui {
         addressText = new JTextArea(10, 10);
         addressText.setText("Address");
         addressText.setBounds(60, 270, 400, 100);
-        addressText.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.white));
+        addressText.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.BLACK));
+        addressText.setOpaque(false);
         addressText.setBackground(null);
-        addressText.setForeground(Color.white);
+        addressText.setForeground(Color.gray);
         addressText.setFont(Oswald);
         addressText.setCursor(Cursor.getPredefinedCursor(Cursor.TEXT_CURSOR));
         addressText.addFocusListener(new FocusListener() {
@@ -356,49 +413,43 @@ public class AdminGui {
         });
 
         addUserButton = new JButton("Add Customer");
-        addUserButton.setBounds(250, 440, 250, 40);
+        addUserButton.setBounds(225, 440, 250, 40);
         addUserButton.setOpaque(true);
         addUserButton.setFocusPainted(false);
         addUserButton.setContentAreaFilled(false);
-        addUserButton.setForeground(Color.white);
+        addUserButton.setForeground(Color.gray);
         addUserButton.setFont(Oswald);
         addUserButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         addUserButton.setBorder(new guiElements.RoundedBorder(25));
         
-        primaryPanel.add(customerIdText);
-        primaryPanel.add(lastNameText);
-        primaryPanel.add(phoneText);
-        primaryPanel.add(addressText);
-        primaryPanel.add(addUserButton);
+        generalPanel.add(customerIdText);
+        generalPanel.add(lastNameText);
+        generalPanel.add(phoneText);
+        generalPanel.add(addressText);
+        generalPanel.add(addUserButton);
        
         addressText.repaint();
         addUserButton.repaint();
 
-        //Values before fields are edited
-        String trnValue = customerIdText.getText();
-        String lastNameValue = lastNameText.getText();
-        String phoneValue = phoneText.getText();
-        String addressValue = addressText.getText();
-
-
-        // TODO Fix retrieval of telephone number getTelephone is not working
+        // TODO Fix retrieval of telephone number getTelephone is not working - Error message is being displayed
         addUserButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                Customer c;
                 String returnString = "";
                 if(!customerIdText.getText().equals("   -   -   ") && !lastNameText.getText().equals("User Last Name") && !addressText.getText().equals("Address") && !phoneText.getText().equals("876-000-0000")){
-                    Customer c = new Customer(customerIdText.getText(), lastNameText.getText(), addressText.getText(), new Telephone(Integer.parseInt(phoneText.getText().substring(0,3)), Integer.parseInt(phoneText.getText().substring(4,7)), Integer.parseInt(phoneText.getText().substring(8,12))));
-                    try {
+                    c = new Customer(customerIdText.getText(), lastNameText.getText(), addressText.getText(), new Telephone(Integer.parseInt(phoneText.getText().substring(0,3)), Integer.parseInt(phoneText.getText().substring(4,7)), Integer.parseInt(phoneText.getText().substring(8,12))));
+                    try{
                         returnString = adminUser.addCustomer(c);
                         if(returnString != ""){
                             JOptionPane.showMessageDialog(parentFrame,returnString + " "+ phoneText.getText() + "\nPrefix - " + phoneText.getText().substring(0,3),"Form Error",JOptionPane.ERROR_MESSAGE);
-                           }
-                           else{
-                            JOptionPane.showMessageDialog(parentFrame,"Information Saved!","Form Submitted",JOptionPane.INFORMATION_MESSAGE);
-                           }
-                    } 
-                    catch(UniqueValueException e3) {
-                        System.out.println("UniqueValueException caught in main");
+                        }
+                        else{
+                        JOptionPane.showMessageDialog(parentFrame,"Information Saved!","Form Submitted",JOptionPane.INFORMATION_MESSAGE);
+                        }
+                    }
+                    catch(UniqueValueException e1){
+                        JOptionPane.showMessageDialog(parentFrame,returnString,"Form Error",JOptionPane.ERROR_MESSAGE);
                     }
                 }
                 else{
@@ -406,5 +457,7 @@ public class AdminGui {
                 }
             }
         });
+
+        primaryPanel.add(generalPanel);
     }
 }

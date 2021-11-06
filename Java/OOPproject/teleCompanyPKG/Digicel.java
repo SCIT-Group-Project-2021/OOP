@@ -111,6 +111,7 @@ public class Digicel extends ServiceProvider {
 
 	}
 
+	// TODO Pass not unique value error message to dialog box
 	public String addCustomer(Customer c) throws UniqueValueException { 
 		FileWriter outFileStream = null;
 		Scanner input = null;
@@ -121,14 +122,11 @@ public class Digicel extends ServiceProvider {
 				checkCustomerUniqueValues(c);
 			} 
 			catch(UniqueValueException e){
-				e.getMessage();
-				return "Telephone and/or TRN already exists";
-			}
-			catch(Exception e) {
 				System.out.println("Inside addCustomer() method");
 				throw e;
 			}
-/*
+
+			/*
 			if(c.getTelephone().toString().length() != 12){
 				return "Telephone number is invalid - Length: " + c.getTelephone().toString().length() + c.getTelephone();
 			}*/
@@ -137,7 +135,7 @@ public class Digicel extends ServiceProvider {
 				return "TRN is invalid - Length: " + c.getCustID().length();
 			}
 			
-			String newCustomer = c.getCustID() + "\t" + c.getName() + "\t" + c.getCreditBalance() + "\t" + c.getTelephone() + "\t" +  c.getAddress() +  "\n";	
+			String newCustomer = c.getCustID() + "\t" + c.getName() + "\t" + c.getCreditBalance() + "\t" + c.getTelephone().toString() + "\t" +  c.getAddress() +  "\n";	
 			outFileStream.write(newCustomer);
 			System.out.println("Information saved successfully!");
 			super.addCustomer(c);
@@ -145,9 +143,14 @@ public class Digicel extends ServiceProvider {
 			return("");
 			
 		}
-		catch(Exception e) {
+		catch(IOException e){
+			e.getStackTrace();
 			return("\nAn unexpected error occured.");
 		}
+		/*
+		catch(Exception e) {
+			return("\nAn unexpected error occured.");
+		}*/
 		finally {
 			if(outFileStream != null) {
 				try {
@@ -163,14 +166,13 @@ public class Digicel extends ServiceProvider {
 		
 	}
 
-	public boolean checkCustomerUniqueValues(Customer c) throws UniqueValueException{
+	public static void checkCustomerUniqueValues(Customer c) throws UniqueValueException{
 		Scanner inFileStream = null;
 		String custID = "";
 	    String name = "";
 		float creditBalance = 0;
 	    String telephone = "";
 		String address = "";
-		boolean check = true;
 		try {
 			inFileStream = new Scanner(new File("Digicel_Customers.txt"));
 			while (inFileStream.hasNext()) {
@@ -179,33 +181,29 @@ public class Digicel extends ServiceProvider {
 				creditBalance = inFileStream.nextFloat();
 				telephone = inFileStream.next();
 				address = inFileStream.nextLine();
-				if (custID == c.getCustID()) {
-					check = false;
+				if (custID.equals(c.getCustID())) {
 					//inFileStream is closed in finally block
 					throw new UniqueValueException("Customer ID already exists.");
 				}
-				else if(telephone == c.getTelephone().toString()){
-					check = false;
+				else if(telephone.equals(c.getTelephone().toString())){
 					throw new UniqueValueException("Telephone number already in use.");
 				}
-			}
-			return check;		
+			}	
 		} 
 		catch (FileNotFoundException e) {
 			e.printStackTrace();
-			return false;
-		} catch (Exception e) {
+		} 
+		/*
+		catch (Exception e) {
 			e.printStackTrace();
-			return false;
-		}
+		}*/
 		finally{
 			if(inFileStream != null) {
 				try {
 					inFileStream.close();
 				}catch(Exception e) {
 					System.err.println("\nAn unexpected error occured.");
-				}
-				return check;		
+				}	
 			}
 		}
 	}
@@ -236,11 +234,13 @@ public class Digicel extends ServiceProvider {
 				System.out.println("No records found.");
 			}
 			//return data;
-		} catch (FileNotFoundException e) {
+		} 
+		catch (FileNotFoundException e) {
 			e.printStackTrace();
-		} catch (Exception e) {
+		} 
+		/*catch (Exception e) {
 			e.printStackTrace();
-		}
+		}*/
 		System.out.println("making array...");
 		String data[][] = new String[getDigicelCustomerCount()][5];
 		try{

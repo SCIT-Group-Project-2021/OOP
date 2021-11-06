@@ -51,7 +51,7 @@ public abstract class ServiceProvider {
 	}
 	
 	//Add customer method, will be overrided in child classes
-	public String addCustomer(Customer c) {
+	public String addCustomer(Customer c) throws UniqueValueException {
 		totalCustomerCount++;
 		return "";
 	}

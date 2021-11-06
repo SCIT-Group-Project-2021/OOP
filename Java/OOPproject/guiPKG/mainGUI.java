@@ -45,7 +45,6 @@ public class mainGUI {
             e.printStackTrace();
         }
         // #endregion
-
         new LoginGui(frame);
 
     }
