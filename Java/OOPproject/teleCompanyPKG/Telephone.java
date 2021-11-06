@@ -20,11 +20,11 @@ public class Telephone {
 		this.prefix = 000;
 		this.serial_number = 0000;
 	}
-	
+	// TODO Return error message when telephone is not created
 	//Primary Constructor
 	public Telephone(int areacode, int prefix, int serial_number) {
         if(!checkTelephone(areacode, prefix, serial_number) || !checkPrefix(areacode, prefix, serial_number)){
-            System.err.println("Invalid phone number");
+            System.out.println("Invalid phone number");
             return;
         }
 		this.areacode = areacode;
@@ -104,6 +104,6 @@ public class Telephone {
 	
 	//Show method
 	public String toString() {
-		return "\nTelephone: " + getPrefix() + "-" + getAreacode() + "-" + getSerial_number();
+		return Integer.toString(getPrefix()) + Integer.toString(getAreacode()) + Integer.toString(getSerial_number());
 	}
 }

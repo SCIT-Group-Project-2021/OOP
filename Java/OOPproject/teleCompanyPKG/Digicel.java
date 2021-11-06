@@ -17,6 +17,9 @@ public class Digicel extends ServiceProvider {
 	private static int numOfBranches = 0;
 	private static int digicelCustomerCount = 0;
 
+	public Digicel() {
+		super("", "");
+	}
 	public Digicel(String companyID, String address) {
 		super(companyID, address);
 	}
@@ -108,23 +111,42 @@ public class Digicel extends ServiceProvider {
 
 	}
 
-	public void addCustomer(Customer c) { 
+	public String addCustomer(Customer c) throws UniqueValueException { 
 		FileWriter outFileStream = null;
 		Scanner input = null;
 		input = new Scanner(System.in);
 		try {
-			outFileStream = new FileWriter(new File("Flow_Customers"), true);
-			checkCustomerUniqueValues(c);
+			outFileStream = new FileWriter(new File("Digicel_Customers.txt"), true);
+			try {
+				checkCustomerUniqueValues(c);
+			} 
+			catch(UniqueValueException e){
+				e.getMessage();
+				return "Telephone and/or TRN already exists";
+			}
+			catch(Exception e) {
+				System.out.println("Inside addCustomer() method");
+				throw e;
+			}
+/*
+			if(c.getTelephone().toString().length() != 12){
+				return "Telephone number is invalid - Length: " + c.getTelephone().toString().length() + c.getTelephone();
+			}*/
+
+			if(c.getCustID().length() != 11){
+				return "TRN is invalid - Length: " + c.getCustID().length();
+			}
+			
 			String newCustomer = c.getCustID() + "\t" + c.getName() + "\t" + c.getCreditBalance() + "\t" + c.getTelephone() + "\t" +  c.getAddress() +  "\n";	
 			outFileStream.write(newCustomer);
 			System.out.println("Information saved successfully!");
 			super.addCustomer(c);
-		}
-		catch(UniqueValueException e){
-			e.getMessage();
+			digicelCustomerCount++;
+			return("");
+			
 		}
 		catch(Exception e) {
-			System.err.println("\nAn unexpected error occured.");
+			return("\nAn unexpected error occured.");
 		}
 		finally {
 			if(outFileStream != null) {
@@ -138,9 +160,10 @@ public class Digicel extends ServiceProvider {
 				input.close();
 			}
 		}
+		
 	}
 
-	public boolean checkCustomerUniqueValues(Customer c){
+	public boolean checkCustomerUniqueValues(Customer c) throws UniqueValueException{
 		Scanner inFileStream = null;
 		String custID = "";
 	    String name = "";
@@ -188,27 +211,52 @@ public class Digicel extends ServiceProvider {
 	}
 
 	
-	public void viewCustomerBase() {
+	public String[][] viewCustomerBase() {
 		Scanner inFileStream = null;
 		String custID = "";
 	    String name = "";
 		float creditBalance = 0;
 	    String telephone = "";
 		String address = "";
+		int i = 0;
 		try {
 			inFileStream = new Scanner(new File("Digicel_Customers.txt"));
+			System.out.println("Search commenced");
 			while (inFileStream.hasNext()) {
 				custID = inFileStream.next();
 				name = inFileStream.next();
 				creditBalance = inFileStream.nextFloat();
 				telephone = inFileStream.next();
 				address = inFileStream.nextLine();
-				System.out.println(custID + "\t" + name + "\t" + creditBalance + "\t" + telephone + "\t" + address);
+				digicelCustomerCount++;
+				//System.out.println(custID + "\t" + name + "\t" + creditBalance + "\t" + telephone + "\t" + address);
 			}
+			//TO DO Extremely inefficient, find a way to store digicel customer count
 			if (custID == "") {
 				System.out.println("No records found.");
 			}
+			//return data;
 		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		System.out.println("making array...");
+		String data[][] = new String[getDigicelCustomerCount()][5];
+		try{
+			inFileStream = new Scanner(new File("Digicel_Customers.txt"));
+			while (inFileStream.hasNext()) {
+				data[i][0] = inFileStream.next();
+				data[i][1] = inFileStream.next();
+				data[i][2] = Float.toString(inFileStream.nextFloat());
+				data[i][3] = inFileStream.next();
+				data[i][4] = inFileStream.nextLine();
+				i++;
+				//System.out.println(custID + "\t" + name + "\t" + creditBalance + "\t" + telephone + "\t" + address);
+			}
+			System.out.println("Array Complete " + data[2][1]);
+		}
+		catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -222,6 +270,7 @@ public class Digicel extends ServiceProvider {
 				}		
 			}
 		}
+		return data;
 	}
 
 	@Override

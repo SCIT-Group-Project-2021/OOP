@@ -17,6 +17,12 @@ public class Flow extends ServiceProvider {
 	private String parentCompanyName;
 	private static int flowCustomerCount;
 
+	// TODO Make super default constructor
+	public Flow() {
+		super("", "");
+		parentCompanyName = "";
+	}
+
 	// Primary Constructor
 	public Flow(String companyID, String address, String pName) {
 		super(companyID, address);
@@ -39,13 +45,13 @@ public class Flow extends ServiceProvider {
 	public static void setFlowCustomerCount(int flowCustomerCount) {
 		Flow.flowCustomerCount = flowCustomerCount;
 	}
-
+/*
 	public void addCustomer(Customer c) { 
 		FileWriter outFileStream = null;
 		Scanner input = null;
 		input = new Scanner(System.in);
 		try {
-			outFileStream = new FileWriter(new File("Flow_Customers"), true);
+			outFileStream = new FileWriter(new File("Flow_Customers.txt"), true);
 			checkCustomerUniqueValues(c);
 			String newCustomer = c.getCustID() + "\t" + c.getName() + "\t" + c.getCreditBalance() + "\t" + c.getTelephone() + "\t" +  c.getAddress() +  "\n";	
 			outFileStream.write(newCustomer);
@@ -70,7 +76,7 @@ public class Flow extends ServiceProvider {
 				input.close();
 			}
 		}
-	}
+	}*/
 
 	public boolean checkCustomerUniqueValues(Customer c){
 		Scanner inFileStream = null;
@@ -214,23 +220,26 @@ public class Flow extends ServiceProvider {
 		}
 	}
 
-	@Override
-	public void viewCustomerBase() {
+	
+	public String[][] viewCustomerBase() {
 		Scanner inFileStream = null;
 		String custID = "";
 	    String name = "";
 		float creditBalance = 0;
 	    String telephone = "";
 		String address = "";
+		String data[][] = new String[getFlowCustomerCount()][5];
+		int i = 0;
 		try {
-			inFileStream = new Scanner(new File("Digicel_Customers.txt"));
+			inFileStream = new Scanner(new File("Flow_Customers.txt"));
 			while (inFileStream.hasNext()) {
-				custID = inFileStream.next();
-				name = inFileStream.next();
-				creditBalance = inFileStream.nextFloat();
-				telephone = inFileStream.next();
-				address = inFileStream.nextLine();
-				System.out.println(custID + "\t" + name + "\t" + creditBalance + "\t" + telephone + "\t" + address);
+				data[i][0] = inFileStream.next();
+				data[i][1] = inFileStream.next();
+				data[i][2] = Float.toString(inFileStream.nextFloat());
+				data[i][3] = inFileStream.next();
+				data[i][4] = inFileStream.nextLine();
+				i++;
+				//System.out.println(custID + "\t" + name + "\t" + creditBalance + "\t" + telephone + "\t" + address);
 			}
 			if (custID == "") {
 				System.out.println("No records found.");
@@ -240,6 +249,16 @@ public class Flow extends ServiceProvider {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		finally{
+			if(inFileStream != null) {
+				try {
+					inFileStream.close();
+				}catch(Exception e) {
+					System.err.println("\nAn unexpected error occured.");
+				}		
+			}
+		}
+		return data;
 	}
 
 	@Override

@@ -15,13 +15,22 @@ public class Customer {
 	private Telephone telephone;
 	private float creditBalance;
 	
+	//Default Constructor
+	public Customer() {
+		this.custID = "000";
+		this.name = "";
+		this.address = "";
+		this.telephone = new Telephone();
+		this.creditBalance = 0;
+	}
+
 	//Primary Constructor
 	public Customer(String custID, String name, String address, Telephone telephone) {
 		this.custID = custID;
 		this.name = name;
 		this.address = address;
-		this.telephone = telephone;
-		//this.creditBalance = creditBalance; Because the credit balance is automatically set, is there a reason to accept credit balance?
+		this.telephone = new Telephone();
+		this.creditBalance = 100;
 	}
 	
 	//Copy constructor - Is this necessary?

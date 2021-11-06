@@ -281,6 +281,7 @@ public class LoginGui {
 
         // Adds Functionality to the button
         adminButton = new JToggleButton("<HTML><U>Click Here</U></HTML>");
+        
         adminButton.setBounds(adminoffsetX, adminoffsetY, 100, uih);
         // Sets the button to the style of the ui
         adminButton.setForeground(Color.white);
@@ -289,6 +290,7 @@ public class LoginGui {
         adminButton.setContentAreaFilled(false);
         adminButton.setFocusPainted(false);
         adminButton.setOpaque(false);
+        adminButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
         // Adds Functionality to the button
         adminButton.addItemListener(new ItemListener() {
@@ -329,6 +331,7 @@ public class LoginGui {
         loginButton.setForeground(Color.white);
         loginButton.setFont(Oswald);
         loginButton.setBorder(new guiElements.RoundedBorder(25));
+        loginButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

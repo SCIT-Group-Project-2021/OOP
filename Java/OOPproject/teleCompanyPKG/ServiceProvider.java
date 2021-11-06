@@ -51,8 +51,9 @@ public abstract class ServiceProvider {
 	}
 	
 	//Add customer method, will be overrided in child classes
-	public void addCustomer(Customer c) {
+	public String addCustomer(Customer c) {
 		totalCustomerCount++;
+		return "";
 	}
 	
 	//Phone Credit Creation Method, will be overrided in child classes
@@ -63,7 +64,7 @@ public abstract class ServiceProvider {
 	//Abstract method which will be made concrete in the child classes
 	public abstract void viewPhoneCredit();
 	
-	public abstract void viewCustomerBase();
+	public abstract String[][] viewCustomerBase();
 
 	
 	//Display method for Service Provider's attributes
