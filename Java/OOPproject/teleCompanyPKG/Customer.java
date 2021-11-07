@@ -25,11 +25,11 @@ public class Customer {
 	}
 
 	//Primary Constructor
-	public Customer(String custID, String name, String address, Telephone telephone) {
+	public Customer(String custID, String name, String address, Telephone telephone){
 		this.custID = custID;
 		this.name = name;
 		this.address = address;
-		this.telephone = new Telephone();
+		this.telephone = telephone;
 		this.creditBalance = 100;
 	}
 	

@@ -18,7 +18,7 @@ public class Digicel extends ServiceProvider {
 	private static int digicelCustomerCount = 0;
 
 	public Digicel() {
-		super("", "");
+		super();
 	}
 	public Digicel(String companyID, String address) {
 		super(companyID, address);
@@ -111,7 +111,7 @@ public class Digicel extends ServiceProvider {
 
 	}
 
-	// TODO Pass not unique value error message to dialog box
+	
 	public String addCustomer(Customer c) throws UniqueValueException { 
 		FileWriter outFileStream = null;
 		Scanner input = null;
@@ -122,7 +122,8 @@ public class Digicel extends ServiceProvider {
 				checkCustomerUniqueValues(c);
 			} 
 			catch(UniqueValueException e){
-				System.out.println("Inside addCustomer() method");
+				System.out.println(e.getMessage());
+				System.out.println("Inside UniqueValueException addCustomer() method");
 				throw e;
 			}
 
@@ -186,6 +187,7 @@ public class Digicel extends ServiceProvider {
 					throw new UniqueValueException("Customer ID already exists.");
 				}
 				else if(telephone.equals(c.getTelephone().toString())){
+					System.out.println(c.getTelephone().toString());
 					throw new UniqueValueException("Telephone number already in use.");
 				}
 			}	

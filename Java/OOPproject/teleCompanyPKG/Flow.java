@@ -17,9 +17,9 @@ public class Flow extends ServiceProvider {
 	private String parentCompanyName;
 	private static int flowCustomerCount;
 
-	// TODO Make super default constructor
+	
 	public Flow() {
-		super("", "");
+		super();
 		parentCompanyName = "";
 	}
 

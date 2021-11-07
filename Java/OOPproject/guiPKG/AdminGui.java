@@ -15,6 +15,7 @@ import javax.swing.*;
 import javax.swing.text.MaskFormatter;
 
 import OOPproject.teleCompanyPKG.Flow;
+import OOPproject.teleCompanyPKG.InvalidTelephoneNumber;
 import OOPproject.teleCompanyPKG.ServiceProvider;
 import OOPproject.teleCompanyPKG.Telephone;
 import OOPproject.teleCompanyPKG.UniqueValueException;
@@ -67,7 +68,7 @@ public class AdminGui {
     private static JTextField phoneText;
     private static JTextField lastNameText;
 
-    //private int phoneProvider;
+    private int phoneProvider;
     private JFrame parentFrame;
 
     ServiceProvider adminUser;
@@ -77,7 +78,7 @@ public class AdminGui {
 
         createPanel();
         parentFrame = frame;
-        //phoneProvider = provider;
+        phoneProvider = provider;
         // #region Are for variables to be assigned
         // Shoul i just leave this as the values and remove the individual rgb constants
         // or not?
@@ -380,7 +381,7 @@ public class AdminGui {
 
                 if (phoneText.getText().equals("876-   -    ")) {
                     phoneText.setText("876-000-0000");
-
+                    
                 }
             }
         });
@@ -431,25 +432,28 @@ public class AdminGui {
         addressText.repaint();
         addUserButton.repaint();
 
-        // TODO Fix retrieval of telephone number getTelephone is not working - Error message is being displayed
+        
         addUserButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Customer c;
                 String returnString = "";
                 if(!customerIdText.getText().equals("   -   -   ") && !lastNameText.getText().equals("User Last Name") && !addressText.getText().equals("Address") && !phoneText.getText().equals("876-000-0000")){
-                    c = new Customer(customerIdText.getText(), lastNameText.getText(), addressText.getText(), new Telephone(Integer.parseInt(phoneText.getText().substring(0,3)), Integer.parseInt(phoneText.getText().substring(4,7)), Integer.parseInt(phoneText.getText().substring(8,12))));
                     try{
+                        c = new Customer(customerIdText.getText(), lastNameText.getText(), addressText.getText(), new Telephone(Integer.parseInt(phoneText.getText().substring(0,3)), Integer.parseInt(phoneText.getText().substring(4,7)), Integer.parseInt(phoneText.getText().substring(8,12)), phoneProvider));
                         returnString = adminUser.addCustomer(c);
                         if(returnString != ""){
-                            JOptionPane.showMessageDialog(parentFrame,returnString + " "+ phoneText.getText() + "\nPrefix - " + phoneText.getText().substring(0,3),"Form Error",JOptionPane.ERROR_MESSAGE);
+                            JOptionPane.showMessageDialog(parentFrame,returnString + " "+ phoneText.getText(),"Form Error",JOptionPane.ERROR_MESSAGE);
                         }
                         else{
                         JOptionPane.showMessageDialog(parentFrame,"Information Saved!","Form Submitted",JOptionPane.INFORMATION_MESSAGE);
                         }
                     }
-                    catch(UniqueValueException e1){
-                        JOptionPane.showMessageDialog(parentFrame,returnString,"Form Error",JOptionPane.ERROR_MESSAGE);
+                    catch(InvalidTelephoneNumber e1){
+                        JOptionPane.showMessageDialog(parentFrame,e1.getMessage(),"Form Error",JOptionPane.ERROR_MESSAGE);
+                    }
+                    catch(UniqueValueException e2){
+                        JOptionPane.showMessageDialog(parentFrame,e2.getMessage(),"Form Error",JOptionPane.ERROR_MESSAGE);
                     }
                 }
                 else{

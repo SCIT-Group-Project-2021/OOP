@@ -20,20 +20,30 @@ public class Telephone {
 		this.prefix = 000;
 		this.serial_number = 0000;
 	}
-	// TODO Return error message when telephone is not created
+	
 	//Primary Constructor
-	public Telephone(int areacode, int prefix, int serial_number) {
-        if(!checkTelephone(areacode, prefix, serial_number) || !checkPrefix(areacode, prefix, serial_number)){
-            System.out.println("Invalid phone number");
-            return;
-        }
+	public Telephone(int areacode, int prefix, int serial_number, int provider) throws InvalidTelephoneNumber{
+
+		/*if(!checkPrefix(prefix, provider)){
+			throw new InvalidTelephoneNumber("Prefix is invalid"); 
+		}*/
+
+		try{
+			checkPrefix(prefix, provider);
+		}
+		catch(InvalidTelephoneNumber e){
+			throw e;
+		}
+
 		this.areacode = areacode;
 		this.prefix = prefix;
 		this.serial_number = serial_number;
+		System.out.println(this.toString());
 	}
 	
     //Checks length of telephone sections
-    public boolean checkTelephone(int ac, int p, int sn){
+	/* Obsolete because GUI ensures that onyl the specfied length can be added
+    public boolean checkTelephone(int ac, int p, int sn) {
         if(String.valueOf(ac).length() != 3){
             return false;
         }
@@ -43,14 +53,26 @@ public class Telephone {
         if(String.valueOf(sn).length() != 4){
             return false;
         }
+		System.out.println("Tele length returns true");
         return true;
-    }
+    }*/
 
     //Checks if the prefix is valid
-    public boolean checkPrefix(int ac, int p, int sn){
-        int prefixArray[] = {301, 302, 303, 304, 601, 602, 603, 604};  
+    public static void checkPrefix(int p, int provider) throws InvalidTelephoneNumber{
+        int prefixArray[];
+		int digicelPrefixArray[] = {301, 302, 303, 304};
+		int flowPrefixArray[] = {601, 602, 603, 604};    
         int check = 0;
-        for(int i = 0; i > 3; i++){
+
+		if(provider == 1){
+			prefixArray = digicelPrefixArray;
+		}			
+		else{
+			prefixArray = flowPrefixArray;
+		}
+			
+		
+        for(int i = 0; i < 4; i++){
             if(p == prefixArray[i]){
                 check = 1;
                 break;
@@ -58,9 +80,11 @@ public class Telephone {
         }
 
         if(check != 1){
-            return false;
+			throw new InvalidTelephoneNumber("Prefix is invalid"); 
         }
-        return true;
+
+		System.out.println("Prefix is valid");
+
     }
 
 	//Copy Constructor
@@ -104,6 +128,6 @@ public class Telephone {
 	
 	//Show method
 	public String toString() {
-		return Integer.toString(getPrefix()) + Integer.toString(getAreacode()) + Integer.toString(getSerial_number());
+		return Integer.toString(getAreacode()) + Integer.toString(getPrefix()) + Integer.toString(getSerial_number());
 	}
 }

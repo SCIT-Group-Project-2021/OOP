@@ -14,6 +14,13 @@ public abstract class ServiceProvider {
 	private static int totalCustomerCount = 0;
 	private Customer customer;
 	
+
+	//Primary Constructor
+	public ServiceProvider() {
+		this.companyID = "";
+		this.address = "";
+	}
+
 	//Primary Constructor
 	public ServiceProvider(String companyID, String address) {
 		this.companyID = companyID;

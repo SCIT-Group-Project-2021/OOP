@@ -355,7 +355,7 @@ public class LoginGui {
                     switch (providor) {
                     case 0:
                         if (Digicel.login(password)) {
-                            // TODO Login Successful
+                            // TODO Choose one place for successful log in message
                             System.out.println("Successfuly logged in confirmed");
                             loginPanel.setVisible(false);
                             loginPanel.removeAll();
