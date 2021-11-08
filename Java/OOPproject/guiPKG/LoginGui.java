@@ -302,7 +302,7 @@ public class LoginGui {
             }
         });
 
-        // Creates Combo Bocx to select Service Providor account
+        // Creates Combo Box to select Service Providor account
         providerBox = new JComboBox<String>(providors);
         // Sets the ComboBox to the style of the ui
         providerBox.setBounds(125, 270, 250, uih);
@@ -364,6 +364,7 @@ public class LoginGui {
 
                         } else {
                             // TODO Password was incorrect
+                            JOptionPane.showMessageDialog(frame, "Incorrect Password!","Unable to log in",JOptionPane.ERROR_MESSAGE);
                         }
 
                         break;
@@ -379,6 +380,7 @@ public class LoginGui {
 
                         } else {
                             // TODO Password was incorrect
+                            JOptionPane.showMessageDialog(frame, "Incorrect Password!","Unable to log in",JOptionPane.ERROR_MESSAGE);
                         }
 
                         break;

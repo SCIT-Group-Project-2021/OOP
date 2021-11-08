@@ -45,25 +45,155 @@ public class Flow extends ServiceProvider {
 	public static void setFlowCustomerCount(int flowCustomerCount) {
 		Flow.flowCustomerCount = flowCustomerCount;
 	}
-/*
-	public void addCustomer(Customer c) { 
+
+	// TODO change parameter type in OOAD
+	public void createPhoneCredit(String voucherNum, float balance) throws UniqueValueException{
+		Scanner inFileStream = null;
+		String creditNum = "";
+		float recordBal = 0;
+		String status = "";
+		FileWriter outFileStream  = null;
+		try {
+			outFileStream = new FileWriter(new File("Flow_CardInformation.txt"), true);
+
+			inFileStream = new Scanner(new File("Flow_CardInformation.txt"));
+
+			while (inFileStream.hasNext()) {
+				creditNum = inFileStream.next();
+				recordBal = inFileStream.nextFloat();
+				status = inFileStream.next();
+
+				if (creditNum.equals(voucherNum)) {
+					throw new UniqueValueException("Voucher number already exists.");
+				}
+			}
+			status = "Available";
+			String record = voucherNum + "\t" + balance + "\t" + status + "\n";
+			outFileStream.write(record);
+			outFileStream.close();
+			
+		}
+		catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} 
+		catch (IOException e) {
+			e.printStackTrace();
+		}
+		finally{
+			if(inFileStream != null){
+				try {
+					inFileStream.close();
+				}catch(Exception e) {
+					System.err.println("\nAn unexpected error occured.");
+				}	
+			}
+
+			if(outFileStream != null){
+				try {
+					outFileStream.close();
+				}catch(Exception e) {
+					System.err.println("\nAn unexpected error occured.");
+				}	
+			}
+		}
+	}
+
+	public String[][] viewPhoneCredit() {
+		Scanner inFileStream = null;
+		String creditNum = "";
+		float balance = 0;
+		String status = "";
+		int i = 0;
+		int recordCount = 0;
+		String data[][] = null;
+		try {
+			inFileStream = new Scanner(new File("Flow_CardInformation.txt"));
+			
+			while (inFileStream.hasNext()) {
+				creditNum = inFileStream.next();
+				balance = inFileStream.nextFloat();
+				status = inFileStream.next();
+				recordCount++;
+			}
+			//TO DO Extremely inefficient, find a way to store digicel customer count
+		} 
+		catch (FileNotFoundException e) {
+			e.printStackTrace();
+			return data;
+		} 
+		finally{
+			if(inFileStream != null) {
+				try {
+					inFileStream.close();
+				}catch(Exception e) {
+					System.err.println("\nAn unexpected error occured.");
+				}		
+			}
+		}
+
+		if(recordCount != 0){
+			data = new String[recordCount][3];
+			try{
+				inFileStream = new Scanner(new File("Flow_CardInformation.txt"));
+				while (inFileStream.hasNext()) {
+					data[i][0] = inFileStream.next();
+					data[i][1] = Float.toString(inFileStream.nextFloat());
+					data[i][2] = inFileStream.next();
+					i++;
+					
+				}
+			}
+			catch (FileNotFoundException e) {
+				e.printStackTrace();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			finally{
+				if(inFileStream != null) {
+					try {
+						inFileStream.close();
+					}catch(Exception e) {
+						System.err.println("\nAn unexpected error occured.");
+					}		
+				}
+			}
+		}
+		return data;
+	}
+
+	
+	public String addCustomer(Customer c) throws UniqueValueException { 
 		FileWriter outFileStream = null;
 		Scanner input = null;
 		input = new Scanner(System.in);
 		try {
 			outFileStream = new FileWriter(new File("Flow_Customers.txt"), true);
-			checkCustomerUniqueValues(c);
-			String newCustomer = c.getCustID() + "\t" + c.getName() + "\t" + c.getCreditBalance() + "\t" + c.getTelephone() + "\t" +  c.getAddress() +  "\n";	
+			try {
+				checkCustomerUniqueValues(c);
+			} 
+			catch(UniqueValueException e){
+				System.out.println(e.getMessage());
+				System.out.println("Inside UniqueValueException addCustomer() method");
+				throw e;
+			}
+
+			if(c.getCustID().length() != 11){
+				return "TRN is invalid - Length: " + c.getCustID().length();
+			}
+			
+			String newCustomer = c.getCustID() + "\t" + c.getName() + "\t" + c.getCreditBalance() + "\t" + c.getTelephone().toString() + "\t" +  c.getAddress() +  "\n";	
 			outFileStream.write(newCustomer);
 			System.out.println("Information saved successfully!");
 			super.addCustomer(c);
+			flowCustomerCount++;
+			return("");
+			
 		}
-		catch(UniqueValueException e){
-			e.getMessage();
+		catch(IOException e){
+			e.getStackTrace();
+			return("\nAn unexpected error occured.");
 		}
-		catch(Exception e) {
-			System.err.println("\nAn unexpected error occured.");
-		}
+		
 		finally {
 			if(outFileStream != null) {
 				try {
@@ -76,147 +206,46 @@ public class Flow extends ServiceProvider {
 				input.close();
 			}
 		}
-	}*/
+		
+	}
 
-	public boolean checkCustomerUniqueValues(Customer c){
+	public static void checkCustomerUniqueValues(Customer c) throws UniqueValueException{
 		Scanner inFileStream = null;
 		String custID = "";
 	    String name = "";
 		float creditBalance = 0;
 	    String telephone = "";
 		String address = "";
-		boolean check = true;
 		try {
-			inFileStream = new Scanner(new File("Digicel_Customers.txt"));
+			inFileStream = new Scanner(new File("Flow_Customers.txt"));
 			while (inFileStream.hasNext()) {
 				custID = inFileStream.next();
 				name = inFileStream.next();
 				creditBalance = inFileStream.nextFloat();
 				telephone = inFileStream.next();
 				address = inFileStream.nextLine();
-				if (custID == c.getCustID()) {
-					check = false;
+				if (custID.equals(c.getCustID())) {
 					//inFileStream is closed in finally block
 					throw new UniqueValueException("Customer ID already exists.");
 				}
-				else if(telephone == c.getTelephone().toString()){
-					check = false;
+				else if(telephone.equals(c.getTelephone().toString())){
+					System.out.println(c.getTelephone().toString());
 					throw new UniqueValueException("Telephone number already in use.");
 				}
-			}
-			return check;		
+			}	
 		} 
 		catch (FileNotFoundException e) {
 			e.printStackTrace();
-			return false;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return false;
-		}
+		} 
+		
 		finally{
 			if(inFileStream != null) {
 				try {
 					inFileStream.close();
 				}catch(Exception e) {
 					System.err.println("\nAn unexpected error occured.");
-				}
-				return check;		
+				}	
 			}
-		}
-	}
-
-
-	
-	
-	//Function used to save info to new file
-	/*
-	public void updateSaveCustomerInfofile(){
-		FileWriter outFileStream = null;
-		try { 
-		outFileStream = new FileWriter(new File("DummyFile.dat"), true);
-		String newCustomer = getCustID() + "\t" + getName() + "\t" + getAddress() +  
-				"\t" + getCreditBalance() + "\t" + getTelephone() +  "\n";
-		outFileStream.write(newCustomer);
-		System.out.println("Information saved successfully!");
-		}catch(Exception e) {
-			System.out.println("\nAn unexpected error occured.");
-		}finally {
-			if(outFileStream != null) {
-				try {
-					outFileStream.close();
-				}catch(IOException e) {
-					e.printStackTrace();
-				}		
-			}
-		}
-	}*/
-
-	@Override
-	public boolean createPhoneCredit(int voucherNum, float balance) {
-		int length = String.valueOf(voucherNum).length();
-		if (length != 13) {
-			System.err.println("Voucher number must be 13 digits long");
-			return false;
-		}
-
-		if(balance != 100 && balance != 200 && balance != 500 && balance != 1000){
-			System.err.println("Balance can only be equal to $100, $200, $500 or $1000");
-			return false;
-		}
-		try {
-			Scanner inFileStream = null;
-			int creditNum = 0;
-			float recordBal = 0;
-			String status = "";
-			inFileStream = new Scanner(new File("Flow_CardInfomation.txt"));
-
-			while (inFileStream.hasNext()) {
-				creditNum = inFileStream.nextInt();
-				recordBal = inFileStream.nextFloat();
-				status = inFileStream.next();
-
-				if (creditNum == voucherNum) {
-					throw new UniqueValueException("Voucher number already exists.");
-				}
-			}
-			status = "Available";
-			FileWriter outFileStream = new FileWriter(new File("Flow_CardInformation.txt"), true);
-			String record = voucherNum + "\t" + balance + "\t" + status;
-			outFileStream.write(record);
-			outFileStream.close();
-			return true;
-		}
-		 catch (FileNotFoundException e) {
-			e.printStackTrace();
-			return false;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return false;
-		}
-	}
-
-	@Override
-	public void viewPhoneCredit() {
-		Scanner inFileStream = null;
-		int creditNum = 0;
-		float balance = 0;
-		String status = "";
-		try {
-			inFileStream = new Scanner(new File("Flow_CardInfomation.txt"));
-			while (inFileStream.hasNext()) {
-				creditNum = inFileStream.nextInt();
-				balance = inFileStream.nextFloat();
-				status = inFileStream.next();
-
-				System.out.println(creditNum + "\t" + balance + "\t" + status);
-			}
-			if (creditNum == 0) {
-				System.out.println("No records found.");
-			}
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (Exception e) {
-			e.printStackTrace();
 		}
 	}
 
@@ -228,27 +257,32 @@ public class Flow extends ServiceProvider {
 		float creditBalance = 0;
 	    String telephone = "";
 		String address = "";
-		String data[][] = new String[getFlowCustomerCount()][5];
 		int i = 0;
+		String data[][] = null;
+		
 		try {
 			inFileStream = new Scanner(new File("Flow_Customers.txt"));
+			
 			while (inFileStream.hasNext()) {
-				data[i][0] = inFileStream.next();
-				data[i][1] = inFileStream.next();
-				data[i][2] = Float.toString(inFileStream.nextFloat());
-				data[i][3] = inFileStream.next();
-				data[i][4] = inFileStream.nextLine();
-				i++;
-				//System.out.println(custID + "\t" + name + "\t" + creditBalance + "\t" + telephone + "\t" + address);
+				custID = inFileStream.next();
+				name = inFileStream.next();
+				creditBalance = inFileStream.nextFloat();
+				telephone = inFileStream.next();
+				address = inFileStream.nextLine();
+
+				// TODO Customer count must be fixed or it'll keep incrementing each time the function is run
+				flowCustomerCount++;
 			}
+			//TO DO Extremely inefficient, find a way to store digicel customer count
 			if (custID == "") {
 				System.out.println("No records found.");
 			}
-		} catch (FileNotFoundException e) {
+			
+		} 
+		catch (FileNotFoundException e) {
 			e.printStackTrace();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+			
+		} 
 		finally{
 			if(inFileStream != null) {
 				try {
@@ -258,6 +292,39 @@ public class Flow extends ServiceProvider {
 				}		
 			}
 		}
+
+		if(getFlowCustomerCount() != 0){
+			data = new String[getFlowCustomerCount()][5];
+			try{
+				inFileStream = new Scanner(new File("Flow_Customers.txt"));
+				while (inFileStream.hasNext()) {
+					data[i][0] = inFileStream.next();
+					data[i][1] = inFileStream.next();
+					data[i][2] = Float.toString(inFileStream.nextFloat());
+					data[i][3] = inFileStream.next();
+					data[i][4] = inFileStream.nextLine();
+					i++;
+					//System.out.println(custID + "\t" + name + "\t" + creditBalance + "\t" + telephone + "\t" + address);
+				}
+				
+			}
+			catch (FileNotFoundException e) {
+				e.printStackTrace();
+				return data;
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			finally{
+				if(inFileStream != null) {
+					try {
+						inFileStream.close();
+					}catch(Exception e) {
+						System.err.println("\nAn unexpected error occured.");
+					}		
+				}
+			}
+		}
+		
 		return data;
 	}
 

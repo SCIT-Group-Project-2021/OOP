@@ -62,11 +62,19 @@ public class AdminGui {
     private static JButton createCreditButton;
     private static JButton viewCreditButton;
     private static JButton addUserButton;
+    private static JButton randomizeVoucherButton;
+    private static JButton createVoucherButton;
 
+    // Add new customer text fields
     private static JTextField customerIdText;
     private static JTextArea addressText;
     private static JTextField phoneText;
     private static JTextField lastNameText;
+
+    // Create new credit voucher text fields
+    private static JTextField voucherNumText;
+    private static JComboBox voucherValueComboBox;
+    private static String[] voucherValues = { "100", "200", "500", "1000" };
 
     private int phoneProvider;
     private JFrame parentFrame;
@@ -240,7 +248,15 @@ public class AdminGui {
         createCreditButton.setFont(Oswald);
         //createCreditButton.setBorder(new guiElements.RoundedBorder(25));
         createCreditButton.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.white));
+        createCreditButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+
         
+        createCreditButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                showNewVoucherForm();
+            }
+        });
 
     }
 
@@ -255,9 +271,17 @@ public class AdminGui {
         viewCreditButton.setFont(Oswald);
         //viewCreditButton.setBorder(new guiElements.RoundedBorder(25));
         viewCreditButton.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.white));
+        viewCreditButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+
+        viewCreditButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                showCreditVoucherTable();
+            }
+        });
     }
 
-    public void showAllUsersTable() {
+    public void showCreditVoucherTable() {
         
         generalPanel.removeAll();
         generalPanel.revalidate();
@@ -266,11 +290,13 @@ public class AdminGui {
         primaryPanel.repaint();
         
         //getCustID() + "\t" + c.getName() + "\t" + c.getCreditBalance() + "\t" + c.getTelephone() + "\t" +  c.getAddress() +  "\n";	
-        String columns[] = {"Customer ID", "Name", "Credit Balance", "Telephone", "Address"};
-        String data[][];
-        data = adminUser.viewCustomerBase();
+        String columns[] = {"Voucher #", "Value", "Status"};
+        String data[][] = null;
+        data = adminUser.viewPhoneCredit();
 
-        System.out.println("In Table method " + data[2][1]);
+        if(data == null){
+            JOptionPane.showMessageDialog(parentFrame, "No records found!","Voucher Table",JOptionPane.ERROR_MESSAGE);
+        }
          
         JTable jt=new JTable(data,columns);    
         jt.setBounds(0,0,700,500);  
@@ -303,6 +329,163 @@ public class AdminGui {
         primaryPanel.add(generalPanel);
     }
 
+
+    public void showAllUsersTable() {
+        
+        generalPanel.removeAll();
+        generalPanel.revalidate();
+        generalPanel.repaint();
+        primaryPanel.remove(generalPanel);
+        primaryPanel.repaint();
+        
+        //getCustID() + "\t" + c.getName() + "\t" + c.getCreditBalance() + "\t" + c.getTelephone() + "\t" +  c.getAddress() +  "\n";	
+        String columns[] = {"Customer ID", "Name", "Credit Balance", "Telephone", "Address"};
+        String data[][] = null;
+        data = adminUser.viewCustomerBase();
+
+        if(data == null){
+            JOptionPane.showMessageDialog(parentFrame, "No records found!","Customer Table",JOptionPane.ERROR_MESSAGE);
+        }
+         
+        JTable jt=new JTable(data,columns);    
+        jt.setBounds(0,0,700,500);  
+        jt.setShowGrid(true);
+        jt.setShowVerticalLines(true);        
+        JScrollPane sp=new JScrollPane();  
+
+        sp.getViewport().add(jt);
+        sp.setOpaque(false);
+        sp.getViewport().setOpaque(false);
+
+        sp.setBounds(0,0,700,500);
+        sp.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 0, Color.white));
+        jt.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 0, Color.white));
+        
+        jt.setBackground(null);
+        jt.setShowGrid(false);
+        jt.setShowHorizontalLines(true);
+
+        jt.setFont(Oswaldmini);
+        jt.setForeground(Color.gray);
+        jt.getTableHeader().setFont(Oswald);
+        jt.getTableHeader().setForeground(Color.gray);
+
+        jt.setRowHeight(40);
+        jt.setOpaque(false);
+        jt.setEnabled(false);
+
+        generalPanel.add(sp); 
+        primaryPanel.add(generalPanel);
+    }
+
+    public void showNewVoucherForm(){
+
+        Font oswald_Small = new Font("Oswald", Font.TYPE1_FONT, 10);
+
+        generalPanel.removeAll();
+        generalPanel.revalidate();
+        generalPanel.repaint();
+        primaryPanel.remove(generalPanel);
+        primaryPanel.repaint();
+
+        try {
+            MaskFormatter fmt;
+            MaskFormatter valueFmt;
+            fmt = new MaskFormatter("#############");
+            voucherNumText = new JFormattedTextField(fmt);  
+            voucherNumText.setText("0000000000000");
+
+            
+        } 
+        catch (ParseException e) {
+            e.getStackTrace();
+        }
+
+        voucherNumText.setBounds(60, 100, 200, 40);
+        voucherNumText.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.BLACK));
+        voucherNumText.setOpaque(false);
+        voucherNumText.setBackground(null);
+        voucherNumText.setForeground(Color.black);
+        voucherNumText.setFont(Oswald);
+        voucherNumText.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (voucherNumText.getText().equals("0000000000000")) {
+                    voucherNumText.setText(null);
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+
+                if (voucherNumText.getText().equals("             ")) {
+                    voucherNumText.setText("0000000000000");
+                    
+                }
+            }
+        });
+
+        // TODO Create randomize function (Add function to parent and accept the file from child classes as a parameter?)
+        randomizeVoucherButton = new JButton("Randomize Voucher Number");
+        randomizeVoucherButton.setBounds(300, 100, 250, 40);
+        randomizeVoucherButton.setOpaque(true);
+        randomizeVoucherButton.setFocusPainted(false);
+        randomizeVoucherButton.setContentAreaFilled(false);
+        randomizeVoucherButton.setForeground(Color.black);
+        randomizeVoucherButton.setFont(Oswald);
+        randomizeVoucherButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        randomizeVoucherButton.setBorder(new guiElements.RoundedBorder(25));
+
+        
+        // Creates Combo Box to select Service Providor account
+        voucherValueComboBox = new JComboBox<String>(voucherValues);
+        // Sets the ComboBox to the style of the ui
+        voucherValueComboBox.setBounds(60, 180, 200, 40);
+        voucherValueComboBox.setVisible(true);
+        voucherValueComboBox.setOpaque(false);
+        voucherValueComboBox.setBackground(null);
+        voucherValueComboBox.setForeground(Color.black);
+        voucherValueComboBox.setFont(oswald_Small);
+        
+        createVoucherButton = new JButton("Create Voucher");
+        createVoucherButton.setBounds(225, 440, 250, 40);
+        createVoucherButton.setOpaque(true);
+        createVoucherButton.setFocusPainted(false);
+        createVoucherButton.setContentAreaFilled(false);
+        createVoucherButton.setForeground(Color.gray);
+        createVoucherButton.setFont(Oswald);
+        createVoucherButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        createVoucherButton.setBorder(new guiElements.RoundedBorder(25));
+        
+        generalPanel.add(voucherNumText);
+        generalPanel.add(randomizeVoucherButton);
+        generalPanel.add(voucherValueComboBox);
+        generalPanel.add(createVoucherButton);
+        
+        voucherValueComboBox.repaint();
+        createVoucherButton.repaint();
+
+        createVoucherButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(!voucherNumText.getText().equals("             ")){
+                    try{
+                        adminUser.createPhoneCredit(voucherNumText.getText(), Float.parseFloat(voucherValueComboBox.getSelectedItem().toString()));
+                        JOptionPane.showMessageDialog(parentFrame,"Information Saved!","Form Submitted",JOptionPane.INFORMATION_MESSAGE);
+                    }
+                    catch(UniqueValueException e1){
+                        JOptionPane.showMessageDialog(parentFrame,e1.getMessage(),"Form Error",JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+                else{
+                    JOptionPane.showMessageDialog(parentFrame,"All fields must be filled","Form Error",JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
+
+        primaryPanel.add(generalPanel);
+    }
+
     private void showNewUserForm() {
 
         MaskFormatter fmt;
@@ -326,6 +509,7 @@ public class AdminGui {
             e.getStackTrace();
         }
 
+        // TODO Create labels for textboxes
         customerIdText.setBounds(60, 100, 200, 40);
         customerIdText.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.BLACK));
         customerIdText.setOpaque(false);
@@ -446,7 +630,7 @@ public class AdminGui {
                             JOptionPane.showMessageDialog(parentFrame,returnString + " "+ phoneText.getText(),"Form Error",JOptionPane.ERROR_MESSAGE);
                         }
                         else{
-                        JOptionPane.showMessageDialog(parentFrame,"Information Saved!","Form Submitted",JOptionPane.INFORMATION_MESSAGE);
+                            JOptionPane.showMessageDialog(parentFrame,"Information Saved!","Form Submitted",JOptionPane.INFORMATION_MESSAGE);
                         }
                     }
                     catch(InvalidTelephoneNumber e1){

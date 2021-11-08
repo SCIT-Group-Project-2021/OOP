@@ -17,9 +17,12 @@ public class Digicel extends ServiceProvider {
 	private static int numOfBranches = 0;
 	private static int digicelCustomerCount = 0;
 
+	// Default Constructor
 	public Digicel() {
 		super();
 	}
+
+	// Primary Constructor
 	public Digicel(String companyID, String address) {
 		super(companyID, address);
 	}
@@ -41,74 +44,114 @@ public class Digicel extends ServiceProvider {
 		Digicel.digicelCustomerCount = digicelCustomerCount;
 	}
 
-	// Should this be boolean?
-	public boolean createPhoneCredit(int voucherNum, float balance) {
-		// Should this be removed seeing as it's traditional error handling?
-		int length = String.valueOf(voucherNum).length();
-		if (length != 13) {
-			System.err.println("Voucher number must be 13 digits long");
-			return false;
-		}
-
-		if(balance != 100 && balance != 200 && balance != 500 && balance != 1000){
-			System.err.println("Balance can only be equal to $100, $200, $500 or $1000");
-			return false;
-		}
+	// TODO change parameter type in OOAD
+	public void createPhoneCredit(String voucherNum, float balance) throws UniqueValueException{
+		Scanner inFileStream = null;
+		String creditNum = "";
+		float recordBal = 0;
+		String status = "";
+		FileWriter outFileStream  = null;
 		try {
-			Scanner inFileStream = null;
-			int creditNum = 0;
-			float recordBal = 0;
-			String status = "";
-			inFileStream = new Scanner(new File("Digicel_CardInfomation.txt"));
+			outFileStream = new FileWriter(new File("Digicel_CardInformation.txt"), true);
+
+			inFileStream = new Scanner(new File("Digicel_CardInformation.txt"));
 
 			while (inFileStream.hasNext()) {
-				creditNum = inFileStream.nextInt();
+				creditNum = inFileStream.next();
 				recordBal = inFileStream.nextFloat();
 				status = inFileStream.next();
 
-				if (creditNum == voucherNum) {
+				if (creditNum.equals(voucherNum)) {
 					throw new UniqueValueException("Voucher number already exists.");
 				}
 			}
 			status = "Available";
-			FileWriter outFileStream = new FileWriter(new File("Flow_CardInformation.txt"), true);
-			String record = voucherNum + "\t" + balance + "\t" + status;
+			String record = voucherNum + "\t" + balance + "\t" + status + "\n";
 			outFileStream.write(record);
 			outFileStream.close();
-			return true;
+			
 		}
-		 catch (FileNotFoundException e) {
+		catch (FileNotFoundException e) {
 			e.printStackTrace();
-			return false;
-		} catch (Exception e) {
+		} 
+		catch (IOException e) {
 			e.printStackTrace();
-			return false;
+		}
+		finally{
+			if(inFileStream != null){
+				try {
+					inFileStream.close();
+				}catch(Exception e) {
+					System.err.println("\nAn unexpected error occured.");
+				}	
+			}
+
+			if(outFileStream != null){
+				try {
+					outFileStream.close();
+				}catch(Exception e) {
+					System.err.println("\nAn unexpected error occured.");
+				}	
+			}
 		}
 	}
 
-	public void viewPhoneCredit() {
+	
+	public String[][] viewPhoneCredit() {
 		Scanner inFileStream = null;
-		int creditNum = 0;
+		String creditNum = "";
 		float balance = 0;
 		String status = "";
+		int i = 0;
+		int recordCount = 0;
+		String data[][] = null;
 		try {
-			inFileStream = new Scanner(new File("Digicel_CardInfomation.txt"));
+			inFileStream = new Scanner(new File("Digicel_CardInformation.txt"));
+			
 			while (inFileStream.hasNext()) {
-				creditNum = inFileStream.nextInt();
+				creditNum = inFileStream.next();
 				balance = inFileStream.nextFloat();
 				status = inFileStream.next();
-
-				System.out.println(creditNum + "\t" + balance + "\t" + status);
+				recordCount++;
 			}
-			if (creditNum == 0) {
-				System.out.println("No records found.");
-			}
-		} catch (FileNotFoundException e) {
+			//TO DO Extremely inefficient, find a way to store digicel customer count, Create file to store counts?
+		} 
+		catch (FileNotFoundException e) {
 			e.printStackTrace();
-		} catch (Exception e) {
-			e.printStackTrace();
+			return data;
+		} 
+		finally{
+			
 		}
 
+		if(recordCount != 0){
+			data = new String[recordCount][3];
+			try{
+				inFileStream = new Scanner(new File("Digicel_CardInformation.txt"));
+				while (inFileStream.hasNext()) {
+					data[i][0] = inFileStream.next();
+					data[i][1] = Float.toString(inFileStream.nextFloat());
+					data[i][2] = inFileStream.next();
+					i++;
+					
+				}
+			}
+			catch (FileNotFoundException e) {
+				e.printStackTrace();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			finally{
+				if(inFileStream != null) {
+					try {
+						inFileStream.close();
+					}catch(Exception e) {
+						System.err.println("\nAn unexpected error occured.");
+					}		
+				}
+			}
+		}
+		return data;
 	}
 
 	
@@ -127,11 +170,6 @@ public class Digicel extends ServiceProvider {
 				throw e;
 			}
 
-			/*
-			if(c.getTelephone().toString().length() != 12){
-				return "Telephone number is invalid - Length: " + c.getTelephone().toString().length() + c.getTelephone();
-			}*/
-
 			if(c.getCustID().length() != 11){
 				return "TRN is invalid - Length: " + c.getCustID().length();
 			}
@@ -148,10 +186,7 @@ public class Digicel extends ServiceProvider {
 			e.getStackTrace();
 			return("\nAn unexpected error occured.");
 		}
-		/*
-		catch(Exception e) {
-			return("\nAn unexpected error occured.");
-		}*/
+		
 		finally {
 			if(outFileStream != null) {
 				try {
@@ -195,10 +230,7 @@ public class Digicel extends ServiceProvider {
 		catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} 
-		/*
-		catch (Exception e) {
-			e.printStackTrace();
-		}*/
+		
 		finally{
 			if(inFileStream != null) {
 				try {
@@ -219,50 +251,29 @@ public class Digicel extends ServiceProvider {
 	    String telephone = "";
 		String address = "";
 		int i = 0;
+		String data[][] = null;
 		try {
 			inFileStream = new Scanner(new File("Digicel_Customers.txt"));
-			System.out.println("Search commenced");
+			
 			while (inFileStream.hasNext()) {
 				custID = inFileStream.next();
 				name = inFileStream.next();
 				creditBalance = inFileStream.nextFloat();
 				telephone = inFileStream.next();
 				address = inFileStream.nextLine();
+				// TODO Customer count must be fixed or it'll keep incrementing each time the function is run
 				digicelCustomerCount++;
-				//System.out.println(custID + "\t" + name + "\t" + creditBalance + "\t" + telephone + "\t" + address);
+				
 			}
 			//TO DO Extremely inefficient, find a way to store digicel customer count
 			if (custID == "") {
 				System.out.println("No records found.");
 			}
-			//return data;
+			
 		} 
 		catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} 
-		/*catch (Exception e) {
-			e.printStackTrace();
-		}*/
-		System.out.println("making array...");
-		String data[][] = new String[getDigicelCustomerCount()][5];
-		try{
-			inFileStream = new Scanner(new File("Digicel_Customers.txt"));
-			while (inFileStream.hasNext()) {
-				data[i][0] = inFileStream.next();
-				data[i][1] = inFileStream.next();
-				data[i][2] = Float.toString(inFileStream.nextFloat());
-				data[i][3] = inFileStream.next();
-				data[i][4] = inFileStream.nextLine();
-				i++;
-				//System.out.println(custID + "\t" + name + "\t" + creditBalance + "\t" + telephone + "\t" + address);
-			}
-			System.out.println("Array Complete " + data[2][1]);
-		}
-		catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 		finally{
 			if(inFileStream != null) {
 				try {
@@ -272,6 +283,40 @@ public class Digicel extends ServiceProvider {
 				}		
 			}
 		}
+		
+		
+		if(getDigicelCustomerCount() != 0){
+			data = new String[getDigicelCustomerCount()][5];
+			try{
+				inFileStream = new Scanner(new File("Digicel_Customers.txt"));
+				while (inFileStream.hasNext()) {
+					data[i][0] = inFileStream.next();
+					data[i][1] = inFileStream.next();
+					data[i][2] = Float.toString(inFileStream.nextFloat());
+					data[i][3] = inFileStream.next();
+					data[i][4] = inFileStream.nextLine();
+					i++;
+					//System.out.println(custID + "\t" + name + "\t" + creditBalance + "\t" + telephone + "\t" + address);
+				}
+				
+			}
+			catch (FileNotFoundException e) {
+				e.printStackTrace();
+				return data;
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			finally{
+				if(inFileStream != null) {
+					try {
+						inFileStream.close();
+					}catch(Exception e) {
+						System.err.println("\nAn unexpected error occured.");
+					}		
+				}
+			}
+		}
+
 		return data;
 	}
 

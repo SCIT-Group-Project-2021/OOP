@@ -64,12 +64,10 @@ public abstract class ServiceProvider {
 	}
 	
 	//Phone Credit Creation Method, will be overrided in child classes
-	public boolean createPhoneCredit(int cardNum, float balance) {
-		return true;
-	};
+	public abstract void createPhoneCredit(String cardNum, float balance) throws UniqueValueException;
 	
 	//Abstract method which will be made concrete in the child classes
-	public abstract void viewPhoneCredit();
+	public abstract String[][] viewPhoneCredit();
 	
 	public abstract String[][] viewCustomerBase();
 
