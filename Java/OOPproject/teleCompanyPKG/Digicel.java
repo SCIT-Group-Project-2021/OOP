@@ -12,10 +12,12 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
+import java.util.prefs.*;
 
 public class Digicel extends ServiceProvider {
 	private static int numOfBranches = 0;
 	private static int digicelCustomerCount = 0;
+	private static int digicelCreditRecordCount = 0;
 
 	// Default Constructor
 	public Digicel() {
@@ -43,6 +45,32 @@ public class Digicel extends ServiceProvider {
 	public static void setDigicelCustomerCount(int digicelCustomerCount) {
 		Digicel.digicelCustomerCount = digicelCustomerCount;
 	}
+
+
+	// Used to store customer count value persistently without using a file
+	public void savePreferences(int value) {
+		Preferences prefs = Preferences.userNodeForPackage(Digicel.class);                
+		prefs.putInt("digicelCustomerCount", value); 
+	}
+
+	 public int readPreferences() {
+		Preferences prefs = Preferences.userNodeForPackage(Digicel.class);
+		return prefs.getInt("digicelCustomerCount", 0);  
+	}  
+
+	public void saveCreditRecordsCount(int value) {
+		Preferences prefs = Preferences.userNodeForPackage(Digicel.class);                
+		prefs.putInt("digicelCreditRecordsCount", value); 
+	}
+
+	 public int readCreditRecordsCount() {
+		Preferences prefs = Preferences.userNodeForPackage(Digicel.class);
+		return prefs.getInt("digicelCreditRecordsCount", 0);  
+	}  
+
+
+
+
 
 	// TODO change parameter type in OOAD
 	public void createPhoneCredit(String voucherNum, float balance) throws UniqueValueException{
@@ -169,16 +197,13 @@ public class Digicel extends ServiceProvider {
 				System.out.println("Inside UniqueValueException addCustomer() method");
 				throw e;
 			}
-
-			if(c.getCustID().length() != 11){
-				return "TRN is invalid - Length: " + c.getCustID().length();
-			}
 			
 			String newCustomer = c.getCustID() + "\t" + c.getName() + "\t" + c.getCreditBalance() + "\t" + c.getTelephone().toString() + "\t" +  c.getAddress() +  "\n";	
 			outFileStream.write(newCustomer);
 			System.out.println("Information saved successfully!");
 			super.addCustomer(c);
 			digicelCustomerCount++;
+			savePreferences(digicelCustomerCount);
 			return("");
 			
 		}
@@ -252,38 +277,8 @@ public class Digicel extends ServiceProvider {
 		String address = "";
 		int i = 0;
 		String data[][] = null;
-		try {
-			inFileStream = new Scanner(new File("Digicel_Customers.txt"));
-			
-			while (inFileStream.hasNext()) {
-				custID = inFileStream.next();
-				name = inFileStream.next();
-				creditBalance = inFileStream.nextFloat();
-				telephone = inFileStream.next();
-				address = inFileStream.nextLine();
-				// TODO Customer count must be fixed or it'll keep incrementing each time the function is run
-				digicelCustomerCount++;
-				
-			}
-			//TO DO Extremely inefficient, find a way to store digicel customer count
-			if (custID == "") {
-				System.out.println("No records found.");
-			}
-			
-		} 
-		catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} 
-		finally{
-			if(inFileStream != null) {
-				try {
-					inFileStream.close();
-				}catch(Exception e) {
-					System.err.println("\nAn unexpected error occured.");
-				}		
-			}
-		}
-		
+
+		digicelCustomerCount = readPreferences();
 		
 		if(getDigicelCustomerCount() != 0){
 			data = new String[getDigicelCustomerCount()][5];
@@ -316,7 +311,6 @@ public class Digicel extends ServiceProvider {
 				}
 			}
 		}
-
 		return data;
 	}
 

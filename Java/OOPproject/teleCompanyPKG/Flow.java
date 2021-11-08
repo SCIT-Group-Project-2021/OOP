@@ -12,12 +12,12 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
+import java.util.prefs.*;
 
 public class Flow extends ServiceProvider {
 	private String parentCompanyName;
-	private static int flowCustomerCount;
+	private static int flowCustomerCount = 0;
 
-	
 	public Flow() {
 		super();
 		parentCompanyName = "";
@@ -45,6 +45,18 @@ public class Flow extends ServiceProvider {
 	public static void setFlowCustomerCount(int flowCustomerCount) {
 		Flow.flowCustomerCount = flowCustomerCount;
 	}
+
+	
+	// Used to store customer count value persistently without using a file
+	public void savePreferences(int value) {
+		Preferences prefs = Preferences.userNodeForPackage(Flow.class);                
+		prefs.putInt("flowCustomerCount", value); 
+	}
+
+	 public int readPreferences() {
+		Preferences prefs = Preferences.userNodeForPackage(Flow.class);
+		return prefs.getInt("flowCustomerCount", 0);  
+	}  
 
 	// TODO change parameter type in OOAD
 	public void createPhoneCredit(String voucherNum, float balance) throws UniqueValueException{
@@ -186,6 +198,7 @@ public class Flow extends ServiceProvider {
 			System.out.println("Information saved successfully!");
 			super.addCustomer(c);
 			flowCustomerCount++;
+			savePreferences(flowCustomerCount);
 			return("");
 			
 		}
@@ -260,38 +273,7 @@ public class Flow extends ServiceProvider {
 		int i = 0;
 		String data[][] = null;
 		
-		try {
-			inFileStream = new Scanner(new File("Flow_Customers.txt"));
-			
-			while (inFileStream.hasNext()) {
-				custID = inFileStream.next();
-				name = inFileStream.next();
-				creditBalance = inFileStream.nextFloat();
-				telephone = inFileStream.next();
-				address = inFileStream.nextLine();
-
-				// TODO Customer count must be fixed or it'll keep incrementing each time the function is run
-				flowCustomerCount++;
-			}
-			//TO DO Extremely inefficient, find a way to store digicel customer count
-			if (custID == "") {
-				System.out.println("No records found.");
-			}
-			
-		} 
-		catch (FileNotFoundException e) {
-			e.printStackTrace();
-			
-		} 
-		finally{
-			if(inFileStream != null) {
-				try {
-					inFileStream.close();
-				}catch(Exception e) {
-					System.err.println("\nAn unexpected error occured.");
-				}		
-			}
-		}
+		flowCustomerCount = readPreferences();
 
 		if(getFlowCustomerCount() != 0){
 			data = new String[getFlowCustomerCount()][5];

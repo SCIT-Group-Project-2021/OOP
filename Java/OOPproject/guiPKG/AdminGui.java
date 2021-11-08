@@ -132,9 +132,10 @@ public class AdminGui {
         default:
             break;
         }
+
+        // TODO is this comment supposed to be in the switch above?
         // Assigns default image to variable
 
-        addCreateUserButton();
 
         // sets layout to be null, to allow for free placement of JAttributes
         sidePanel.setLayout(null);
@@ -627,7 +628,8 @@ public class AdminGui {
                         c = new Customer(customerIdText.getText(), lastNameText.getText(), addressText.getText(), new Telephone(Integer.parseInt(phoneText.getText().substring(0,3)), Integer.parseInt(phoneText.getText().substring(4,7)), Integer.parseInt(phoneText.getText().substring(8,12)), phoneProvider));
                         returnString = adminUser.addCustomer(c);
                         if(returnString != ""){
-                            JOptionPane.showMessageDialog(parentFrame,returnString + " "+ phoneText.getText(),"Form Error",JOptionPane.ERROR_MESSAGE);
+                            // TODO Check if this is still necessary
+                            JOptionPane.showMessageDialog(parentFrame,returnString,"Form Error",JOptionPane.ERROR_MESSAGE);
                         }
                         else{
                             JOptionPane.showMessageDialog(parentFrame,"Information Saved!","Form Submitted",JOptionPane.INFORMATION_MESSAGE);

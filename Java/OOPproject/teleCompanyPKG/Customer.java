@@ -314,9 +314,11 @@ public class Customer {
 							for(int i = 0; i < 4; i++) {
 								if(prefix.equals(digicelPrefixes[i])) {
 									inFileStream = new Scanner(new File ("Digicel_Customers.txt"));
+									break;
 								}
 								else if(prefix.equals(flowPrefixes[i])) {
 									inFileStream = new Scanner(new File ("Flow_Customers.txt"));
+									break;
 								}				
 							}
 							if(inFileStream == null){
@@ -369,6 +371,56 @@ public class Customer {
 			}
 		}
 		return balance;
+	}
+
+	// TODO Check for telephone being taken in as a string (needs to be changed from int)
+	// TODO Should this stay static or would using it on the object make more sense?
+	// If so the if statement when customer is found would have to be changed
+	public static Customer search(int provider, String lastNameEntered, String tele){
+		boolean bool = false;
+		Customer c = null;
+		Scanner inFileStream = null;
+		try{
+			if(provider == 1){
+				inFileStream = new Scanner(new File ("Digicel_Customers.txt"));
+			}
+			else{
+				inFileStream = new Scanner(new File ("Flow_Customers.txt"));
+			}
+
+			while(inFileStream.hasNext()){
+				String custID = inFileStream.next();
+				String lastName = inFileStream.next();
+				float creditBalance = inFileStream.nextFloat();
+				String telephone = inFileStream.next();
+				String address = inFileStream.nextLine();
+
+				if(tele.equals(telephone) && lastNameEntered.equals(lastName)){ 
+					c = new Customer(custID, lastName, address, new Telephone(Integer.parseInt(telephone.substring(0,3)), Integer.parseInt(telephone.substring(3,6)), Integer.parseInt(telephone.substring(6,10)),provider));
+				}
+			}
+		}
+		catch(FileNotFoundException e){
+			e.printStackTrace();
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvalidTelephoneNumber e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally{
+			if(inFileStream != null){
+				try{
+					inFileStream.close();
+				}
+				catch(Exception e){
+					e.getStackTrace();
+				}
+			}
+		}
+
+		return c;
 	}
 	public String toString() {
 		return "\nCustomer ID: " + getCustID() + "\nSurname: " + getName() + "\nAddress: "

@@ -194,9 +194,10 @@ public class LoginGui {
         });
         // #endregion
 
+        // TODO Recenter Customer Fields
         // #region Username input Box Setup
         userText = new JTextField(25);
-        userText.setText("User First Name");
+        userText.setText("User Last Name");
         userText.setBounds(125, 310, 250, uih);
         userText.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.white));
         userText.setBackground(null);
@@ -205,7 +206,7 @@ public class LoginGui {
         userText.addFocusListener(new FocusListener() {
             @Override
             public void focusGained(FocusEvent e) {
-                if (userText.getText().equals("User First Name")) {
+                if (userText.getText().equals("User Last Name")) {
                     userText.setText(null);
                 }
 
@@ -214,7 +215,7 @@ public class LoginGui {
             @Override
             public void focusLost(FocusEvent e) {
                 if (userText.getText().equals("")) {
-                    userText.setText("User First Name");
+                    userText.setText("User Last Name");
 
                 }
 
@@ -226,7 +227,7 @@ public class LoginGui {
         // #region Password input Box Setup
         passwordText = new JPasswordField("Password");
         passwordText.setBounds(125, 370, 250, uih);
-        passwordText.setVisible(true);
+        passwordText.setVisible(false);
         passwordText.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.white));
         passwordText.setBackground(null);
         passwordText.setForeground(Color.white);
@@ -337,14 +338,33 @@ public class LoginGui {
             public void actionPerformed(ActionEvent e) {
 
                 if (panelStatus == customer) {
-
+                    
                     String username = userText.getText();
-                    String phone = phoneText.getText();
-                    char[] passwordchar = passwordText.getPassword();
-                    String password = String.valueOf(passwordchar);
+                    String phone = phoneText.getText().substring(0,3) + phoneText.getText().substring(4,7) + phoneText.getText().substring(8,12);
+                    int provider;
+                    boolean logInStatus;
+                    Customer c = new Customer();
+                    
+                    try{
+                        provider = Telephone.isValidTelephone(phone);
+                        c = Customer.search(provider, username, phone);
+                        if(c != null){
+                            System.out.println("Successfuly logged in confirmed");
+                            loginPanel.setVisible(false);
+                            loginPanel.removeAll();
+                            frame.remove(loginPanel);
+                            new customerGui(provider, frame, c);
+                        }
+                        else{
+                            JOptionPane.showMessageDialog(frame,"Username/Telephone Number is incorrect","Unable to Log In",JOptionPane.ERROR_MESSAGE);
+                        }
+                    }
+                    catch(InvalidTelephoneNumber e1){
+                        JOptionPane.showMessageDialog(frame,e1.getMessage(),"Unable to Log In",JOptionPane.ERROR_MESSAGE);
+                    }
 
-                    System.out.println("Customer Information\n" + "Username:\t" + username + "\n" + "Password:\t"
-                            + password + "\n" + "Phone Number:\t" + phone);
+
+                    System.out.println("Customer Information\n" + "Customer ID (TRN):\t" + c.getCustID() + "\n" + "User Name:\t" + c.getName() + "\n" + "Phone Number:\t" + c.getTelephone().toString() + "Credit Balance:\t" + c.getCreditBalance() + "\n");
 
                 } else if (panelStatus == admin) {
 
@@ -363,7 +383,6 @@ public class LoginGui {
                             new AdminGui(1, frame);
 
                         } else {
-                            // TODO Password was incorrect
                             JOptionPane.showMessageDialog(frame, "Incorrect Password!","Unable to log in",JOptionPane.ERROR_MESSAGE);
                         }
 
@@ -371,7 +390,7 @@ public class LoginGui {
 
                     case 1:
                         if (Flow.login(password)) {
-                            // TODO Login Successful
+                            // TODO Choose one place for successful log in message
                             System.out.println("Successfuly logged in confirmed");
                             loginPanel.setVisible(false);
                             loginPanel.removeAll();
@@ -379,7 +398,7 @@ public class LoginGui {
                             new AdminGui(2, frame);
 
                         } else {
-                            // TODO Password was incorrect
+
                             JOptionPane.showMessageDialog(frame, "Incorrect Password!","Unable to log in",JOptionPane.ERROR_MESSAGE);
                         }
 
@@ -405,8 +424,10 @@ public class LoginGui {
 
             phoneText.setVisible(false);
             userText.setVisible(false);
+            passwordText.setVisible(true);
             passwordText.setBounds(125, 350, 250, uih);
             providerBox.setVisible(true);
+
 
             picLabel.setBounds(-20, 0, 500, 600);
             imagePanel.setBackground(adminPicColor);
@@ -424,6 +445,7 @@ public class LoginGui {
         } else {
             phoneText.setVisible(true);
             userText.setVisible(true);
+            passwordText.setVisible(false);
             passwordText.setBounds(125, 370, 250, uih);
             providerBox.setVisible(false);
 

@@ -24,10 +24,6 @@ public class Telephone {
 	//Primary Constructor
 	public Telephone(int areacode, int prefix, int serial_number, int provider) throws InvalidTelephoneNumber{
 
-		/*if(!checkPrefix(prefix, provider)){
-			throw new InvalidTelephoneNumber("Prefix is invalid"); 
-		}*/
-
 		try{
 			checkPrefix(prefix, provider);
 		}
@@ -40,24 +36,9 @@ public class Telephone {
 		this.serial_number = serial_number;
 		System.out.println(this.toString());
 	}
-	
-    //Checks length of telephone sections
-	/* Obsolete because GUI ensures that onyl the specfied length can be added
-    public boolean checkTelephone(int ac, int p, int sn) {
-        if(String.valueOf(ac).length() != 3){
-            return false;
-        }
-        if(String.valueOf(p).length() != 3){
-            return false;
-        }
-        if(String.valueOf(sn).length() != 4){
-            return false;
-        }
-		System.out.println("Tele length returns true");
-        return true;
-    }*/
 
     //Checks if the prefix is valid
+	// TODO Remove provider from telephone parameters
     public static void checkPrefix(int p, int provider) throws InvalidTelephoneNumber{
         int prefixArray[];
 		int digicelPrefixArray[] = {301, 302, 303, 304};
@@ -85,6 +66,48 @@ public class Telephone {
 
 		System.out.println("Prefix is valid");
 
+    }
+
+	public static int isValidTelephone(String tele) throws InvalidTelephoneNumber{
+        int prefixArray[];
+		int digicelPrefixArray[] = {301, 302, 303, 304};
+		int flowPrefixArray[] = {601, 602, 603, 604};    
+        int check = -1;
+		int increase = 1;
+		int p = Integer.parseInt(tele.substring(3,6));
+		prefixArray = digicelPrefixArray;
+			
+		for(int i = 0; i < 4; i++) {
+			if(p == digicelPrefixArray[i]) {
+				check = 1;
+				break;
+			}
+			else if(p == flowPrefixArray[i]) {
+				check = 2;
+				break;
+			}				
+		}
+
+		// TODO Make Gabe see how dumb I am
+		/*
+		while(increase < 3){
+			for(int i = 0; i < 4; i++){
+				if(p == prefixArray[i]){
+					check+=increase;
+					break;
+				}
+			}
+			increase++;
+			prefixArray = flowPrefixArray;	
+		}*/
+        
+
+        if(check == -1){
+			throw new InvalidTelephoneNumber("Prefix is invalid"); 
+        }
+
+		System.out.println("Prefix is valid");
+		return check;
     }
 
 	//Copy Constructor
