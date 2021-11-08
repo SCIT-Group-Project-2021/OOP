@@ -168,7 +168,7 @@ public class LoginGui {
         }
 
         phoneText.setText("User Phone number");
-        phoneText.setBounds(125, 250, 250, uih);
+        phoneText.setBounds(125, 270, 250, uih);
         phoneText.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.white));
         phoneText.setBackground(null);
         phoneText.setForeground(Color.white);
@@ -198,7 +198,7 @@ public class LoginGui {
         // #region Username input Box Setup
         userText = new JTextField(25);
         userText.setText("User Last Name");
-        userText.setBounds(125, 310, 250, uih);
+        userText.setBounds(125, 350, 250, uih);
         userText.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.white));
         userText.setBackground(null);
         userText.setForeground(Color.white);
@@ -342,7 +342,6 @@ public class LoginGui {
                     String username = userText.getText();
                     String phone = phoneText.getText().substring(0,3) + phoneText.getText().substring(4,7) + phoneText.getText().substring(8,12);
                     int provider;
-                    boolean logInStatus;
                     Customer c = new Customer();
                     
                     try{

@@ -4,7 +4,9 @@ import javax.swing.*;
 import OOPproject.teleCompanyPKG.Customer;
 import java.awt.*;
 import java.awt.event.*;
-import java.text.ParseException;
+
+// TODO uncomment this mess of warnings
+/*import java.text.ParseException;
 
 import javax.swing.text.MaskFormatter;
 
@@ -14,7 +16,7 @@ import OOPproject.teleCompanyPKG.ServiceProvider;
 import OOPproject.teleCompanyPKG.Telephone;
 import OOPproject.teleCompanyPKG.UniqueValueException;
 import OOPproject.teleCompanyPKG.Digicel;
-import OOPproject.teleCompanyPKG.Customer;
+import OOPproject.teleCompanyPKG.Customer;*/
 
 
 public class customerGui {
@@ -37,7 +39,6 @@ public class customerGui {
     private static Color digicelColor;
 
     private static Font Oswald;
-    private static Font Oswaldmini;
 
     private static JPanel sidePanel;
     private static JPanel primaryPanel;
@@ -51,23 +52,8 @@ public class customerGui {
 
     private static JButton addCreditButton;
     private static JButton checkBalanceButton;
-    private static JButton createCreditButton;
-    private static JButton viewCreditButton;
-    private static JButton addUserButton;
-    private static JButton randomizeVoucherButton;
-    private static JButton createVoucherButton;
 
-    // Add new customer text fields
-    private static JTextField customerIdText;
-    private static JTextArea addressText;
-    private static JTextField phoneText;
-    private static JTextField lastNameText;
-
-    // Create new credit voucher text fields
-    private static JTextField voucherNumText;
-    private static JComboBox voucherValueComboBox;
-    private static String[] voucherValues = { "100", "200", "500", "1000" };
-
+    // TODO put these to use, pass values to other functions and frame fore dialog box
     private int phoneProvider;
     private JFrame parentFrame;
 
@@ -84,12 +70,13 @@ public class customerGui {
         digicelColor = new Color(250, 253, 255); //250, 253, 255
         
         Oswald = new Font("Oswald", Font.TYPE1_FONT, 15);
-        Oswaldmini = new Font("Oswald", Font.PLAIN, 15);
 
         // #endregion
 
         sidePanel = new JPanel();
         primaryPanel = new JPanel();
+
+        // Assigns default image to variable
 
         switch (provider) {
         case 1:
@@ -118,9 +105,6 @@ public class customerGui {
         default:
             break;
         }
-        // Assigns default image to variable
-
-       
 
         // sets layout to be null, to allow for free placement of JAttributes
         sidePanel.setLayout(null);
@@ -134,7 +118,6 @@ public class customerGui {
         guiElements.addExitButton();
         guiElements.exitButton.setBounds(755, 0, 45, 45);
         primaryPanel.add(guiElements.exitButton);
-        // TODO Change UI Color to be correct
         guiElements.exitButton.setForeground(Color.black);
 
         // #endregion

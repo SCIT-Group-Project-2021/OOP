@@ -41,6 +41,7 @@ public class guiElements {
         exitButton.setContentAreaFilled(false);
         exitButton.setFocusPainted(false);
         exitButton.setOpaque(false);
+        exitButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
     }
 

@@ -73,7 +73,7 @@ public class AdminGui {
 
     // Create new credit voucher text fields
     private static JTextField voucherNumText;
-    private static JComboBox voucherValueComboBox;
+    private static JComboBox <String>voucherValueComboBox;
     private static String[] voucherValues = { "100", "200", "500", "1000" };
 
     private int phoneProvider;
@@ -101,6 +101,8 @@ public class AdminGui {
 
         sidePanel = new JPanel();
         primaryPanel = new JPanel();
+
+        // Assigns default image to variable
 
         switch (provider) {
         case 1:
@@ -131,11 +133,7 @@ public class AdminGui {
             break;
         default:
             break;
-        }
-
-        // TODO is this comment supposed to be in the switch above?
-        // Assigns default image to variable
-
+        }      
 
         // sets layout to be null, to allow for free placement of JAttributes
         sidePanel.setLayout(null);
@@ -151,7 +149,6 @@ public class AdminGui {
         guiElements.addExitButton();
         guiElements.exitButton.setBounds(755, 0, 45, 45);
         primaryPanel.add(guiElements.exitButton);
-        // TODO Change UI Color to be correct
         guiElements.exitButton.setForeground(Color.black);
 
         // #endregion
@@ -391,7 +388,6 @@ public class AdminGui {
 
         try {
             MaskFormatter fmt;
-            MaskFormatter valueFmt;
             fmt = new MaskFormatter("#############");
             voucherNumText = new JFormattedTextField(fmt);  
             voucherNumText.setText("0000000000000");

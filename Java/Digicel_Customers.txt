@@ -1,5 +1,3 @@
-363-574-563	James	100.0	000	Your mom's house
-334-363-466	Deans	100.0	8763012453	Arcadia Drive, Montego Bay
-324-563-465	Palmer	100.0	8766022143	Test
-356-654-647	Deans	100.0	8763023423	Add
-574-545-634	Johnson	100.0	8763042904	Walker Street, Clarendon
+123-151-612	Garcia	100.0	8763012515	Garcias Address
+122-313-321	Deans	100.0	8763017123	Deans Address
+612-233-321	Will	100.0	8763024123	Wills Address
