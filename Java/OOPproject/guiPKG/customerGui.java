@@ -41,6 +41,7 @@ public class customerGui {
 
     private static Color flowColor;
     private static Color digicelColor;
+    private static Color textColor;
 
     private static Font Oswald;
 
@@ -72,12 +73,11 @@ public class customerGui {
         // or not?
 
         flowColor = new Color(48, 60, 120);
-        digicelColor = Color.decode("#404040"); //250, 253, 255
+        digicelColor = Color.decode("#F3f3f3"); //250, 253, 255
         
         Oswald = new Font("Oswald", Font.TYPE1_FONT, 15);
 
         // #endregion
-
         sidePanel = new JPanel();
         primaryPanel = new JPanel();
 
@@ -89,6 +89,7 @@ public class customerGui {
                     new ImageIcon(AdminGui.class.getResource("/OOPproject/Images/Digicel-Logo.png")).getImage()
                             .getScaledInstance(100, 60, Image.SCALE_DEFAULT));
             Logo = new JLabel(digicelLogoIcon);
+            textColor = Color.decode("#000000");
             // #region set Panel Backgrounds
             sidePanel.setBackground(Color.decode("#a5141f"));
             primaryPanel.setBackground(digicelColor);
@@ -104,6 +105,7 @@ public class customerGui {
             // #region set Panel Backgrounds
             sidePanel.setBackground(new Color(65, 108, 163));
             primaryPanel.setBackground(flowColor);
+            textColor = Color.decode("#Fffff");
             // #endregion
 
             break;
@@ -254,12 +256,12 @@ public class customerGui {
         }
 
         voucherNumText.setBounds(0, 240, 200, 40);
-        voucherNumText.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.white));
+        voucherNumText.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, textColor));
         voucherNumText.setOpaque(false);
         voucherNumText.setBackground(null);
-        voucherNumText.setForeground(Color.white);
+        voucherNumText.setForeground(textColor);
         voucherNumText.setFont(Oswald);
-        voucherNumText.setCaretColor(Color.white);
+        voucherNumText.setCaretColor(textColor);
         voucherNumText.addFocusListener(new FocusListener() {
             @Override
             public void focusGained(FocusEvent e) {
@@ -283,7 +285,7 @@ public class customerGui {
         useVoucherButton.setOpaque(true);
         useVoucherButton.setFocusPainted(false);
         useVoucherButton.setContentAreaFilled(false);
-        useVoucherButton.setForeground(Color.white);
+        useVoucherButton.setForeground(textColor);
         useVoucherButton.setFont(Oswald);
         useVoucherButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         useVoucherButton.setBorder(new guiElements.RoundedBorder(25));
@@ -313,10 +315,10 @@ public class customerGui {
 
         CheckBalance = new JLabel("Balance Text");
         CheckBalance.setBounds(0, 240, 200, 40);
-        CheckBalance.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.white));
+        CheckBalance.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, textColor));
         CheckBalance.setOpaque(false);
         CheckBalance.setBackground(null);
-        CheckBalance.setForeground(Color.white);
+        CheckBalance.setForeground(textColor);
         CheckBalance.setFont(Oswald);
                 
         refreshCheckBalance = new JButton("Refresh");
@@ -324,7 +326,7 @@ public class customerGui {
         refreshCheckBalance.setOpaque(true);
         refreshCheckBalance.setFocusPainted(false);
         refreshCheckBalance.setContentAreaFilled(false);
-        refreshCheckBalance.setForeground(Color.white);
+        refreshCheckBalance.setForeground(textColor);
         refreshCheckBalance.setFont(Oswald);
         refreshCheckBalance.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         refreshCheckBalance.setBorder(new guiElements.RoundedBorder(25));

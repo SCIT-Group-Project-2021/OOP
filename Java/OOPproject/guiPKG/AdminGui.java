@@ -12,6 +12,7 @@ import java.awt.event.*;
 import java.text.ParseException;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.text.MaskFormatter;
 
 import OOPproject.teleCompanyPKG.Flow;
@@ -43,6 +44,7 @@ public class AdminGui {
 
     private static Color flowColor;
     private static Color digicelColor;
+    private static Color textColor;
 
     private static Font Oswald;
     private static Font Oswaldmini;
@@ -101,7 +103,7 @@ public class AdminGui {
         // or not?
 
         flowColor = new Color(48, 60, 120);
-        digicelColor = Color.decode("#404040"); //250, 253, 255
+        digicelColor = Color.decode("#F3f3f3"); //250, 253, 255
         
         Oswald = new Font("Oswald", Font.TYPE1_FONT, 15);
         Oswaldmini = new Font("Oswald", Font.PLAIN, 15);
@@ -123,6 +125,7 @@ public class AdminGui {
             Logo = new JLabel(digicelLogoIcon);
             adminUser = new Digicel();
             // #region set Panel Backgrounds
+            textColor = Color.decode("#404040");
             sidePanel.setBackground(Color.decode("#a5141f"));
             primaryPanel.setBackground(digicelColor);
             // #endregion
@@ -136,6 +139,7 @@ public class AdminGui {
 
             adminUser = new Flow();
             // #region set Panel Backgrounds
+            textColor = Color.decode("#Ffffff");
             sidePanel.setBackground(new Color(65, 108, 163));
             primaryPanel.setBackground(flowColor);
             // #endregion
@@ -160,7 +164,7 @@ public class AdminGui {
         guiElements.addExitButton();
         guiElements.exitButton.setBounds(755, 0, 45, 45);
         primaryPanel.add(guiElements.exitButton);
-        guiElements.exitButton.setForeground(Color.white);
+        guiElements.exitButton.setForeground(textColor);
 
         // #endregion
 
@@ -340,8 +344,8 @@ public class AdminGui {
         sp.getViewport().setOpaque(false);
 
         sp.setBounds(0,0,700,500);
-        sp.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 0, Color.white));
-        jt.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 0, Color.white));
+        sp.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 0, textColor));
+        jt.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 0, textColor));
         
         jt.setBackground(primaryPanel.getBackground());
         jt.getTableHeader().setBackground(primaryPanel.getBackground());
@@ -349,13 +353,20 @@ public class AdminGui {
         jt.setShowHorizontalLines(true);
 
         jt.setFont(Oswaldmini);
-        jt.setForeground(Color.white);
+        jt.setForeground(textColor);
         jt.getTableHeader().setFont(Oswald);
-        jt.getTableHeader().setForeground(Color.white);
+        jt.getTableHeader().setForeground(textColor);
 
         jt.setRowHeight(40);
         jt.setOpaque(false);
         jt.setEnabled(false);
+
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment( JLabel.CENTER );
+
+        for (int i = 0; i < jt.getColumnModel().getColumnCount(); i++) {
+            jt.getColumnModel().getColumn(i).setCellRenderer( centerRenderer );
+        }
 
         generalPanel.add(sp); 
         primaryPanel.add(generalPanel);
@@ -382,19 +393,19 @@ public class AdminGui {
          
         totalCustomers = new JLabel("Total Number of Customers: " + adminUser.getTotalCustomerCount());
         totalCustomers.setBounds(100, 450, 200, 40);
-        totalCustomers.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.white));
+        totalCustomers.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, textColor));
         totalCustomers.setOpaque(false);
         totalCustomers.setBackground(null);
-        totalCustomers.setForeground(Color.white);
+        totalCustomers.setForeground(textColor);
         totalCustomers.setFont(Oswald);
         generalPanel.add(totalCustomers);
 
         providorCustomers = new JLabel("Total Digicel Customers: " + adminUser.getProvidorCustomerCount());
         providorCustomers.setBounds(400, 450, 200, 40);
-        providorCustomers.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.white));
+        providorCustomers.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, textColor));
         providorCustomers.setOpaque(false);
         providorCustomers.setBackground(null);
-        providorCustomers.setForeground(Color.white);
+        providorCustomers.setForeground(textColor);
         providorCustomers.setFont(Oswald);
         generalPanel.add(providorCustomers);
 
@@ -409,8 +420,9 @@ public class AdminGui {
         sp.getViewport().setOpaque(false);
 
         sp.setBounds(0,0,700,500);
-        sp.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 0, Color.white));
-        jt.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 0, Color.white));
+        sp.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 0, textColor));
+        jt.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 0, textColor));
+        jt.getTableHeader().setBorder(BorderFactory.createMatteBorder(0, 0, 0, 0, textColor));
         
         jt.setBackground(primaryPanel.getBackground());
         jt.getTableHeader().setBackground(primaryPanel.getBackground());
@@ -418,14 +430,21 @@ public class AdminGui {
         jt.setShowHorizontalLines(true);
 
         jt.setFont(Oswaldmini);
-        jt.setForeground(Color.white);
+        jt.setForeground(textColor);
         jt.getTableHeader().setFont(Oswald);
-        jt.getTableHeader().setForeground(Color.white);
+        jt.getTableHeader().setForeground(textColor);
 
         jt.setRowHeight(40);
         jt.setOpaque(false);
         jt.setEnabled(false);
 
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment( JLabel.CENTER );
+
+        for (int i = 0; i < jt.getColumnModel().getColumnCount(); i++) {
+            jt.getColumnModel().getColumn(i).setCellRenderer( centerRenderer );
+        }
+        
         generalPanel.add(sp); 
         primaryPanel.add(generalPanel);
     }
@@ -453,12 +472,12 @@ public class AdminGui {
         }
 
         voucherNumText.setBounds(60, 100, 200, 40);
-        voucherNumText.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.white));
+        voucherNumText.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, textColor));
         voucherNumText.setOpaque(false);
         voucherNumText.setBackground(null);
-        voucherNumText.setForeground(Color.white);
+        voucherNumText.setForeground(textColor);
         voucherNumText.setFont(Oswald);
-        voucherNumText.setCaretColor(Color.white);
+        voucherNumText.setCaretColor(textColor);
         voucherNumText.addFocusListener(new FocusListener() {
             @Override
             public void focusGained(FocusEvent e) {
@@ -483,7 +502,7 @@ public class AdminGui {
         randomizeVoucherButton.setOpaque(true);
         randomizeVoucherButton.setFocusPainted(false);
         randomizeVoucherButton.setContentAreaFilled(false);
-        randomizeVoucherButton.setForeground(Color.white);
+        randomizeVoucherButton.setForeground(textColor);
         randomizeVoucherButton.setFont(Oswald);
         randomizeVoucherButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         randomizeVoucherButton.setBorder(new guiElements.RoundedBorder(25));
@@ -504,7 +523,7 @@ public class AdminGui {
         createVoucherButton.setOpaque(true);
         createVoucherButton.setFocusPainted(false);
         createVoucherButton.setContentAreaFilled(false);
-        createVoucherButton.setForeground(Color.white);
+        createVoucherButton.setForeground(textColor);
         createVoucherButton.setFont(Oswald);
         createVoucherButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         createVoucherButton.setBorder(new guiElements.RoundedBorder(25));
@@ -563,31 +582,31 @@ public class AdminGui {
 
         // TODO Create labels for textboxes
         customerIdText.setBounds(60, 100, 200, 40);
-        customerIdText.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.white));
+        customerIdText.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, textColor));
         customerIdText.setOpaque(false);
         customerIdText.setBackground(null);
-        customerIdText.setForeground(Color.white);
+        customerIdText.setForeground(textColor);
         customerIdText.setFont(Oswald);
-        customerIdText.setCaretColor(Color.white);
+        customerIdText.setCaretColor(textColor);
 
         customerIdLabel = new JLabel("TRN:");
         customerIdLabel.setBounds(60, 70, 200, 40);
-        customerIdLabel.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 0, Color.white));
+        customerIdLabel.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 0, textColor));
         customerIdLabel.setOpaque(false);
         customerIdLabel.setBackground(null);
-        customerIdLabel.setForeground(Color.white);
+        customerIdLabel.setForeground(textColor);
         customerIdLabel.setFont(Oswald);
 
         
         lastNameText = new JTextField(25);
         lastNameText.setText("User Last Name");
         lastNameText.setBounds(300, 100, 200, 40);
-        lastNameText.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.white));
+        lastNameText.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, textColor));
         lastNameText.setOpaque(false);
         lastNameText.setBackground(null);
-        lastNameText.setForeground(Color.white);
+        lastNameText.setForeground(textColor);
         lastNameText.setFont(Oswald);
-        lastNameText.setCaretColor(Color.white);
+        lastNameText.setCaretColor(textColor);
         
         lastNameText.addFocusListener(new FocusListener() {
             @Override
@@ -611,19 +630,19 @@ public class AdminGui {
 
         lastNameLabel = new JLabel("Last Name:");
         lastNameLabel.setBounds(300, 70, 200, 40);
-        lastNameLabel.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 0, Color.white));
+        lastNameLabel.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 0, textColor));
         lastNameLabel.setOpaque(false);
         lastNameLabel.setBackground(null);
-        lastNameLabel.setForeground(Color.white);
+        lastNameLabel.setForeground(textColor);
         lastNameLabel.setFont(Oswald);
 
         phoneText.setBounds(60, 205, 200, 40);
-        phoneText.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.white));
+        phoneText.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, textColor));
         phoneText.setOpaque(false);
         phoneText.setBackground(null);
-        phoneText.setForeground(Color.white);
+        phoneText.setForeground(textColor);
         phoneText.setFont(Oswald);
-        phoneText.setCaretColor(Color.white);
+        phoneText.setCaretColor(textColor);
         phoneText.addFocusListener(new FocusListener() {
             @Override
             public void focusGained(FocusEvent e) {
@@ -644,22 +663,22 @@ public class AdminGui {
 
         phoneLabel = new JLabel("Phone Number:");
         phoneLabel.setBounds(60, 175, 200, 40);
-        phoneLabel.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 0, Color.white));
+        phoneLabel.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 0, textColor));
         phoneLabel.setOpaque(false);
         phoneLabel.setBackground(null);
-        phoneLabel.setForeground(Color.white);
+        phoneLabel.setForeground(textColor);
         phoneLabel.setFont(Oswald);
 
         addressText = new JTextArea(10, 10);
         addressText.setText("Address");
         addressText.setBounds(60, 320, 400, 100);
-        addressText.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.white));
+        addressText.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, textColor));
         addressText.setOpaque(false);
         addressText.setBackground(null);
-        addressText.setForeground(Color.white);
+        addressText.setForeground(textColor);
         addressText.setFont(Oswald);
         addressText.setCursor(Cursor.getPredefinedCursor(Cursor.TEXT_CURSOR));
-        addressText.setCaretColor(Color.white);
+        addressText.setCaretColor(textColor);
         addressText.addFocusListener(new FocusListener() {
             @Override
             public void focusGained(FocusEvent e) {
@@ -680,10 +699,10 @@ public class AdminGui {
 
         addressLabel = new JLabel("Home Address:");
         addressLabel.setBounds(60, 280, 200, 40);
-        addressLabel.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 0, Color.white));
+        addressLabel.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 0, textColor));
         addressLabel.setOpaque(false);
         addressLabel.setBackground(null);
-        addressLabel.setForeground(Color.white);
+        addressLabel.setForeground(textColor);
         addressLabel.setFont(Oswald);
 
         addUserButton = new JButton("Add Customer");
@@ -691,7 +710,7 @@ public class AdminGui {
         addUserButton.setOpaque(true);
         addUserButton.setFocusPainted(false);
         addUserButton.setContentAreaFilled(false);
-        addUserButton.setForeground(Color.white);
+        addUserButton.setForeground(textColor);
         addUserButton.setFont(Oswald);
         addUserButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         addUserButton.setBorder(new guiElements.RoundedBorder(25));
