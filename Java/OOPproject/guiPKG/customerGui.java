@@ -54,15 +54,8 @@ public class customerGui {
     private static JButton checkBalanceButton;
     private static JButton LogOutButton;
 
-    // TODO put these to use, pass values to other functions and frame fore dialog box
-    private int phoneProvider;
-    private JFrame parentFrame;
-
-
     public customerGui(int provider, JFrame frame, Customer c){
         createPanel();
-        parentFrame = frame;
-        phoneProvider = provider;
         // #region Are for variables to be assigned
         // Shoul i just leave this as the values and remove the individual rgb constants
         // or not?

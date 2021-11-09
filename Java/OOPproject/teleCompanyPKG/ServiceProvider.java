@@ -14,9 +14,9 @@ public abstract class ServiceProvider {
 	protected String address;
 	//Should this be private or protected?
 	private static int totalCustomerCount = 0;
+	//Here to be inherited
 	private Customer customer;
 	
-
 	//Primary Constructor
 	public ServiceProvider() {
 		this.companyID = "";

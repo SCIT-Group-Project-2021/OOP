@@ -7,6 +7,7 @@ import java.io.FileWriter;
 //import java.io.IOException;
 import java.lang.String;
 
+
 public class Customer {
 
 	private String custID;
@@ -97,8 +98,8 @@ public class Customer {
 	}
 	
 	
-	
-	@SuppressWarnings("unlikely-arg-type")
+
+	@SuppressWarnings({"unlikely-arg-type", "unused"})
 	public void addCredit(String mmiCode) {
 		String voucherNum = "", digicelPrefixArray[] = {"301", "302", "303", "304"};  
 		String flowPrefixArray[] = {"601", "602", "603", "604"}; 
@@ -108,6 +109,7 @@ public class Customer {
 		//Scanner input = null;
 		Scanner inFileStream = null;
 		float voucherBalance = 0;
+		
 		boolean check = false;
 		String userTeleNumber = "";
 		try{		
@@ -294,7 +296,7 @@ public class Customer {
 		}
 	}
 	
-	@SuppressWarnings("unlikely-arg-type")
+	@SuppressWarnings({"unlikely-arg-type", "unused"})
 	public float checkBalance(String balanceChecker) {
 		String TelNumber = "000000000", prefix, areaCode = "876", checkBalancePin = "*120*", endSpecifier = "#";
 		String digicelPrefixes[] = {"301", "302", "303", "304"}, flowPrefixes[] = {"601", "602", "603", "604"};  
@@ -325,7 +327,6 @@ public class Customer {
 								System.err.println("Telephone number entered is invalid.");
 								return 0;
 							}
-							
 							while(inFileStream.hasNext()) {
 								//Telephone telephone = null;
 								String custID = inFileStream.next();
@@ -376,6 +377,7 @@ public class Customer {
 	// TODO Check for telephone being taken in as a string (needs to be changed from int)
 	// TODO Should this stay static or would using it on the object make more sense?
 	// If so the if statement when customer is found would have to be changed
+	@SuppressWarnings({"unused"})
 	public static Customer search(int provider, String lastNameEntered, String tele){
 		boolean bool = false;
 		Customer c = null;

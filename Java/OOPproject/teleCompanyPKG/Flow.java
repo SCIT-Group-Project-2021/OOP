@@ -63,6 +63,7 @@ public class Flow extends ServiceProvider {
 	}  
 
 	// TODO change parameter type in OOAD
+	@SuppressWarnings({"unused"})
 	public void createPhoneCredit(String voucherNum, float balance) throws UniqueValueException{
 		Scanner inFileStream = null;
 		String creditNum = "";
@@ -113,7 +114,7 @@ public class Flow extends ServiceProvider {
 			}
 		}
 	}
-
+	@SuppressWarnings({"unused"})
 	public String[][] viewPhoneCredit() {
 		Scanner inFileStream = null;
 		String creditNum = "";
@@ -226,6 +227,7 @@ public class Flow extends ServiceProvider {
 		
 	}
 
+	@SuppressWarnings({"unused"})
 	public static void checkCustomerUniqueValues(Customer c) throws UniqueValueException{
 		Scanner inFileStream = null;
 		String custID = "";
@@ -266,7 +268,7 @@ public class Flow extends ServiceProvider {
 		}
 	}
 
-	
+	@SuppressWarnings({"unused"})
 	public String[][] viewCustomerBase() {
 		Scanner inFileStream = null;
 		String custID = "";

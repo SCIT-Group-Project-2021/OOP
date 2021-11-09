@@ -13,7 +13,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 import java.util.prefs.*;
-
 public class Digicel extends ServiceProvider {
 	private static int numOfBranches = 0;
 	private static int digicelCustomerCount = 0;
@@ -72,11 +71,8 @@ public class Digicel extends ServiceProvider {
 		return prefs.getInt("digicelCreditRecordsCount", 0);  
 	}  
 
-
-
-
-
 	// TODO change parameter type in OOAD
+	@SuppressWarnings({"unused"})
 	public void createPhoneCredit(String voucherNum, float balance) throws UniqueValueException{
 		Scanner inFileStream = null;
 		String creditNum = "";
@@ -128,7 +124,7 @@ public class Digicel extends ServiceProvider {
 		}
 	}
 
-	
+	@SuppressWarnings({"unused"})
 	public String[][] viewPhoneCredit() {
 		Scanner inFileStream = null;
 		String creditNum = "";
@@ -230,7 +226,7 @@ public class Digicel extends ServiceProvider {
 		}
 		
 	}
-
+	@SuppressWarnings({"unused"})
 	public static void checkCustomerUniqueValues(Customer c) throws UniqueValueException{
 		Scanner inFileStream = null;
 		String custID = "";
@@ -271,7 +267,7 @@ public class Digicel extends ServiceProvider {
 		}
 	}
 
-	
+	@SuppressWarnings({"unused"})
 	public String[][] viewCustomerBase() {
 		Scanner inFileStream = null;
 		String custID = "";

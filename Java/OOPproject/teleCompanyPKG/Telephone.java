@@ -69,13 +69,10 @@ public class Telephone {
     }
 
 	public static int isValidTelephone(String tele) throws InvalidTelephoneNumber{
-        int prefixArray[];
 		int digicelPrefixArray[] = {301, 302, 303, 304};
 		int flowPrefixArray[] = {601, 602, 603, 604};    
         int check = -1;
-		int increase = 1;
 		int p = Integer.parseInt(tele.substring(3,6));
-		prefixArray = digicelPrefixArray;
 			
 		for(int i = 0; i < 4; i++) {
 			if(p == digicelPrefixArray[i]) {
@@ -87,20 +84,6 @@ public class Telephone {
 				break;
 			}				
 		}
-
-		// TODO Make Gabe see how dumb I am
-		/*
-		while(increase < 3){
-			for(int i = 0; i < 4; i++){
-				if(p == prefixArray[i]){
-					check+=increase;
-					break;
-				}
-			}
-			increase++;
-			prefixArray = flowPrefixArray;	
-		}*/
-        
 
         if(check == -1){
 			throw new InvalidTelephoneNumber("Prefix is invalid"); 
