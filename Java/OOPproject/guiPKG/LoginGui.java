@@ -174,6 +174,7 @@ public class LoginGui {
         phoneText.setBackground(null);
         phoneText.setForeground(Color.white);
         phoneText.setFont(Oswald);
+        phoneText.setCaretColor(Color.white);
         phoneText.addFocusListener(new FocusListener() {
             @Override
             public void focusGained(FocusEvent e) {
@@ -203,6 +204,7 @@ public class LoginGui {
         userText.setBackground(null);
         userText.setForeground(Color.white);
         userText.setFont(Oswald);
+        userText.setCaretColor(Color.white);
         userText.addFocusListener(new FocusListener() {
             @Override
             public void focusGained(FocusEvent e) {
@@ -232,6 +234,7 @@ public class LoginGui {
         passwordText.setBackground(null);
         passwordText.setForeground(Color.white);
         passwordText.setFont(Oswald);
+        passwordText.setCaretColor(Color.white);
         passwordText.addFocusListener(new FocusListener() {
             @Override
             public void focusGained(FocusEvent e) {

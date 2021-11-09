@@ -458,6 +458,7 @@ public class AdminGui {
         voucherNumText.setBackground(null);
         voucherNumText.setForeground(Color.white);
         voucherNumText.setFont(Oswald);
+        voucherNumText.setCaretColor(Color.white);
         voucherNumText.addFocusListener(new FocusListener() {
             @Override
             public void focusGained(FocusEvent e) {
@@ -567,6 +568,7 @@ public class AdminGui {
         customerIdText.setBackground(null);
         customerIdText.setForeground(Color.white);
         customerIdText.setFont(Oswald);
+        customerIdText.setCaretColor(Color.white);
 
         customerIdLabel = new JLabel("TRN:");
         customerIdLabel.setBounds(60, 70, 200, 40);
@@ -585,6 +587,8 @@ public class AdminGui {
         lastNameText.setBackground(null);
         lastNameText.setForeground(Color.white);
         lastNameText.setFont(Oswald);
+        lastNameText.setCaretColor(Color.white);
+        
         lastNameText.addFocusListener(new FocusListener() {
             @Override
             public void focusGained(FocusEvent e) {
@@ -613,13 +617,13 @@ public class AdminGui {
         lastNameLabel.setForeground(Color.white);
         lastNameLabel.setFont(Oswald);
 
-        //phoneText.setText("User Phone number");
-        phoneText.setBounds(60, 180, 200, 40);
+        phoneText.setBounds(60, 205, 200, 40);
         phoneText.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.white));
         phoneText.setOpaque(false);
         phoneText.setBackground(null);
         phoneText.setForeground(Color.white);
         phoneText.setFont(Oswald);
+        phoneText.setCaretColor(Color.white);
         phoneText.addFocusListener(new FocusListener() {
             @Override
             public void focusGained(FocusEvent e) {
@@ -639,7 +643,7 @@ public class AdminGui {
         });
 
         phoneLabel = new JLabel("Phone Number:");
-        phoneLabel.setBounds(60, 150, 200, 40);
+        phoneLabel.setBounds(60, 175, 200, 40);
         phoneLabel.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 0, Color.white));
         phoneLabel.setOpaque(false);
         phoneLabel.setBackground(null);
@@ -648,13 +652,14 @@ public class AdminGui {
 
         addressText = new JTextArea(10, 10);
         addressText.setText("Address");
-        addressText.setBounds(60, 270, 400, 100);
+        addressText.setBounds(60, 320, 400, 100);
         addressText.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.white));
         addressText.setOpaque(false);
         addressText.setBackground(null);
         addressText.setForeground(Color.white);
         addressText.setFont(Oswald);
         addressText.setCursor(Cursor.getPredefinedCursor(Cursor.TEXT_CURSOR));
+        addressText.setCaretColor(Color.white);
         addressText.addFocusListener(new FocusListener() {
             @Override
             public void focusGained(FocusEvent e) {
@@ -674,7 +679,7 @@ public class AdminGui {
         });
 
         addressLabel = new JLabel("Home Address:");
-        addressLabel.setBounds(60, 230, 200, 40);
+        addressLabel.setBounds(60, 280, 200, 40);
         addressLabel.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 0, Color.white));
         addressLabel.setOpaque(false);
         addressLabel.setBackground(null);

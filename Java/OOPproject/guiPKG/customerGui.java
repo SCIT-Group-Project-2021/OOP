@@ -254,11 +254,12 @@ public class customerGui {
         }
 
         voucherNumText.setBounds(0, 240, 200, 40);
-        voucherNumText.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.BLACK));
+        voucherNumText.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.white));
         voucherNumText.setOpaque(false);
         voucherNumText.setBackground(null);
         voucherNumText.setForeground(Color.white);
         voucherNumText.setFont(Oswald);
+        voucherNumText.setCaretColor(Color.white);
         voucherNumText.addFocusListener(new FocusListener() {
             @Override
             public void focusGained(FocusEvent e) {
@@ -312,7 +313,7 @@ public class customerGui {
 
         CheckBalance = new JLabel("Balance Text");
         CheckBalance.setBounds(0, 240, 200, 40);
-        CheckBalance.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.BLACK));
+        CheckBalance.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.white));
         CheckBalance.setOpaque(false);
         CheckBalance.setBackground(null);
         CheckBalance.setForeground(Color.white);
