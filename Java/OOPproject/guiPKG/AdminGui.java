@@ -123,7 +123,7 @@ public class AdminGui {
             Logo = new JLabel(digicelLogoIcon);
             adminUser = new Digicel();
             // #region set Panel Backgrounds
-            sidePanel.setBackground(Color.decode("#282828"));
+            sidePanel.setBackground(Color.decode("#a5141f"));
             primaryPanel.setBackground(digicelColor);
             // #endregion
 

@@ -1,9 +1,12 @@
 package OOPproject.guiPKG;
 
 import javax.swing.*;
+import javax.swing.text.MaskFormatter;
+
 import OOPproject.teleCompanyPKG.Customer;
 import java.awt.*;
 import java.awt.event.*;
+import java.text.ParseException;
 
 // TODO uncomment this mess of warnings
 /*import java.text.ParseException;
@@ -46,6 +49,7 @@ public class customerGui {
     private static JPanel customerPanel;
 
     private static JLabel Logo;
+    private static JLabel CheckBalance;
 
     private static Icon digicelLogoIcon;
     private static Icon flowLogoIcon;
@@ -53,6 +57,10 @@ public class customerGui {
     private static JButton addCreditButton;
     private static JButton checkBalanceButton;
     private static JButton LogOutButton;
+    private static JButton useVoucherButton;
+    private static JButton refreshCheckBalance;
+
+    private static JTextField voucherNumText;
 
     public customerGui(int provider, JFrame frame, Customer c){
         createPanel();
@@ -61,7 +69,7 @@ public class customerGui {
         // or not?
 
         flowColor = new Color(48, 60, 120);
-        digicelColor = new Color(250, 253, 255); //250, 253, 255
+        digicelColor = Color.decode("#404040"); //250, 253, 255
         
         Oswald = new Font("Oswald", Font.TYPE1_FONT, 15);
 
@@ -79,7 +87,7 @@ public class customerGui {
                             .getScaledInstance(100, 60, Image.SCALE_DEFAULT));
             Logo = new JLabel(digicelLogoIcon);
             // #region set Panel Backgrounds
-            sidePanel.setBackground(Color.gray);
+            sidePanel.setBackground(Color.decode("#a5141f"));
             primaryPanel.setBackground(digicelColor);
             // #endregion
 
@@ -171,7 +179,7 @@ public class customerGui {
         addCreditButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-               // showNewUserForm();
+                showAddVoucher();
             }
         });
     }
@@ -215,10 +223,123 @@ public class customerGui {
         checkBalanceButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-              //  showAllUsersTable();
+                showCheckBalance();
+                // TODO add checkbalance value
+                setCheckBalance("Value");
             }
         });
     }
 
+    public void showAddVoucher(){
+
+        generalPanel.removeAll();
+        generalPanel.revalidate();
+        generalPanel.repaint();
+        primaryPanel.remove(generalPanel);
+        primaryPanel.repaint();
+
+        try {
+            MaskFormatter fmt;
+            fmt = new MaskFormatter("#############");
+            voucherNumText = new JFormattedTextField(fmt);  
+            voucherNumText.setText("0000000000000");
+
+            
+        } 
+        catch (ParseException e) {
+            e.getStackTrace();
+        }
+
+        voucherNumText.setBounds(225, 240, 200, 40);
+        voucherNumText.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.BLACK));
+        voucherNumText.setOpaque(false);
+        voucherNumText.setBackground(null);
+        voucherNumText.setForeground(Color.white);
+        voucherNumText.setFont(Oswald);
+        voucherNumText.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (voucherNumText.getText().equals("0000000000000")) {
+                    voucherNumText.setText(null);
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+
+                if (voucherNumText.getText().equals("             ")) {
+                    voucherNumText.setText("0000000000000");
+                    
+                }
+            }
+        });
+        
+        useVoucherButton = new JButton("Use Voucher");
+        useVoucherButton.setBounds(225, 440, 250, 40);
+        useVoucherButton.setOpaque(true);
+        useVoucherButton.setFocusPainted(false);
+        useVoucherButton.setContentAreaFilled(false);
+        useVoucherButton.setForeground(Color.white);
+        useVoucherButton.setFont(Oswald);
+        useVoucherButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        useVoucherButton.setBorder(new guiElements.RoundedBorder(25));
+        
+        generalPanel.add(voucherNumText);
+        generalPanel.add(useVoucherButton);
+
+        useVoucherButton.repaint();
+
+        useVoucherButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // TODO Add Voucher
+            }
+        });
+
+        primaryPanel.add(generalPanel);
+    }
+
+    public void showCheckBalance(){
+
+        generalPanel.removeAll();
+        generalPanel.revalidate();
+        generalPanel.repaint();
+        primaryPanel.remove(generalPanel);
+        primaryPanel.repaint();
+
+        CheckBalance = new JLabel("Balance Text");
+        CheckBalance.setBounds(225, 240, 200, 40);
+        CheckBalance.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.BLACK));
+        CheckBalance.setOpaque(false);
+        CheckBalance.setBackground(null);
+        CheckBalance.setForeground(Color.white);
+        CheckBalance.setFont(Oswald);
+                
+        refreshCheckBalance = new JButton("Refresh");
+        refreshCheckBalance.setBounds(225, 440, 250, 40);
+        refreshCheckBalance.setOpaque(true);
+        refreshCheckBalance.setFocusPainted(false);
+        refreshCheckBalance.setContentAreaFilled(false);
+        refreshCheckBalance.setForeground(Color.white);
+        refreshCheckBalance.setFont(Oswald);
+        refreshCheckBalance.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        refreshCheckBalance.setBorder(new guiElements.RoundedBorder(25));
+        
+        generalPanel.add(CheckBalance);
+        generalPanel.add(refreshCheckBalance);
+        refreshCheckBalance.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // TODO Should i remove this button;
+                setCheckBalance("Value");
+            }
+        });
+
+        primaryPanel.add(generalPanel);
+    }
+
+    public void setCheckBalance(String checkBalance) {
+        CheckBalance.setText(checkBalance);
+    }
 }
 
