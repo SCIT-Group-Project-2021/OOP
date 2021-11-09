@@ -41,7 +41,6 @@ public class mainGUI {
             baseFrame baseFrame = new baseFrame();
             frame = baseFrame.getBaseFrame();
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         // #endregion

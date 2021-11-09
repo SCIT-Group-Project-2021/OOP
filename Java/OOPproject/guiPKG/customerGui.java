@@ -43,7 +43,7 @@ public class customerGui {
     private static JPanel sidePanel;
     private static JPanel primaryPanel;
     private static JPanel generalPanel;
-    private static JPanel adminPanel;
+    private static JPanel customerPanel;
 
     private static JLabel Logo;
 
@@ -52,6 +52,7 @@ public class customerGui {
 
     private static JButton addCreditButton;
     private static JButton checkBalanceButton;
+    private static JButton LogOutButton;
 
     // TODO put these to use, pass values to other functions and frame fore dialog box
     private int phoneProvider;
@@ -115,6 +116,7 @@ public class customerGui {
 
         createAddCreditButton();
         createCheckBalanceButton();
+        addLogOutButton(frame);
         guiElements.addExitButton();
         guiElements.exitButton.setBounds(755, 0, 45, 45);
         primaryPanel.add(guiElements.exitButton);
@@ -132,12 +134,12 @@ public class customerGui {
 
         // adds created panels to main Panel
         sidePanel.setPreferredSize(new Dimension(200, 600));
-        adminPanel.add(sidePanel, BorderLayout.WEST);
+        customerPanel.add(sidePanel, BorderLayout.WEST);
 
         primaryPanel.setPreferredSize(new Dimension(800, 600));
-        adminPanel.add(primaryPanel, BorderLayout.CENTER);
+        customerPanel.add(primaryPanel, BorderLayout.CENTER);
 
-        frame.add(adminPanel);
+        frame.add(customerPanel);
         
         generalPanel = new JPanel();
         generalPanel.setLayout(null);
@@ -149,13 +151,13 @@ public class customerGui {
 
     public void createPanel() {
 
-        adminPanel = new JPanel();
+        customerPanel = new JPanel();
         // adds Base panel to the background frame for everything else to be mounted to
-        // frame.add(adminPanel);
+        // frame.add(customerPanel);
 
-        adminPanel.setBounds(0, 0, 1000, 600);
-        adminPanel.setLayout(new BorderLayout());
-        adminPanel.setBackground(Color.black);
+        customerPanel.setBounds(0, 0, 1000, 600);
+        customerPanel.setLayout(new BorderLayout());
+        customerPanel.setBackground(Color.black);
 
     }
 
@@ -177,6 +179,28 @@ public class customerGui {
             @Override
             public void actionPerformed(ActionEvent e) {
                // showNewUserForm();
+            }
+        });
+    }
+
+    public void addLogOutButton(JFrame frame) {
+
+        LogOutButton = new JButton("LOGOUT");
+        LogOutButton.setBounds(0, spButtons+180, 200, 50);
+        sidePanel.add(LogOutButton);
+        LogOutButton.setOpaque(false);
+        LogOutButton.setFocusPainted(false);
+        LogOutButton.setContentAreaFilled(false);
+        LogOutButton.setForeground(Color.white);
+        LogOutButton.setFont(Oswald);
+        LogOutButton.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.white));
+        LogOutButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+
+        LogOutButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.remove(customerPanel);;
+                new LoginGui(frame);
             }
         });
     }

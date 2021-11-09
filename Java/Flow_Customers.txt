@@ -1,0 +1,3 @@
+123-151-651	Garcia	100.0	8766012423	Home Address
+512-761-731	Wuiiliam	100.0	8766014561	Lets Address
+635-251-234	Deans	100.0	8766015171	Lets Address

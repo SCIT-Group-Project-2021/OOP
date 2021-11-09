@@ -42,11 +42,15 @@ public class Flow extends ServiceProvider {
 		return flowCustomerCount;
 	}
 
+	public int getProvidorCustomerCount() {
+		return flowCustomerCount;
+	}
+
 	public static void setFlowCustomerCount(int flowCustomerCount) {
 		Flow.flowCustomerCount = flowCustomerCount;
 	}
 
-	
+	// #TODO savePreferences and readPreferences override service providor and make it so totalCustomerCount is overridden
 	// Used to store customer count value persistently without using a file
 	public void savePreferences(int value) {
 		Preferences prefs = Preferences.userNodeForPackage(Flow.class);                

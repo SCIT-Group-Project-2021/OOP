@@ -163,7 +163,6 @@ public class LoginGui {
             phoneText = new JFormattedTextField(fmt);
             phoneText.setText("876-111-1111");
         } catch (ParseException e1) {
-            // TODO Auto-generated catch block
             e1.printStackTrace();
         }
 
@@ -194,7 +193,6 @@ public class LoginGui {
         });
         // #endregion
 
-        // TODO Recenter Customer Fields
         // #region Username input Box Setup
         userText = new JTextField(25);
         userText.setText("User Last Name");
@@ -374,8 +372,6 @@ public class LoginGui {
                     switch (providor) {
                     case 0:
                         if (Digicel.login(password)) {
-                            // TODO Choose one place for successful log in message
-                            System.out.println("Successfuly logged in confirmed");
                             loginPanel.setVisible(false);
                             loginPanel.removeAll();
                             frame.remove(loginPanel);
@@ -389,8 +385,6 @@ public class LoginGui {
 
                     case 1:
                         if (Flow.login(password)) {
-                            // TODO Choose one place for successful log in message
-                            System.out.println("Successfuly logged in confirmed");
                             loginPanel.setVisible(false);
                             loginPanel.removeAll();
                             frame.remove(loginPanel);
@@ -426,7 +420,6 @@ public class LoginGui {
             passwordText.setVisible(true);
             passwordText.setBounds(125, 350, 250, uih);
             providerBox.setVisible(true);
-
 
             picLabel.setBounds(-20, 0, 500, 600);
             imagePanel.setBackground(adminPicColor);

@@ -49,8 +49,16 @@ public abstract class ServiceProvider {
 		this.address = address;
 	}
 
+	// #TODO Function to initialize Customer count and do the re-count
+
 	//Displays the total number of customers across all service providers
 	public int getTotalCustomerCount() {
+		totalCustomerCount = readPreferences();
+		return totalCustomerCount;
+	}
+
+	// #TODO figure out a better way to implement this
+	public int getProvidorCustomerCount() {
 		totalCustomerCount = readPreferences();
 		return totalCustomerCount;
 	}

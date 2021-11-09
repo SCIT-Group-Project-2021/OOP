@@ -42,11 +42,15 @@ public class Digicel extends ServiceProvider {
 		return digicelCustomerCount;
 	}
 
+	public int getProvidorCustomerCount() {
+		return digicelCustomerCount;
+	}
+
 	public static void setDigicelCustomerCount(int digicelCustomerCount) {
 		Digicel.digicelCustomerCount = digicelCustomerCount;
 	}
 
-
+	// #TODO savePreferences and readPreferences override service providor and make it so totalCustomerCount is overridden
 	// Used to store customer count value persistently without using a file
 	public void savePreferences(int value) {
 		Preferences prefs = Preferences.userNodeForPackage(Digicel.class);                
