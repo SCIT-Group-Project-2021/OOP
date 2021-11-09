@@ -15,6 +15,7 @@ import java.text.ParseException;
 import javax.swing.*;
 import javax.swing.BorderFactory;
 import javax.swing.text.MaskFormatter;
+import java.awt.geom.RoundRectangle2D;
 
 import OOPproject.teleCompanyPKG.*;
 
@@ -68,7 +69,8 @@ public class LoginGui {
     // #endregion
 
     public LoginGui(JFrame frame) {
-
+        frame.setShape(new RoundRectangle2D.Double(0, 0, panelw, panelh, 30, 30));
+        frame.setSize(panelw, panelh);
         createPanel(frame);
 
         // #region Are for variables to be assigned

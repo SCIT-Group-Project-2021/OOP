@@ -7,6 +7,7 @@ import OOPproject.teleCompanyPKG.Customer;
 import java.awt.*;
 import java.awt.event.*;
 import java.text.ParseException;
+import java.awt.geom.RoundRectangle2D;
 
 // TODO uncomment this mess of warnings
 /*import java.text.ParseException;
@@ -24,7 +25,7 @@ import OOPproject.teleCompanyPKG.Customer;*/
 
 public class customerGui {
 
-    final int panelw = 1000;
+    final int panelw = 1000/2;
     final int panelh = 600;
     final int uih = 25;
     final int spButtons = 220;
@@ -63,6 +64,8 @@ public class customerGui {
     private static JTextField voucherNumText;
 
     public customerGui(int provider, JFrame frame, Customer c){
+        frame.setShape(new RoundRectangle2D.Double(0, 0, panelw, panelh, 30, 30));
+        frame.setSize(panelw, panelh);
         createPanel();
         // #region Are for variables to be assigned
         // Shoul i just leave this as the values and remove the individual rgb constants
@@ -119,9 +122,9 @@ public class customerGui {
         createCheckBalanceButton();
         addLogOutButton(frame);
         guiElements.addExitButton();
-        guiElements.exitButton.setBounds(755, 0, 45, 45);
+        guiElements.exitButton.setBounds(255, 0, 45, 45);
         primaryPanel.add(guiElements.exitButton);
-        guiElements.exitButton.setForeground(Color.black);
+        //guiElements.exitButton.setForeground(Color.black);
 
         // #endregion
 
@@ -156,7 +159,7 @@ public class customerGui {
         // adds Base panel to the background frame for everything else to be mounted to
         // frame.add(customerPanel);
 
-        customerPanel.setBounds(0, 0, 1000, 600);
+        customerPanel.setBounds(0, 0, 1000/2, 600);
         customerPanel.setLayout(new BorderLayout());
         customerPanel.setBackground(Color.black);
 
@@ -250,7 +253,7 @@ public class customerGui {
             e.getStackTrace();
         }
 
-        voucherNumText.setBounds(225, 240, 200, 40);
+        voucherNumText.setBounds(0, 240, 200, 40);
         voucherNumText.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.BLACK));
         voucherNumText.setOpaque(false);
         voucherNumText.setBackground(null);
@@ -275,7 +278,7 @@ public class customerGui {
         });
         
         useVoucherButton = new JButton("Use Voucher");
-        useVoucherButton.setBounds(225, 440, 250, 40);
+        useVoucherButton.setBounds(0, 440, 200, 40);
         useVoucherButton.setOpaque(true);
         useVoucherButton.setFocusPainted(false);
         useVoucherButton.setContentAreaFilled(false);
@@ -308,7 +311,7 @@ public class customerGui {
         primaryPanel.repaint();
 
         CheckBalance = new JLabel("Balance Text");
-        CheckBalance.setBounds(225, 240, 200, 40);
+        CheckBalance.setBounds(0, 240, 200, 40);
         CheckBalance.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.BLACK));
         CheckBalance.setOpaque(false);
         CheckBalance.setBackground(null);
@@ -316,7 +319,7 @@ public class customerGui {
         CheckBalance.setFont(Oswald);
                 
         refreshCheckBalance = new JButton("Refresh");
-        refreshCheckBalance.setBounds(225, 440, 250, 40);
+        refreshCheckBalance.setBounds(0, 440, 200, 40);
         refreshCheckBalance.setOpaque(true);
         refreshCheckBalance.setFocusPainted(false);
         refreshCheckBalance.setContentAreaFilled(false);
