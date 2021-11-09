@@ -343,14 +343,15 @@ public class AdminGui {
         sp.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 0, Color.white));
         jt.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 0, Color.white));
         
-        jt.setBackground(null);
+        jt.setBackground(primaryPanel.getBackground());
+        jt.getTableHeader().setBackground(primaryPanel.getBackground());
         jt.setShowGrid(false);
         jt.setShowHorizontalLines(true);
 
         jt.setFont(Oswaldmini);
-        jt.setForeground(Color.gray);
+        jt.setForeground(Color.white);
         jt.getTableHeader().setFont(Oswald);
-        jt.getTableHeader().setForeground(Color.gray);
+        jt.getTableHeader().setForeground(Color.white);
 
         jt.setRowHeight(40);
         jt.setOpaque(false);
@@ -411,14 +412,15 @@ public class AdminGui {
         sp.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 0, Color.white));
         jt.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 0, Color.white));
         
-        jt.setBackground(null);
+        jt.setBackground(primaryPanel.getBackground());
+        jt.getTableHeader().setBackground(primaryPanel.getBackground());
         jt.setShowGrid(false);
         jt.setShowHorizontalLines(true);
 
         jt.setFont(Oswaldmini);
-        jt.setForeground(Color.gray);
+        jt.setForeground(Color.white);
         jt.getTableHeader().setFont(Oswald);
-        jt.getTableHeader().setForeground(Color.gray);
+        jt.getTableHeader().setForeground(Color.white);
 
         jt.setRowHeight(40);
         jt.setOpaque(false);
