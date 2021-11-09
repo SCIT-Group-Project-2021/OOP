@@ -51,8 +51,15 @@ public class AdminGui {
     private static JPanel primaryPanel;
     private static JPanel generalPanel;
     private static JPanel adminPanel;
+    private static JLabel totalCustomers;
+    private static JLabel providorCustomers;
 
     private static JLabel Logo;
+
+    private static JLabel customerIdLabel;
+    private static JLabel addressLabel;
+    private static JLabel phoneLabel;
+    private static JLabel lastNameLabel;
 
     private static Icon digicelLogoIcon;
     private static Icon flowLogoIcon;
@@ -64,12 +71,14 @@ public class AdminGui {
     private static JButton addUserButton;
     private static JButton randomizeVoucherButton;
     private static JButton createVoucherButton;
+    private static JButton LogOutButton;
 
     // Add new customer text fields
     private static JTextField customerIdText;
     private static JTextArea addressText;
     private static JTextField phoneText;
     private static JTextField lastNameText;
+
 
     // Create new credit voucher text fields
     private static JTextField voucherNumText;
@@ -92,7 +101,7 @@ public class AdminGui {
         // or not?
 
         flowColor = new Color(48, 60, 120);
-        digicelColor = new Color(250, 253, 255); //250, 253, 255
+        digicelColor = Color.decode("#404040"); //250, 253, 255
         
         Oswald = new Font("Oswald", Font.TYPE1_FONT, 15);
         Oswaldmini = new Font("Oswald", Font.PLAIN, 15);
@@ -104,6 +113,8 @@ public class AdminGui {
 
         // Assigns default image to variable
 
+        
+
         switch (provider) {
         case 1:
             digicelLogoIcon = new ImageIcon(
@@ -112,7 +123,7 @@ public class AdminGui {
             Logo = new JLabel(digicelLogoIcon);
             adminUser = new Digicel();
             // #region set Panel Backgrounds
-            sidePanel.setBackground(Color.gray);
+            sidePanel.setBackground(Color.decode("#282828"));
             primaryPanel.setBackground(digicelColor);
             // #endregion
 
@@ -124,7 +135,6 @@ public class AdminGui {
             Logo = new JLabel(flowLogoIcon);
 
             adminUser = new Flow();
-
             // #region set Panel Backgrounds
             sidePanel.setBackground(new Color(65, 108, 163));
             primaryPanel.setBackground(flowColor);
@@ -146,6 +156,7 @@ public class AdminGui {
         addViewAllCustomerButton();
         addCreateCreditButton();
         addViewCreditButton();
+        addLogOutButton(frame);
         guiElements.addExitButton();
         guiElements.exitButton.setBounds(755, 0, 45, 45);
         primaryPanel.add(guiElements.exitButton);
@@ -173,7 +184,7 @@ public class AdminGui {
         generalPanel = new JPanel();
         generalPanel.setLayout(null);
         generalPanel.setPreferredSize(new Dimension(700,500));
-        generalPanel.setBounds(50, 50, 700, 500);
+        generalPanel.setBounds(50, 50, 700, 600);
         generalPanel.setOpaque(false);
 
     }
@@ -279,6 +290,28 @@ public class AdminGui {
         });
     }
 
+    public void addLogOutButton(JFrame frame) {
+
+        LogOutButton = new JButton("LOGOUT");
+        LogOutButton.setBounds(0, spButtons+240, 200, 50);
+        sidePanel.add(LogOutButton);
+        LogOutButton.setOpaque(false);
+        LogOutButton.setFocusPainted(false);
+        LogOutButton.setContentAreaFilled(false);
+        LogOutButton.setForeground(Color.white);
+        LogOutButton.setFont(Oswald);
+        LogOutButton.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.white));
+        LogOutButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+
+        LogOutButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.remove(adminPanel);;
+                new LoginGui(frame);
+            }
+        });
+    }
+
     public void showCreditVoucherTable() {
         
         generalPanel.removeAll();
@@ -327,15 +360,16 @@ public class AdminGui {
         primaryPanel.add(generalPanel);
     }
 
-
     public void showAllUsersTable() {
+
+        // TODO button to initialize Customer re-count
         
         generalPanel.removeAll();
         generalPanel.revalidate();
         generalPanel.repaint();
         primaryPanel.remove(generalPanel);
         primaryPanel.repaint();
-        
+ 
         //getCustID() + "\t" + c.getName() + "\t" + c.getCreditBalance() + "\t" + c.getTelephone() + "\t" +  c.getAddress() +  "\n";	
         String columns[] = {"Customer ID", "Name", "Credit Balance", "Telephone", "Address"};
         String data[][] = null;
@@ -345,6 +379,24 @@ public class AdminGui {
             JOptionPane.showMessageDialog(parentFrame, "No records found!","Customer Table",JOptionPane.ERROR_MESSAGE);
         }
          
+        totalCustomers = new JLabel("Total Number of Customers: " + adminUser.getTotalCustomerCount());
+        totalCustomers.setBounds(100, 450, 200, 40);
+        totalCustomers.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.BLACK));
+        totalCustomers.setOpaque(false);
+        totalCustomers.setBackground(null);
+        totalCustomers.setForeground(Color.white);
+        totalCustomers.setFont(Oswald);
+        generalPanel.add(totalCustomers);
+
+        providorCustomers = new JLabel("Total Digicel Customers: " + adminUser.getProvidorCustomerCount());
+        providorCustomers.setBounds(400, 450, 200, 40);
+        providorCustomers.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.BLACK));
+        providorCustomers.setOpaque(false);
+        providorCustomers.setBackground(null);
+        providorCustomers.setForeground(Color.white);
+        providorCustomers.setFont(Oswald);
+        generalPanel.add(providorCustomers);
+
         JTable jt=new JTable(data,columns);    
         jt.setBounds(0,0,700,500);  
         jt.setShowGrid(true);
@@ -402,7 +454,7 @@ public class AdminGui {
         voucherNumText.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.BLACK));
         voucherNumText.setOpaque(false);
         voucherNumText.setBackground(null);
-        voucherNumText.setForeground(Color.black);
+        voucherNumText.setForeground(Color.white);
         voucherNumText.setFont(Oswald);
         voucherNumText.addFocusListener(new FocusListener() {
             @Override
@@ -428,7 +480,7 @@ public class AdminGui {
         randomizeVoucherButton.setOpaque(true);
         randomizeVoucherButton.setFocusPainted(false);
         randomizeVoucherButton.setContentAreaFilled(false);
-        randomizeVoucherButton.setForeground(Color.black);
+        randomizeVoucherButton.setForeground(Color.white);
         randomizeVoucherButton.setFont(Oswald);
         randomizeVoucherButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         randomizeVoucherButton.setBorder(new guiElements.RoundedBorder(25));
@@ -441,7 +493,7 @@ public class AdminGui {
         voucherValueComboBox.setVisible(true);
         voucherValueComboBox.setOpaque(false);
         voucherValueComboBox.setBackground(null);
-        voucherValueComboBox.setForeground(Color.black);
+        voucherValueComboBox.setForeground(Color.gray);
         voucherValueComboBox.setFont(oswald_Small);
         
         createVoucherButton = new JButton("Create Voucher");
@@ -449,7 +501,7 @@ public class AdminGui {
         createVoucherButton.setOpaque(true);
         createVoucherButton.setFocusPainted(false);
         createVoucherButton.setContentAreaFilled(false);
-        createVoucherButton.setForeground(Color.gray);
+        createVoucherButton.setForeground(Color.white);
         createVoucherButton.setFont(Oswald);
         createVoucherButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         createVoucherButton.setBorder(new guiElements.RoundedBorder(25));
@@ -511,8 +563,17 @@ public class AdminGui {
         customerIdText.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.BLACK));
         customerIdText.setOpaque(false);
         customerIdText.setBackground(null);
-        customerIdText.setForeground(Color.gray);
+        customerIdText.setForeground(Color.white);
         customerIdText.setFont(Oswald);
+
+        customerIdLabel = new JLabel("TRN:");
+        customerIdLabel.setBounds(60, 70, 200, 40);
+        customerIdLabel.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 0, Color.BLACK));
+        customerIdLabel.setOpaque(false);
+        customerIdLabel.setBackground(null);
+        customerIdLabel.setForeground(Color.white);
+        customerIdLabel.setFont(Oswald);
+
         
         lastNameText = new JTextField(25);
         lastNameText.setText("User Last Name");
@@ -520,7 +581,7 @@ public class AdminGui {
         lastNameText.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.BLACK));
         lastNameText.setOpaque(false);
         lastNameText.setBackground(null);
-        lastNameText.setForeground(Color.gray);
+        lastNameText.setForeground(Color.white);
         lastNameText.setFont(Oswald);
         lastNameText.addFocusListener(new FocusListener() {
             @Override
@@ -542,12 +603,20 @@ public class AdminGui {
 
         });
 
+        lastNameLabel = new JLabel("Last Name:");
+        lastNameLabel.setBounds(300, 70, 200, 40);
+        lastNameLabel.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 0, Color.BLACK));
+        lastNameLabel.setOpaque(false);
+        lastNameLabel.setBackground(null);
+        lastNameLabel.setForeground(Color.white);
+        lastNameLabel.setFont(Oswald);
+
         //phoneText.setText("User Phone number");
         phoneText.setBounds(60, 180, 200, 40);
         phoneText.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.BLACK));
         phoneText.setOpaque(false);
         phoneText.setBackground(null);
-        phoneText.setForeground(Color.gray);
+        phoneText.setForeground(Color.white);
         phoneText.setFont(Oswald);
         phoneText.addFocusListener(new FocusListener() {
             @Override
@@ -567,13 +636,21 @@ public class AdminGui {
             }
         });
 
+        phoneLabel = new JLabel("Phone Number:");
+        phoneLabel.setBounds(60, 150, 200, 40);
+        phoneLabel.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 0, Color.BLACK));
+        phoneLabel.setOpaque(false);
+        phoneLabel.setBackground(null);
+        phoneLabel.setForeground(Color.white);
+        phoneLabel.setFont(Oswald);
+
         addressText = new JTextArea(10, 10);
         addressText.setText("Address");
         addressText.setBounds(60, 270, 400, 100);
         addressText.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.BLACK));
         addressText.setOpaque(false);
         addressText.setBackground(null);
-        addressText.setForeground(Color.gray);
+        addressText.setForeground(Color.white);
         addressText.setFont(Oswald);
         addressText.setCursor(Cursor.getPredefinedCursor(Cursor.TEXT_CURSOR));
         addressText.addFocusListener(new FocusListener() {
@@ -594,19 +671,31 @@ public class AdminGui {
             }
         });
 
+        addressLabel = new JLabel("Home Address:");
+        addressLabel.setBounds(60, 230, 200, 40);
+        addressLabel.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 0, Color.BLACK));
+        addressLabel.setOpaque(false);
+        addressLabel.setBackground(null);
+        addressLabel.setForeground(Color.white);
+        addressLabel.setFont(Oswald);
+
         addUserButton = new JButton("Add Customer");
         addUserButton.setBounds(225, 440, 250, 40);
         addUserButton.setOpaque(true);
         addUserButton.setFocusPainted(false);
         addUserButton.setContentAreaFilled(false);
-        addUserButton.setForeground(Color.gray);
+        addUserButton.setForeground(Color.white);
         addUserButton.setFont(Oswald);
         addUserButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         addUserButton.setBorder(new guiElements.RoundedBorder(25));
         
+        generalPanel.add(customerIdLabel);
         generalPanel.add(customerIdText);
+        generalPanel.add(lastNameLabel);
         generalPanel.add(lastNameText);
+        generalPanel.add(phoneLabel);
         generalPanel.add(phoneText);
+        generalPanel.add(addressLabel);
         generalPanel.add(addressText);
         generalPanel.add(addUserButton);
        
