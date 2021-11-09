@@ -160,7 +160,7 @@ public class AdminGui {
         guiElements.addExitButton();
         guiElements.exitButton.setBounds(755, 0, 45, 45);
         primaryPanel.add(guiElements.exitButton);
-        guiElements.exitButton.setForeground(Color.black);
+        guiElements.exitButton.setForeground(Color.white);
 
         // #endregion
 
@@ -381,7 +381,7 @@ public class AdminGui {
          
         totalCustomers = new JLabel("Total Number of Customers: " + adminUser.getTotalCustomerCount());
         totalCustomers.setBounds(100, 450, 200, 40);
-        totalCustomers.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.BLACK));
+        totalCustomers.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.white));
         totalCustomers.setOpaque(false);
         totalCustomers.setBackground(null);
         totalCustomers.setForeground(Color.white);
@@ -390,7 +390,7 @@ public class AdminGui {
 
         providorCustomers = new JLabel("Total Digicel Customers: " + adminUser.getProvidorCustomerCount());
         providorCustomers.setBounds(400, 450, 200, 40);
-        providorCustomers.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.BLACK));
+        providorCustomers.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.white));
         providorCustomers.setOpaque(false);
         providorCustomers.setBackground(null);
         providorCustomers.setForeground(Color.white);
@@ -451,7 +451,7 @@ public class AdminGui {
         }
 
         voucherNumText.setBounds(60, 100, 200, 40);
-        voucherNumText.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.BLACK));
+        voucherNumText.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.white));
         voucherNumText.setOpaque(false);
         voucherNumText.setBackground(null);
         voucherNumText.setForeground(Color.white);
@@ -560,7 +560,7 @@ public class AdminGui {
 
         // TODO Create labels for textboxes
         customerIdText.setBounds(60, 100, 200, 40);
-        customerIdText.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.BLACK));
+        customerIdText.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.white));
         customerIdText.setOpaque(false);
         customerIdText.setBackground(null);
         customerIdText.setForeground(Color.white);
@@ -568,7 +568,7 @@ public class AdminGui {
 
         customerIdLabel = new JLabel("TRN:");
         customerIdLabel.setBounds(60, 70, 200, 40);
-        customerIdLabel.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 0, Color.BLACK));
+        customerIdLabel.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 0, Color.white));
         customerIdLabel.setOpaque(false);
         customerIdLabel.setBackground(null);
         customerIdLabel.setForeground(Color.white);
@@ -578,7 +578,7 @@ public class AdminGui {
         lastNameText = new JTextField(25);
         lastNameText.setText("User Last Name");
         lastNameText.setBounds(300, 100, 200, 40);
-        lastNameText.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.BLACK));
+        lastNameText.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.white));
         lastNameText.setOpaque(false);
         lastNameText.setBackground(null);
         lastNameText.setForeground(Color.white);
@@ -605,7 +605,7 @@ public class AdminGui {
 
         lastNameLabel = new JLabel("Last Name:");
         lastNameLabel.setBounds(300, 70, 200, 40);
-        lastNameLabel.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 0, Color.BLACK));
+        lastNameLabel.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 0, Color.white));
         lastNameLabel.setOpaque(false);
         lastNameLabel.setBackground(null);
         lastNameLabel.setForeground(Color.white);
@@ -613,7 +613,7 @@ public class AdminGui {
 
         //phoneText.setText("User Phone number");
         phoneText.setBounds(60, 180, 200, 40);
-        phoneText.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.BLACK));
+        phoneText.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.white));
         phoneText.setOpaque(false);
         phoneText.setBackground(null);
         phoneText.setForeground(Color.white);
@@ -638,7 +638,7 @@ public class AdminGui {
 
         phoneLabel = new JLabel("Phone Number:");
         phoneLabel.setBounds(60, 150, 200, 40);
-        phoneLabel.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 0, Color.BLACK));
+        phoneLabel.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 0, Color.white));
         phoneLabel.setOpaque(false);
         phoneLabel.setBackground(null);
         phoneLabel.setForeground(Color.white);
@@ -647,7 +647,7 @@ public class AdminGui {
         addressText = new JTextArea(10, 10);
         addressText.setText("Address");
         addressText.setBounds(60, 270, 400, 100);
-        addressText.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.BLACK));
+        addressText.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.white));
         addressText.setOpaque(false);
         addressText.setBackground(null);
         addressText.setForeground(Color.white);
@@ -673,7 +673,7 @@ public class AdminGui {
 
         addressLabel = new JLabel("Home Address:");
         addressLabel.setBounds(60, 230, 200, 40);
-        addressLabel.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 0, Color.BLACK));
+        addressLabel.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 0, Color.white));
         addressLabel.setOpaque(false);
         addressLabel.setBackground(null);
         addressLabel.setForeground(Color.white);
