@@ -9,6 +9,7 @@ package OOPproject.teleCompanyPKG;
 
 import java.util.prefs.*;
 
+@SuppressWarnings({"unused"})
 public abstract class ServiceProvider {
 	protected String companyID;
 	protected String address;

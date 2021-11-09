@@ -295,8 +295,8 @@ public class Customer {
 			}
 		}
 	}
-	
-	@SuppressWarnings({"unlikely-arg-type", "unused"})
+
+	@SuppressWarnings({"unused"})
 	public float checkBalance(String balanceChecker) {
 		String TelNumber = "000000000", prefix, areaCode = "876", checkBalancePin = "*120*", endSpecifier = "#";
 		String digicelPrefixes[] = {"301", "302", "303", "304"}, flowPrefixes[] = {"601", "602", "603", "604"};  
