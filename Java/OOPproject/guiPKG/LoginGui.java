@@ -351,7 +351,6 @@ public class LoginGui {
                         provider = Telephone.isValidTelephone(phone);
                         c = Customer.search(provider, username, phone);
                         if(c != null){
-                            System.out.println("Successfuly logged in confirmed");
                             loginPanel.setVisible(false);
                             loginPanel.removeAll();
                             frame.remove(loginPanel);
@@ -366,7 +365,7 @@ public class LoginGui {
                     }
 
 
-                    System.out.println("Customer Information\n" + "Customer ID (TRN):\t" + c.getCustID() + "\n" + "User Name:\t" + c.getName() + "\n" + "Phone Number:\t" + c.getTelephone().toString() + "Credit Balance:\t" + c.getCreditBalance() + "\n");
+                    System.out.println("Customer Information\n" + "Customer ID (TRN):\t" + c.getCustID() + "\n" + "User Name:\t" + c.getName() + "\n" + "Phone Number:\t" + c.getTelephone().toString() + "\n" +  "Credit Balance:\t" + c.getCreditBalance() + "\n");
 
                 } else if (panelStatus == admin) {
 

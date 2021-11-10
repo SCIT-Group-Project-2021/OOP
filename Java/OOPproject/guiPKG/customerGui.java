@@ -130,7 +130,7 @@ public class customerGui {
         guiElements.addExitButton();
         guiElements.exitButton.setBounds(255, 0, 45, 45);
         primaryPanel.add(guiElements.exitButton);
-        //guiElements.exitButton.setForeground(Color.black);
+        guiElements.exitButton.setForeground(textColor);
 
         // #endregion
 
@@ -248,11 +248,14 @@ public class customerGui {
         primaryPanel.repaint();
 
         try {
+            //Use ' to specify maskformatter characters or it wont register properly
             MaskFormatter fmt;
-            fmt = new MaskFormatter("*###*#############*##########*");
+            fmt = new MaskFormatter("'*121'*#############'*876#######'#");
             fmt.setValidCharacters("0123456789*#");
+            fmt.setPlaceholder("*121*0000000000000*8760000000#");
             voucherNumText = new JFormattedTextField(fmt);  
-            voucherNumText.setText("0000000000000");   
+            //Commented Out because im using Placeholder Text instead
+            //voucherNumText.setText("*121*0000000000000*8760000000#");   
         } 
         catch (ParseException e) {
             e.getStackTrace();
@@ -268,7 +271,7 @@ public class customerGui {
         voucherNumText.addFocusListener(new FocusListener() {
             @Override
             public void focusGained(FocusEvent e) {
-                if (voucherNumText.getText().equals("0000000000000")) {
+                if (voucherNumText.getText().equals("*121*0000000000000*8760000000#")) {
                     voucherNumText.setText(null);
                 }
             }
@@ -276,10 +279,11 @@ public class customerGui {
             @Override
             public void focusLost(FocusEvent e) {
 
-                if (voucherNumText.getText().equals("             ")) {
+                //Commented Out because im using Placeholder Text instead
+                /*if (voucherNumText.getText().equals("             ")) {
                     voucherNumText.setText("0000000000000");
                     
-                }
+                }*/
             }
         });
         
@@ -315,7 +319,7 @@ public class customerGui {
         generalPanel.repaint();
         primaryPanel.remove(generalPanel);
         primaryPanel.repaint();
-
+        
         CheckBalance = new JLabel("Balance Text");
         CheckBalance.setBounds(0, 240, 200, 40);
         CheckBalance.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, textColor));
@@ -336,10 +340,11 @@ public class customerGui {
 
         try {
             MaskFormatter fmt;
-            fmt = new MaskFormatter("*###*##########*");
+            fmt = new MaskFormatter("'*120'*876#######'#");
             fmt.setValidCharacters("0123456789*#");
+            fmt.setPlaceholder("*120*8760000000#");
             balanceMMIText = new JFormattedTextField(fmt);  
-            balanceMMIText.setText("*120*0000000000#");   
+            //balanceMMIText.setText("*120*0000000000#");   
         } 
         catch (ParseException e) {
             e.getStackTrace();
@@ -355,18 +360,18 @@ public class customerGui {
         balanceMMIText.addFocusListener(new FocusListener() {
             @Override
             public void focusGained(FocusEvent e) {
-                if (balanceMMIText.getText().equals("*120*0000000000#")) {
+                if (balanceMMIText.getText().equals("*120*8760000000#")) {
                     balanceMMIText.setText(null);
                 }
             }
 
             @Override
             public void focusLost(FocusEvent e) {
-
-                if (balanceMMIText.getText().equals("             ")) {
+                //Commented Out because im using Placeholder Text instead
+                /*if (balanceMMIText.getText().equals("             ")) {
                     balanceMMIText.setText("*120*0000000000#");
                     
-                }
+                }*/
             }
         });
         generalPanel.add(balanceMMIText);

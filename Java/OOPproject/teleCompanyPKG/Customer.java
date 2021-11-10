@@ -76,6 +76,7 @@ public class Customer {
 		this.telephone = telephone;
 	}
 
+	// TODO This returns 100 no matter what
 	public float getCreditBalance() {
 		return creditBalance;
 	}
@@ -110,6 +111,9 @@ public class Customer {
 		Scanner inFileStream = null;
 		float voucherBalance = 0;
 		
+		boolean numCheck = false;
+		boolean vouchCheck = false;
+		// TODO I added these two other chack values because you were just continously overriding the check value and it wasnt doing anything
 		boolean check = false;
 		String userTeleNumber = "";
 		try{		
@@ -163,15 +167,17 @@ public class Customer {
 						voucherBalance = inFileStream.nextFloat();
 						status = inFileStream.nextLine();
 						
+						// Changed this from check to vouchCheck because if you use check your just overriding everything else
 						if(voucherNum.equals(creditNumber)) {
-							if(status != "Used" || status != "used") {
-							//System.out.println("\nAn amount of $" + balance + " was added to your account.\n");
-								check = true;
+							if(status.equals("Available") || status.equals("Available")) {
+								
+								vouchCheck = true;
+								System.out.println("\nAn amount of $" + voucherBalance + " was added to your account.\n" + "\t" + vouchCheck);
 								break;
 							}
 							else{
-								check = false;
-								System.err.println("Invalid voucher number");
+								vouchCheck = false;
+								System.err.println("Invalid voucher number" + "\t" + vouchCheck);
 								break;
 							}
 						}		
@@ -199,13 +205,14 @@ public class Customer {
 						telephone.setSerial_number(inFileStream.nextInt());
 						
 						String custNumber = String.valueOf(telephone.getPrefix()).concat(String.valueOf(telephone.getAreacode())).concat(String.valueOf(telephone.getSerial_number()));*/
+						// Changed this from check to numcheck because if you use check your just overriding everything else
 						userTeleNumber =  mmiCode.substring(19,29);
 						if(userTeleNumber.equals(telephone)){ 
-							check = true;
+							numCheck = true;
 							break;
 						}
 						else{
-							check = false;
+							numCheck = false;
 							System.err.println("Invalid telephone number");
 							break;
 						}		
@@ -221,10 +228,16 @@ public class Customer {
 				System.err.println("Invalid MMI code");
 			}
 
-			if(check = true){
-				updateCreditFile(voucherNum, creditFile);
-				updateCustomerFile(voucherBalance, customerFile, userTeleNumber);
-				// TODO Dialogue box to say it worked
+			// TODO Did the multiple checks to Stop credit being added because check was passed
+			if(check == true){
+				if (numCheck == true) {
+					if (vouchCheck == true) {
+						updateCreditFile(voucherNum, creditFile);
+						updateCustomerFile(voucherBalance, customerFile, userTeleNumber);
+						// TODO Dialogue box to say it worked
+					}
+				}
+				
 			}	
 		}
         catch (Exception e) {
