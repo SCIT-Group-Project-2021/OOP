@@ -19,8 +19,8 @@ import OOPproject.teleCompanyPKG.InvalidTelephoneNumber;
 import OOPproject.teleCompanyPKG.ServiceProvider;
 import OOPproject.teleCompanyPKG.Telephone;
 import OOPproject.teleCompanyPKG.UniqueValueException;
-import OOPproject.teleCompanyPKG.Digicel;*/
-import OOPproject.teleCompanyPKG.Customer;
+import OOPproject.teleCompanyPKG.Digicel;
+import OOPproject.teleCompanyPKG.Customer;*/
 
 
 public class customerGui {
@@ -63,8 +63,11 @@ public class customerGui {
     private static JButton refreshCheckBalance;
 
     private static JTextField voucherNumText;
+    private static JTextField balanceMMIText;
+
     Customer cus;
 
+    // TODO CHange all class names to capital letters (Must follow the Java naming schemes)
     public customerGui(int provider, JFrame frame, Customer c){
         frame.setShape(new RoundRectangle2D.Double(0, 0, panelw, panelh, 30, 30));
         frame.setSize(panelw, panelh);
@@ -330,14 +333,54 @@ public class customerGui {
         refreshCheckBalance.setFont(Oswald);
         refreshCheckBalance.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         refreshCheckBalance.setBorder(new guiElements.RoundedBorder(25));
-        
+
+        try {
+            MaskFormatter fmt;
+            fmt = new MaskFormatter("*###*##########*");
+            fmt.setValidCharacters("0123456789*#");
+            balanceMMIText = new JFormattedTextField(fmt);  
+            balanceMMIText.setText("*120*0000000000#");   
+        } 
+        catch (ParseException e) {
+            e.getStackTrace();
+        }
+
+        balanceMMIText.setBounds(0, 180, 200, 40);
+        balanceMMIText.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, textColor));
+        balanceMMIText.setOpaque(false);
+        balanceMMIText.setBackground(null);
+        balanceMMIText.setForeground(textColor);
+        balanceMMIText.setFont(Oswald);
+        balanceMMIText.setCaretColor(textColor);
+        balanceMMIText.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (balanceMMIText.getText().equals("*120*0000000000#")) {
+                    balanceMMIText.setText(null);
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+
+                if (balanceMMIText.getText().equals("             ")) {
+                    balanceMMIText.setText("*120*0000000000#");
+                    
+                }
+            }
+        });
+        generalPanel.add(balanceMMIText);
         generalPanel.add(CheckBalance);
         generalPanel.add(refreshCheckBalance);
+        
+        
         refreshCheckBalance.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // TODO Should i remove this button;
-                setCheckBalance("Value");
+               float creditBalance = 0;
+               // setCheckBalance("Value");
+               creditBalance = cus.checkBalance(balanceMMIText.getText());
+               setCheckBalance("$" + Float.toString(creditBalance));
             }
         });
 

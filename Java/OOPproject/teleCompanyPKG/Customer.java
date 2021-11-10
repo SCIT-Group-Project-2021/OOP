@@ -99,7 +99,7 @@ public class Customer {
 	
 	
 	// TODO Remove checks with exception throws
-	@SuppressWarnings({"unlikely-arg-type", "unused"})
+	@SuppressWarnings({"unused"})
 	public void addCredit(String mmiCode) {
 		String voucherNum = "", digicelPrefixArray[] = {"301", "302", "303", "304"};  
 		String flowPrefixArray[] = {"601", "602", "603", "604"}; 
@@ -115,6 +115,8 @@ public class Customer {
 		try{		
 			//input = new Scanner(System.in);
 			length = mmiCode.length();
+
+			// TODO Length if statement
 			if(length != 30) { //29 represents the number of digits and symbols that are in the String 
 				System.err.println("Invalid length");
 				/*addCreditPrompt();
@@ -222,7 +224,7 @@ public class Customer {
 			if(check = true){
 				updateCreditFile(voucherNum, creditFile);
 				updateCustomerFile(voucherBalance, customerFile, userTeleNumber);
-				System.out.println("Ayyyee credit added.");
+				// TODO Dialogue box to say it worked
 			}	
 		}
         catch (Exception e) {
@@ -334,6 +336,7 @@ public class Customer {
 		}
 	}
 
+	// TODO Create exceptions f
 	@SuppressWarnings({"unused"})
 	public float checkBalance(String balanceChecker) {
 		String TelNumber = "000000000", prefix, areaCode = "876", checkBalancePin = "*120*", endSpecifier = "#";
@@ -345,15 +348,16 @@ public class Customer {
 			//input = new Scanner(System.in);
 			//checkBalancePrompt();
 			//balanceChecker = input.nextLine();
+			// TODO Remove length if statement
 			if(balanceChecker.length() == 16){//Checking if the length of the numbers entered is the same as this -> *120*8760000000#
 				if(checkBalancePin.equals(balanceChecker.substring(0,5))) {//Checking for *120*
 					if(areaCode.equals(balanceChecker.substring(5,8))) {//Checking for area code 876
-						if(endSpecifier.equals(balanceChecker.charAt(balanceChecker.length() - 1))){//Checking for the #
+						if(endSpecifier.equals(Character.toString(balanceChecker.charAt(balanceChecker.length()- 1)))){//Checking for the #
 							TelNumber = balanceChecker.substring(5,15);//Assigning index 5 to 14 of the input which should resemble this -> *120*8760000000# where index 5 to 14 is 8760000000
 							prefix = balanceChecker.substring(8,11); //Assigning index 8 to 10 of the input which to the prefix variable
 							for(int i = 0; i < 4; i++) {
 								if(prefix.equals(digicelPrefixes[i])) {
-									inFileStream = new Scanner(new File ("Digicel_Customers.txt"));
+									inFileStream = new Scanner(new File("Digicel_Customers.txt"));
 									break;
 								}
 								else if(prefix.equals(flowPrefixes[i])) {
@@ -362,19 +366,17 @@ public class Customer {
 								}				
 							}
 							if(inFileStream == null){
-								System.err.println("Telephone number entered is invalid.");
+								System.out.println("Telephone number entered is invalid.");
 								return 0;
 							}
 							while(inFileStream.hasNext()) {
-								//Telephone telephone = null;
 								String custID = inFileStream.next();
 								String lastName = inFileStream.next();
 								float creditBalance = inFileStream.nextFloat();
-								int telephone = inFileStream.nextInt();
+								String telephone = inFileStream.next();
 								String address = inFileStream.nextLine();
 
-								if(TelNumber.equals(Integer.toString(telephone))){ 
-									System.out.print("\nYour Credit Balance is: ");
+								if(TelNumber.equals(telephone)){ 
 									balance = creditBalance;
 								}
 								else{
