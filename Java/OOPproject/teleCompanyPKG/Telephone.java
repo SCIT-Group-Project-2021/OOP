@@ -22,10 +22,10 @@ public class Telephone {
 	}
 	
 	//Primary Constructor
-	public Telephone(int areacode, int prefix, int serial_number, int provider) throws InvalidTelephoneNumber{
+	public Telephone(int areacode, int prefix, int serial_number) throws InvalidTelephoneNumber{
 
 		try{
-			checkPrefix(prefix, provider);
+			checkPrefix(prefix);
 		}
 		catch(InvalidTelephoneNumber e){
 			throw e;
@@ -39,29 +39,25 @@ public class Telephone {
 
     //Checks if the prefix is valid
 	// TODO Remove provider from telephone parameters
-    public static void checkPrefix(int p, int provider) throws InvalidTelephoneNumber{
-        int prefixArray[];
+    public static void checkPrefix(int p) throws InvalidTelephoneNumber{
 		int digicelPrefixArray[] = {301, 302, 303, 304};
 		int flowPrefixArray[] = {601, 602, 603, 604};    
         int check = 0;
 
-		if(provider == 1){
-			prefixArray = digicelPrefixArray;
-		}			
-		else{
-			prefixArray = flowPrefixArray;
+		for(int i = 0; i < 4; i++) {
+			if(p == digicelPrefixArray[i]) {
+				check = 1;
+				break;
+			}
+			else if(p == flowPrefixArray[i]) {
+				check = 2;
+				break;
+			}				
 		}
-			
-		
-        for(int i = 0; i < 4; i++){
-            if(p == prefixArray[i]){
-                check = 1;
-                break;
-            }
-        }
 
-        if(check != 1){
+        if(check == 0){
 			throw new InvalidTelephoneNumber("Prefix is invalid"); 
+			
         }
 
 		System.out.println("Prefix is valid");

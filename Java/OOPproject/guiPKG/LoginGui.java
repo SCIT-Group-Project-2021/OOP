@@ -138,11 +138,13 @@ public class LoginGui {
         // #endregion
 
         // #region set Panel Backgrounds
-        imagePanel.setBackground(userPicColor);// was 222,235,252
+        imagePanel.setBackground(userPicColor);
         mainPanel.setBackground(userLogColor);
         // #endregion
 
         frame.add(loginPanel);
+
+        
 
     }
 

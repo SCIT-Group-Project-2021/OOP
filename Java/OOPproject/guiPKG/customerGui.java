@@ -4,27 +4,16 @@ import javax.swing.*;
 import javax.swing.text.MaskFormatter;
 
 import OOPproject.teleCompanyPKG.Customer;
+import OOPproject.teleCompanyPKG.InvalidMMICode;
+import OOPproject.teleCompanyPKG.InvalidTelephoneNumber;
+import OOPproject.teleCompanyPKG.InvalidVoucherNumber;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.text.ParseException;
 import java.awt.geom.RoundRectangle2D;
 
-// TODO uncomment this mess of warnings
-/*import java.text.ParseException;
-
-import javax.swing.text.MaskFormatter;
-
-import OOPproject.teleCompanyPKG.Flow;
-import OOPproject.teleCompanyPKG.InvalidTelephoneNumber;
-import OOPproject.teleCompanyPKG.ServiceProvider;
-import OOPproject.teleCompanyPKG.Telephone;
-import OOPproject.teleCompanyPKG.UniqueValueException;
-import OOPproject.teleCompanyPKG.Digicel;
-import OOPproject.teleCompanyPKG.Customer;*/
-
-
 public class customerGui {
-
     final int panelw = 1000/2;
     final int panelh = 600;
     final int uih = 25;
@@ -65,10 +54,17 @@ public class customerGui {
     private static JTextField voucherNumText;
     private static JTextField balanceMMIText;
 
+    private JFrame parentFrame;
+
     Customer cus;
 
-    // TODO CHange all class names to capital letters (Must follow the Java naming schemes)
+    // TODO Change all class names to capital letters (Must follow the Java naming schemes)
+    // TODO Add a customer welcome homepage? Like with Hello [Customer Name] or smth smth
+    // TODO Make customer frame wider
     public customerGui(int provider, JFrame frame, Customer c){
+
+        parentFrame = frame;
+
         frame.setShape(new RoundRectangle2D.Double(0, 0, panelw, panelh, 30, 30));
         frame.setSize(panelw, panelh);
         createPanel();
@@ -305,7 +301,13 @@ public class customerGui {
         useVoucherButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                cus.addCredit(voucherNumText.getText());
+                float creditBalance = 0;
+                try {
+                    creditBalance = cus.addCredit(voucherNumText.getText(), cus);
+                    JOptionPane.showMessageDialog(parentFrame,"$"+creditBalance + "0 has been added to your balance!","Credit Added Successfully",JOptionPane.INFORMATION_MESSAGE);
+                } catch (InvalidTelephoneNumber | InvalidVoucherNumber | InvalidMMICode e1) {
+                    JOptionPane.showMessageDialog(parentFrame,e1.getMessage(),"Error",JOptionPane.ERROR_MESSAGE);
+                } 
             }
         });
 
@@ -384,8 +386,12 @@ public class customerGui {
             public void actionPerformed(ActionEvent e) {
                float creditBalance = 0;
                // setCheckBalance("Value");
-               creditBalance = cus.checkBalance(balanceMMIText.getText());
-               setCheckBalance("$" + Float.toString(creditBalance));
+               try {
+                creditBalance = cus.checkBalance(balanceMMIText.getText());
+            } catch (InvalidMMICode | InvalidTelephoneNumber e1) {
+                JOptionPane.showMessageDialog(parentFrame,e1.getMessage(),"Error",JOptionPane.ERROR_MESSAGE);
+            }
+               setCheckBalance("$" + Float.toString(creditBalance) + "0");
             }
         });
 

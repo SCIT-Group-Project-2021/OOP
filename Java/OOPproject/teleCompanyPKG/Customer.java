@@ -25,13 +25,21 @@ public class Customer {
 		this.creditBalance = 0;
 	}
 
-	//Primary Constructor
+	//Primary Constructor - for new customers
 	public Customer(String custID, String name, String address, Telephone telephone){
 		this.custID = custID;
 		this.name = name;
 		this.address = address;
 		this.telephone = telephone;
 		this.creditBalance = 100;
+	}
+	//Primary Constructor - for existing customers
+	public Customer(String custID, String name, String address, Telephone telephone, float creditBalance){
+		this.custID = custID;
+		this.name = name;
+		this.address = address;
+		this.telephone = telephone;
+		this.creditBalance = creditBalance;
 	}
 	
 	//Copy constructor - Is this necessary?
@@ -76,7 +84,6 @@ public class Customer {
 		this.telephone = telephone;
 	}
 
-	// TODO This returns 100 no matter what
 	public float getCreditBalance() {
 		return creditBalance;
 	}
@@ -85,8 +92,9 @@ public class Customer {
 		this.creditBalance = creditBalance;
 	}
 	
+	// TODO Add this to the UI? If not, remove it as well as the checkBalancePrompt
 	public void addCreditPrompt() {
-		System.out.println("\nIf you wish to add credit, enter the following information. else press ### to end.");
+		System.out.println("\nIf you wish to add credit, enter the following information.");
 		System.out.println("\n*121* followed by the 13-digit card number followed by '*' then your telphone number.");
 		System.out.println("\nlastly, enter the number sign(#). That is: *121*[card number]*[customer telephone number]#e.g. *121*123456789012*000000000#.");		
 	}
@@ -101,7 +109,7 @@ public class Customer {
 	
 	// TODO Remove checks with exception throws
 	@SuppressWarnings({"unused"})
-	public void addCredit(String mmiCode) {
+	public float addCredit(String mmiCode, Customer c) throws InvalidTelephoneNumber, InvalidVoucherNumber, InvalidMMICode{
 		String voucherNum = "", digicelPrefixArray[] = {"301", "302", "303", "304"};  
 		String flowPrefixArray[] = {"601", "602", "603", "604"}; 
 		String addCreditPin = "*121*", endSpecifier = "#", midSpecifier = "*";
@@ -117,43 +125,38 @@ public class Customer {
 		boolean check = false;
 		String userTeleNumber = "";
 		try{		
-			//input = new Scanner(System.in);
 			length = mmiCode.length();
 
-			// TODO Length if statement
-			if(length != 30) { //29 represents the number of digits and symbols that are in the String 
-				System.err.println("Invalid length");
-				/*addCreditPrompt();
-				mmiCode = input.nextLine();
-				length = mmiCode.length();*/
-			}
-			else 
-			{
-				voucherNum = mmiCode.substring(5,18); //this should assign the voucher number to the variable credit 
-				String prefix = mmiCode.substring(22, 25);
-				
-				//Checking if the mmi code is valid
-				if(addCreditPin.equals(mmiCode.substring(0,5))) {
-					if(midSpecifier.equals(Character.toString(mmiCode.charAt(18)))) {
-						if(endSpecifier.equals(Character.toString(mmiCode.charAt(length - 1))) ) {
-							//Check if the prefix number is valid
-							for(int i = 0; i < 4; i++) {
-								if(prefix.equals(digicelPrefixArray[i])) {
-									creditFile = new File("Digicel_CardInformation.txt");
-									customerFile = new File ("Digicel_Customers.txt");
-									check = true;
-									break;
-								}
-								else if(prefix.equals(flowPrefixArray[i])){
-									creditFile = new File ("Flow_CardInformation.txt");
-									customerFile = new File("Flow_Customers.txt");
-									check = true;
-									break;
-								}
+			voucherNum = mmiCode.substring(5,18); //this should assign the voucher number to the variable credit 
+
+			// using customer prefix instead because we cant add credit from flow to digicel and vice versa
+			// TODO Might have to remove customer log in
+			String prefix = Integer.toString(c.getTelephone().getPrefix()); // mmiCode.substring(22, 25);
+			
+			//Checking if the mmi code is valid
+			if(addCreditPin.equals(mmiCode.substring(0,5))) {
+				if(midSpecifier.equals(Character.toString(mmiCode.charAt(18)))) {
+					if(endSpecifier.equals(Character.toString(mmiCode.charAt(length - 1))) ) {
+						//Check if the prefix number is valid
+						for(int i = 0; i < 4; i++) {
+							if(prefix.equals(digicelPrefixArray[i])) {
+								creditFile = new File("Digicel_CardInformation.txt");
+								customerFile = new File ("Digicel_Customers.txt");
+								check = true;
+								break;
+							}
+							else if(prefix.equals(flowPrefixArray[i])){
+								creditFile = new File ("Flow_CardInformation.txt");
+								customerFile = new File("Flow_Customers.txt");
+								check = true;
+								break;
 							}
 						}
 					}
 				}
+			}
+			else{
+				throw new InvalidMMICode("Invalid MMI code");
 			}
 
 			//Check if the voucher number and telephone number is valid
@@ -165,22 +168,18 @@ public class Customer {
 					while(inFileStream.hasNext()) {
 						creditNumber = inFileStream.next();
 						voucherBalance = inFileStream.nextFloat();
-						status = inFileStream.nextLine();
+						status = inFileStream.next();
 						
 						// Changed this from check to vouchCheck because if you use check your just overriding everything else
 						if(voucherNum.equals(creditNumber)) {
-							if(status.equals("Available") || status.equals("Available")) {
-								
+							if(status.equals("Available") || status.equals("available")) {
 								vouchCheck = true;
-								System.out.println("\nAn amount of $" + voucherBalance + " was added to your account.\n" + "\t" + vouchCheck);
 								break;
 							}
 							else{
-								vouchCheck = false;
-								System.err.println("Invalid voucher number" + "\t" + vouchCheck);
-								break;
+								throw new InvalidVoucherNumber("The voucher number entered has already been used");
 							}
-						}		
+						}	
 					}
 					inFileStream.close();
 
@@ -189,7 +188,6 @@ public class Customer {
 					float creditBalance = 0;
 					String telephone = "";
 					String address = "";
-					//inFileStream is closed in the finally block
 					inFileStream = new Scanner(customerFile);
 					while(inFileStream.hasNext()) {
 						custID = inFileStream.next();
@@ -198,24 +196,12 @@ public class Customer {
 						telephone = inFileStream.next();
 						address = inFileStream.nextLine();
 						
-
-						/*
-						telephone.setPrefix(inFileStream.nextInt());
-						telephone.setAreacode(inFileStream.nextInt());
-						telephone.setSerial_number(inFileStream.nextInt());
-						
-						String custNumber = String.valueOf(telephone.getPrefix()).concat(String.valueOf(telephone.getAreacode())).concat(String.valueOf(telephone.getSerial_number()));*/
 						// Changed this from check to numcheck because if you use check your just overriding everything else
 						userTeleNumber =  mmiCode.substring(19,29);
 						if(userTeleNumber.equals(telephone)){ 
 							numCheck = true;
 							break;
-						}
-						else{
-							numCheck = false;
-							System.err.println("Invalid telephone number");
-							break;
-						}		
+						}	
 					}	
 					inFileStream.close();
 				}
@@ -224,31 +210,29 @@ public class Customer {
 				}
 				
 			}
-			else{
-				System.err.println("Invalid MMI code");
-			}
 
-			// TODO Did the multiple checks to Stop credit being added because check was passed
-			if(check == true){
-				if (numCheck == true) {
-					if (vouchCheck == true) {
-						updateCreditFile(voucherNum, creditFile);
-						updateCustomerFile(voucherBalance, customerFile, userTeleNumber);
-						// TODO Dialogue box to say it worked
-					}
+			// TODO Did the multiple checks to stop credit being added because check was passed
+			if (numCheck == true) {
+				if (vouchCheck == true) {
+					updateCreditFile(voucherNum, creditFile);
+					updateCustomerFile(voucherBalance, customerFile, userTeleNumber);
+					return voucherBalance;
 				}
-				
-			}	
-		}
-        catch (Exception e) {
-            e.getStackTrace();
-			System.err.println("An unexpected error occured.");
+				else{
+					throw new InvalidVoucherNumber("The voucher number entered is invalid");
+				}
+			}
+			else{
+				throw new InvalidTelephoneNumber("The telephone number entered does not exist");
+			}
 		}
 		finally {
 			if (inFileStream!= null) {
 				inFileStream.close();
 			}
 		}
+
+		
 	}
 
 	public void updateCreditFile(String voucherNum, File creditFile){
@@ -351,7 +335,7 @@ public class Customer {
 
 	// TODO Create exceptions f
 	@SuppressWarnings({"unused"})
-	public float checkBalance(String balanceChecker) {
+	public float checkBalance(String balanceChecker) throws InvalidMMICode, InvalidTelephoneNumber{
 		String TelNumber = "000000000", prefix, areaCode = "876", checkBalancePin = "*120*", endSpecifier = "#";
 		String digicelPrefixes[] = {"301", "302", "303", "304"}, flowPrefixes[] = {"601", "602", "603", "604"};  
 		float balance = 0;
@@ -379,8 +363,7 @@ public class Customer {
 								}				
 							}
 							if(inFileStream == null){
-								System.out.println("Telephone number entered is invalid.");
-								return 0;
+								throw new InvalidTelephoneNumber("The telephone number is invalid");
 							}
 							while(inFileStream.hasNext()) {
 								String custID = inFileStream.next();
@@ -393,7 +376,7 @@ public class Customer {
 									balance = creditBalance;
 								}
 								else{
-									System.out.println("Telephone Number: " + TelNumber + "is not assigned or does not exists.");
+									throw new InvalidTelephoneNumber("The telephone number entered does not exist");
 								}
 							}
 						}
@@ -401,8 +384,8 @@ public class Customer {
 				}
 			}
 			else{
-				System.err.println("Invalid MMI code");
-				return balance;
+				throw new InvalidMMICode("Invalid MMI code");
+				
 				//checkBalancePrompt();
 				//balanceChecker = input.nextLine();
 			}
@@ -410,10 +393,6 @@ public class Customer {
 		catch(FileNotFoundException e){
 			System.err.println("File not found.");
 			e.getStackTrace();
-			return balance;
-		}
-		catch (Exception e) {
-			System.err.println("Sorry, an unexpected error occured.");
 			return balance;
 		}
 		finally {
@@ -452,7 +431,7 @@ public class Customer {
 				String address = inFileStream.nextLine();
 
 				if(tele.equals(telephone) && lastNameEntered.equals(lastName)){ 
-					c = new Customer(custID, lastName, address, new Telephone(Integer.parseInt(telephone.substring(0,3)), Integer.parseInt(telephone.substring(3,6)), Integer.parseInt(telephone.substring(6,10)),provider));
+					c = new Customer(custID, lastName, address, new Telephone(Integer.parseInt(telephone.substring(0,3)), Integer.parseInt(telephone.substring(3,6)), Integer.parseInt(telephone.substring(6,10))), creditBalance);
 				}
 			}
 		}

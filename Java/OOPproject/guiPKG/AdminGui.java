@@ -94,12 +94,14 @@ public class AdminGui {
     // #endregion
 
     public AdminGui(int provider, JFrame frame) {
+        
+        totalNumberCheck();
 
         createPanel();
         parentFrame = frame;
         phoneProvider = provider;
         // #region Are for variables to be assigned
-        // Shoul i just leave this as the values and remove the individual rgb constants
+        // Should i just leave this as the values and remove the individual rgb constants
         // or not?
 
         flowColor = new Color(48, 60, 120);
@@ -114,9 +116,6 @@ public class AdminGui {
         primaryPanel = new JPanel();
 
         // Assigns default image to variable
-
-        
-
         switch (provider) {
         case 1:
             digicelLogoIcon = new ImageIcon(
@@ -191,6 +190,12 @@ public class AdminGui {
         generalPanel.setBounds(50, 50, 700, 600);
         generalPanel.setOpaque(false);
 
+    }
+
+    public void totalNumberCheck(){
+        int totalTeleCount = Digicel.getDigicelCustomerCount() + Flow.getFlowCustomerCount();
+        //ServiceProvider.savePreferences(totalTeleCount);
+        ServiceProvider.setTotalCustomerCount(totalTeleCount);
     }
 
     public void createPanel() {
@@ -391,7 +396,7 @@ public class AdminGui {
             JOptionPane.showMessageDialog(parentFrame, "No records found!","Customer Table",JOptionPane.ERROR_MESSAGE);
         }
          
-        totalCustomers = new JLabel("Total Number of Customers: " + adminUser.getTotalCustomerCount());
+        totalCustomers = new JLabel("Total Number of Customers: " + ServiceProvider.getTotalCustomerCount());
         totalCustomers.setBounds(100, 450, 200, 40);
         totalCustomers.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, textColor));
         totalCustomers.setOpaque(false);
@@ -738,7 +743,7 @@ public class AdminGui {
                 String returnString = "";
                 if(!customerIdText.getText().equals("   -   -   ") && !lastNameText.getText().equals("User Last Name") && !addressText.getText().equals("Address") && !phoneText.getText().equals("876-000-0000")){
                     try{
-                        c = new Customer(customerIdText.getText(), lastNameText.getText(), addressText.getText(), new Telephone(Integer.parseInt(phoneText.getText().substring(0,3)), Integer.parseInt(phoneText.getText().substring(4,7)), Integer.parseInt(phoneText.getText().substring(8,12)), phoneProvider));
+                        c = new Customer(customerIdText.getText(), lastNameText.getText(), addressText.getText(), new Telephone(Integer.parseInt(phoneText.getText().substring(0,3)), Integer.parseInt(phoneText.getText().substring(4,7)), Integer.parseInt(phoneText.getText().substring(8,12))));
                         returnString = adminUser.addCustomer(c);
                         if(returnString != ""){
                             // TODO Check if this is still necessary

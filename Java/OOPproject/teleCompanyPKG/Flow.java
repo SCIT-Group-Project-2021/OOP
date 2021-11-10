@@ -39,9 +39,42 @@ public class Flow extends ServiceProvider {
 	}
 
 	public static int getFlowCustomerCount() {
-		return flowCustomerCount;
+		Scanner inFileStream = null;
+		String custID = "";
+	    String name = "";
+		float creditBalance = 0;
+	    String telephone = "";
+		String address = "";
+		flowCustomerCount = 0;
+		try {
+			inFileStream = new Scanner(new File("Flow_Customers.txt"));
+			while (inFileStream.hasNext()) {
+				custID = inFileStream.next();
+				name = inFileStream.next();
+				creditBalance = inFileStream.nextFloat();
+				telephone = inFileStream.next();
+				address = inFileStream.nextLine();
+				flowCustomerCount++;
+			}	
+			//savePreferences(flowCustomerCount);
+			return flowCustomerCount;
+		} 
+		catch (FileNotFoundException e) {
+			e.printStackTrace();
+			return flowCustomerCount;
+		} 
+		
+		finally{
+			if(inFileStream != null) {
+				try {
+					inFileStream.close();
+				}catch(Exception e) {
+					System.err.println("\nAn unexpected error occured.");
+				}	
+			}
+		}
 	}
-
+	
 	public int getProvidorCustomerCount() {
 		return flowCustomerCount;
 	}
@@ -51,16 +84,16 @@ public class Flow extends ServiceProvider {
 	}
 
 	// #TODO savePreferences and readPreferences override service providor and make it so totalCustomerCount is overridden
-	// Used to store customer count value persistently without using a file
-	public void savePreferences(int value) {
+	/* Used to store customer count value persistently without using a file
+	public static void savePreferences(int value) {
 		Preferences prefs = Preferences.userNodeForPackage(Flow.class);                
 		prefs.putInt("flowCustomerCount", value); 
 	}
 
-	 public int readPreferences() {
+	 public static int readPreferences() {
 		Preferences prefs = Preferences.userNodeForPackage(Flow.class);
 		return prefs.getInt("flowCustomerCount", 0);  
-	}  
+	}  */
 
 	// TODO change parameter type in OOAD
 	@SuppressWarnings({"unused"})
@@ -181,8 +214,6 @@ public class Flow extends ServiceProvider {
 	
 	public String addCustomer(Customer c) throws UniqueValueException { 
 		FileWriter outFileStream = null;
-		Scanner input = null;
-		input = new Scanner(System.in);
 		try {
 			outFileStream = new FileWriter(new File("Flow_Customers.txt"), true);
 			try {
@@ -203,7 +234,7 @@ public class Flow extends ServiceProvider {
 			System.out.println("Information saved successfully!");
 			super.addCustomer(c);
 			flowCustomerCount++;
-			savePreferences(flowCustomerCount);
+			setFlowCustomerCount(flowCustomerCount);
 			return("");
 			
 		}
@@ -219,9 +250,6 @@ public class Flow extends ServiceProvider {
 				}catch(Exception e) {
 					System.err.println("\nAn unexpected error occured.");
 				}		
-			}
-			if(input != null) {
-				input.close();
 			}
 		}
 		
@@ -278,8 +306,6 @@ public class Flow extends ServiceProvider {
 		String address = "";
 		int i = 0;
 		String data[][] = null;
-		
-		flowCustomerCount = readPreferences();
 
 		if(getFlowCustomerCount() != 0){
 			data = new String[getFlowCustomerCount()][5];

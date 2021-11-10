@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.util.Scanner;
 import java.util.prefs.*;
 public class Digicel extends ServiceProvider {
+
 	private static int numOfBranches = 0;
 	private static int digicelCustomerCount = 0;
 	private static int digicelCreditRecordCount = 0;
@@ -38,7 +39,40 @@ public class Digicel extends ServiceProvider {
 	}
 
 	public static int getDigicelCustomerCount() {
-		return digicelCustomerCount;
+		Scanner inFileStream = null;
+		String custID = "";
+	    String name = "";
+		float creditBalance = 0;
+	    String telephone = "";
+		String address = "";
+		digicelCustomerCount = 0;
+		try {
+			inFileStream = new Scanner(new File("Digicel_Customers.txt"));
+			while (inFileStream.hasNext()) {
+				custID = inFileStream.next();
+				name = inFileStream.next();
+				creditBalance = inFileStream.nextFloat();
+				telephone = inFileStream.next();
+				address = inFileStream.nextLine();
+				digicelCustomerCount++;
+			}	
+			setDigicelCustomerCount(digicelCustomerCount);
+			return digicelCustomerCount;
+		} 
+		catch (FileNotFoundException e) {
+			e.printStackTrace();
+			return digicelCustomerCount;
+		} 
+		
+		finally{
+			if(inFileStream != null) {
+				try {
+					inFileStream.close();
+				}catch(Exception e) {
+					System.err.println("\nAn unexpected error occured.");
+				}	
+			}
+		}
 	}
 
 	public int getProvidorCustomerCount() {
@@ -51,15 +85,16 @@ public class Digicel extends ServiceProvider {
 
 	// #TODO savePreferences and readPreferences override service providor and make it so totalCustomerCount is overridden
 	// Used to store customer count value persistently without using a file
-	public void savePreferences(int value) {
+	/* TODO Remove prefreferences sinces it checks everytime admin is opened?
+	public static void savePreferences(int value) {
 		Preferences prefs = Preferences.userNodeForPackage(Digicel.class);                
 		prefs.putInt("digicelCustomerCount", value); 
 	}
 
-	 public int readPreferences() {
+	 public static int readPreferences() {
 		Preferences prefs = Preferences.userNodeForPackage(Digicel.class);
 		return prefs.getInt("digicelCustomerCount", 0);  
-	}  
+	}  */
 
 	public void saveCreditRecordsCount(int value) {
 		Preferences prefs = Preferences.userNodeForPackage(Digicel.class);                
@@ -185,8 +220,6 @@ public class Digicel extends ServiceProvider {
 	
 	public String addCustomer(Customer c) throws UniqueValueException { 
 		FileWriter outFileStream = null;
-		Scanner input = null;
-		input = new Scanner(System.in);
 		try {
 			outFileStream = new FileWriter(new File("Digicel_Customers.txt"), true);
 			try {
@@ -203,9 +236,8 @@ public class Digicel extends ServiceProvider {
 			System.out.println("Information saved successfully!");
 			super.addCustomer(c);
 			digicelCustomerCount++;
-			savePreferences(digicelCustomerCount);
+			setDigicelCustomerCount(digicelCustomerCount);
 			return("");
-			
 		}
 		catch(IOException e){
 			e.getStackTrace();
@@ -219,9 +251,6 @@ public class Digicel extends ServiceProvider {
 				}catch(Exception e) {
 					System.err.println("\nAn unexpected error occured.");
 				}		
-			}
-			if(input != null) {
-				input.close();
 			}
 		}
 		
@@ -277,8 +306,6 @@ public class Digicel extends ServiceProvider {
 		String address = "";
 		int i = 0;
 		String data[][] = null;
-
-		digicelCustomerCount = readPreferences();
 		
 		if(getDigicelCustomerCount() != 0){
 			data = new String[getDigicelCustomerCount()][5];

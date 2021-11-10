@@ -45,35 +45,36 @@ public abstract class ServiceProvider {
 		return address;
 	}
 
-
 	public void setAddress(String address) {
 		this.address = address;
 	}
 
-	// #TODO Function to initialize Customer count and do the re-count
+	public static void setTotalCustomerCount(int num) {
+		totalCustomerCount = num;
+	}
 
 	//Displays the total number of customers across all service providers
-	public int getTotalCustomerCount() {
-		totalCustomerCount = readPreferences();
+	public static int getTotalCustomerCount() {
+		//totalCustomerCount = readPreferences();
 		return totalCustomerCount;
 	}
 
-	// #TODO figure out a better way to implement this
+	// TODO figure out a better way to implement this
 	public int getProvidorCustomerCount() {
-		totalCustomerCount = readPreferences();
+		//totalCustomerCount = readPreferences();
 		return totalCustomerCount;
 	}
 
-	// Used to store customer count value persistently without using a file
-	public void savePreferences(int value) {
+	/* Used to store customer count value persistently without using a file
+	public static void savePreferences(int value) {
 		Preferences prefs = Preferences.userNodeForPackage(ServiceProvider.class);                
 		prefs.putInt("totalCustomerCount", value); 
 	}
 
-	 public int readPreferences() {
+	 public static int readPreferences() {
 		Preferences prefs = Preferences.userNodeForPackage(ServiceProvider.class);
 		return prefs.getInt("totalCustomerCount", 0);  
-	}  
+	}  */
 	
 	//Displays the total number of customers across all service providers
 	// TODO Create a button for this in admin GUI and remove from this class
@@ -84,7 +85,7 @@ public abstract class ServiceProvider {
 	//Add customer method, will be overrided in child classes
 	public String addCustomer(Customer c) throws UniqueValueException {
 		totalCustomerCount++;
-		savePreferences(totalCustomerCount);
+		setTotalCustomerCount(totalCustomerCount);
 		return "";
 	}
 	
