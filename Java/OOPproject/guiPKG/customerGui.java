@@ -19,8 +19,8 @@ import OOPproject.teleCompanyPKG.InvalidTelephoneNumber;
 import OOPproject.teleCompanyPKG.ServiceProvider;
 import OOPproject.teleCompanyPKG.Telephone;
 import OOPproject.teleCompanyPKG.UniqueValueException;
-import OOPproject.teleCompanyPKG.Digicel;
-import OOPproject.teleCompanyPKG.Customer;*/
+import OOPproject.teleCompanyPKG.Digicel;*/
+import OOPproject.teleCompanyPKG.Customer;
 
 
 public class customerGui {
@@ -63,6 +63,7 @@ public class customerGui {
     private static JButton refreshCheckBalance;
 
     private static JTextField voucherNumText;
+    Customer cus;
 
     public customerGui(int provider, JFrame frame, Customer c){
         frame.setShape(new RoundRectangle2D.Double(0, 0, panelw, panelh, 30, 30));
@@ -71,7 +72,7 @@ public class customerGui {
         // #region Are for variables to be assigned
         // Shoul i just leave this as the values and remove the individual rgb constants
         // or not?
-
+        cus = new Customer(c);
         flowColor = new Color(48, 60, 120);
         digicelColor = Color.decode("#F3f3f3"); //250, 253, 255
         
@@ -245,11 +246,10 @@ public class customerGui {
 
         try {
             MaskFormatter fmt;
-            fmt = new MaskFormatter("#############");
+            fmt = new MaskFormatter("*###*#############*##########*");
+            fmt.setValidCharacters("0123456789*#");
             voucherNumText = new JFormattedTextField(fmt);  
-            voucherNumText.setText("0000000000000");
-
-            
+            voucherNumText.setText("0000000000000");   
         } 
         catch (ParseException e) {
             e.getStackTrace();
@@ -298,7 +298,7 @@ public class customerGui {
         useVoucherButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // TODO Add Voucher
+                cus.addCredit(voucherNumText.getText());
             }
         });
 

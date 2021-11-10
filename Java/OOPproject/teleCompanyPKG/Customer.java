@@ -98,7 +98,7 @@ public class Customer {
 	}
 	
 	
-
+	// TODO Remove checks with exception throws
 	@SuppressWarnings({"unlikely-arg-type", "unused"})
 	public void addCredit(String mmiCode) {
 		String voucherNum = "", digicelPrefixArray[] = {"301", "302", "303", "304"};  
@@ -115,7 +115,7 @@ public class Customer {
 		try{		
 			//input = new Scanner(System.in);
 			length = mmiCode.length();
-			if(length != 29) { //29 represents the number of digits and symbols that are in the String 
+			if(length != 30) { //29 represents the number of digits and symbols that are in the String 
 				System.err.println("Invalid length");
 				/*addCreditPrompt();
 				mmiCode = input.nextLine();
@@ -123,24 +123,24 @@ public class Customer {
 			}
 			else 
 			{
-				voucherNum = mmiCode.substring(5,17); //this should assign the voucher number to the variable credit 
+				voucherNum = mmiCode.substring(5,18); //this should assign the voucher number to the variable credit 
 				String prefix = mmiCode.substring(22, 25);
 				
 				//Checking if the mmi code is valid
-				if(addCreditPin.equals(mmiCode.substring(0,4))) {
-					if(midSpecifier.equals(mmiCode.charAt(18))) {
-						if(endSpecifier.equals(mmiCode.charAt(length - 1)) ) {
+				if(addCreditPin.equals(mmiCode.substring(0,5))) {
+					if(midSpecifier.equals(Character.toString(mmiCode.charAt(18)))) {
+						if(endSpecifier.equals(Character.toString(mmiCode.charAt(length - 1))) ) {
 							//Check if the prefix number is valid
 							for(int i = 0; i < 4; i++) {
 								if(prefix.equals(digicelPrefixArray[i])) {
-									creditFile = new File("Digicel_CardInfomation");
-									customerFile = new File ("Digicel_Customers");
+									creditFile = new File("Digicel_CardInformation.txt");
+									customerFile = new File ("Digicel_Customers.txt");
 									check = true;
 									break;
 								}
 								else if(prefix.equals(flowPrefixArray[i])){
-									creditFile = new File ("Flow_CardInformation");
-									customerFile = new File("Flow_Customers");
+									creditFile = new File ("Flow_CardInformation.txt");
+									customerFile = new File("Flow_Customers.txt");
 									check = true;
 									break;
 								}
@@ -151,50 +151,69 @@ public class Customer {
 			}
 
 			//Check if the voucher number and telephone number is valid
-			if(check = true) {
-				inFileStream = new Scanner(creditFile);
-				while(inFileStream.hasNext()) {
-					int creditNumber = inFileStream.nextInt();
-					voucherBalance = inFileStream.nextFloat();
-					String status = inFileStream.nextLine();
-					
-					if(voucherNum.equals(String.valueOf(creditNumber))) {
-						if(status != "Used" || status != "used") {
-						//System.out.println("\nAn amount of $" + balance + " was added to your account.\n");
+			if(check == true) {
+				String creditNumber = "";
+				String status = "";
+				try{
+					inFileStream = new Scanner(creditFile);
+					while(inFileStream.hasNext()) {
+						creditNumber = inFileStream.next();
+						voucherBalance = inFileStream.nextFloat();
+						status = inFileStream.nextLine();
+						
+						if(voucherNum.equals(creditNumber)) {
+							if(status != "Used" || status != "used") {
+							//System.out.println("\nAn amount of $" + balance + " was added to your account.\n");
+								check = true;
+								break;
+							}
+							else{
+								check = false;
+								System.err.println("Invalid voucher number");
+								break;
+							}
+						}		
+					}
+					inFileStream.close();
+
+					String custID = "";
+					String lastName = "";
+					float creditBalance = 0;
+					String telephone = "";
+					String address = "";
+					//inFileStream is closed in the finally block
+					inFileStream = new Scanner(customerFile);
+					while(inFileStream.hasNext()) {
+						custID = inFileStream.next();
+						lastName = inFileStream.next();
+						creditBalance = inFileStream.nextFloat();
+						telephone = inFileStream.next();
+						address = inFileStream.nextLine();
+						
+
+						/*
+						telephone.setPrefix(inFileStream.nextInt());
+						telephone.setAreacode(inFileStream.nextInt());
+						telephone.setSerial_number(inFileStream.nextInt());
+						
+						String custNumber = String.valueOf(telephone.getPrefix()).concat(String.valueOf(telephone.getAreacode())).concat(String.valueOf(telephone.getSerial_number()));*/
+						userTeleNumber =  mmiCode.substring(19,29);
+						if(userTeleNumber.equals(telephone)){ 
 							check = true;
+							break;
 						}
 						else{
 							check = false;
-							System.err.println("Invalid voucher number");
-						}
-					}		
+							System.err.println("Invalid telephone number");
+							break;
+						}		
+					}	
+					inFileStream.close();
 				}
-
-				//inFileStream is closed in the finally block
-				inFileStream = new Scanner(customerFile);
-				while(inFileStream.hasNext()) {
-					String custID = inFileStream.next();
-					String lastName = inFileStream.next();
-					float creditBalance = inFileStream.nextFloat();
-					int telephone = inFileStream.nextInt();
-					String address = inFileStream.nextLine();
-					
-
-					/*
-					telephone.setPrefix(inFileStream.nextInt());
-					telephone.setAreacode(inFileStream.nextInt());
-					telephone.setSerial_number(inFileStream.nextInt());
-					
-					String custNumber = String.valueOf(telephone.getPrefix()).concat(String.valueOf(telephone.getAreacode())).concat(String.valueOf(telephone.getSerial_number()));*/
-					userTeleNumber =  mmiCode.concat(mmiCode.substring(19,29));
-					if(userTeleNumber.equals(telephone)){ 
-						check = true;
-					}
-					else{
-						check = false;
-						System.err.println("Invalid telephone number");
-					}		
-				}	
+				catch(FileNotFoundException e){
+					e.getMessage();
+				}
+				
 			}
 			else{
 				System.err.println("Invalid MMI code");
@@ -203,6 +222,7 @@ public class Customer {
 			if(check = true){
 				updateCreditFile(voucherNum, creditFile);
 				updateCustomerFile(voucherBalance, customerFile, userTeleNumber);
+				System.out.println("Ayyyee credit added.");
 			}	
 		}
         catch (Exception e) {
@@ -218,24 +238,31 @@ public class Customer {
 
 	public void updateCreditFile(String voucherNum, File creditFile){
 		FileWriter outFileStream = null;
-		File creditTempFile = new File("temp.txt");
+		File creditTempFile = new File("tempCredit.txt");
 		Scanner inFileStream = null;
+		String creditNumber = "";
+		float recordBalance = 0;
+		String status = "";
 		try { 
 			inFileStream = new Scanner(creditFile);
 			outFileStream = new FileWriter(creditTempFile, true);
 			while(inFileStream.hasNext()) {
-				int creditNumber = inFileStream.nextInt();
-				float recordBalance = inFileStream.nextFloat();
-				String status = inFileStream.nextLine();
+				creditNumber = inFileStream.next();
+				recordBalance = inFileStream.nextFloat();
+				status = inFileStream.next();
 
-				if(Integer.toString(creditNumber) == voucherNum){
+				if(creditNumber.equals(voucherNum)){
 					status = "Used";
 				}
 				String record = creditNumber + "\t" + recordBalance + "\t" + status +  "\n";	
 				outFileStream.write(record);
 			}
 
-			creditTempFile.renameTo(creditFile);
+			inFileStream.close();
+			outFileStream.close();
+			boolean successD = creditFile.delete();
+			boolean success = creditTempFile.renameTo(creditFile);
+			System.out.println("Deletion successful = " + successD + "\nCredit file: " + success);
 		}
 		catch(FileNotFoundException e){
 			e.getStackTrace();
@@ -245,7 +272,14 @@ public class Customer {
 		}
 		finally{
 			try{
-				outFileStream.close();
+				if(outFileStream!= null){
+					try{
+						outFileStream.close();
+					}
+					catch(Exception e){
+						e.getStackTrace();
+					}
+				}
 			}
 			catch(Exception e){
 				e.getStackTrace();
@@ -256,26 +290,30 @@ public class Customer {
 	public void updateCustomerFile(float voucherBalance, File customerFile, String userTeleNumber){
 		Scanner inFileStream = null;
 		FileWriter outFileStream = null;
-		File cusTempFile = new File("temp.txt");
+		File cusTempFile = new File("tempCustomer.txt");
+
 		try{
+			inFileStream = new Scanner(customerFile);
+			outFileStream = new FileWriter(cusTempFile, true);
 			while(inFileStream.hasNext()){
-				inFileStream = new Scanner(customerFile);
-				outFileStream = new FileWriter(cusTempFile, true);
 				String custID = inFileStream.next();
 				String lastName = inFileStream.next();
 				float creditBalance = inFileStream.nextFloat();
-				int telephone = inFileStream.nextInt();
+				String telephone = inFileStream.next();
 				String address = inFileStream.nextLine();
 
-				if(userTeleNumber.equals(Integer.toString(telephone))){ 
+				if(userTeleNumber.equals(telephone)){ 
 					creditBalance += voucherBalance;
 				}
 
 				String record = custID + "\t" + lastName + "\t" + creditBalance + "\t" + telephone + "\t" +  address +  "\n";	
 				outFileStream.write(record);
 			}
-			
-			cusTempFile.renameTo(customerFile);
+			inFileStream.close();
+			outFileStream.close();
+			boolean successD = customerFile.delete();
+			boolean success = cusTempFile.renameTo(customerFile);
+			System.out.println("Customer Delete success: " + successD+ "\nCustomer file: " + success);
 		}
 		catch(FileNotFoundException e) {
 			System.out.println("\nFile not found.");
@@ -377,6 +415,7 @@ public class Customer {
 	// TODO Check for telephone being taken in as a string (needs to be changed from int)
 	// TODO Should this stay static or would using it on the object make more sense?
 	// If so the if statement when customer is found would have to be changed
+	//TODO Update it so that capital/common letters do not interfere with the log in
 	@SuppressWarnings({"unused"})
 	public static Customer search(int provider, String lastNameEntered, String tele){
 		boolean bool = false;
@@ -425,8 +464,7 @@ public class Customer {
 		return c;
 	}
 	public String toString() {
-		return "\nCustomer ID: " + getCustID() + "\nSurname: " + getName() + "\nAddress: "
-				+ getAddress() + "\nTelephone: " + getTelephone() + "\nCredit Balance: " + getCreditBalance();
+		return "\nCustomer ID: " + getCustID() + "\nSurname: " + getName() + "\nAddress: " + getAddress() + "\nTelephone: " + getTelephone() + "\nCredit Balance: " + getCreditBalance();
 	}
 		
 		

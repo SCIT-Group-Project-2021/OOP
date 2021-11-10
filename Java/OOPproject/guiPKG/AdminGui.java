@@ -555,6 +555,8 @@ public class AdminGui {
         });
 
         primaryPanel.add(generalPanel);
+
+        
     }
 
     private void showNewUserForm() {
