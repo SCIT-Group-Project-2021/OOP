@@ -163,10 +163,10 @@ public class AdminGui {
         addCreateCreditButton();
         addViewCreditButton();
         addLogOutButton(frame);
-        uiElements.addExitButton();
-        uiElements.exitButton.setBounds(755, 0, 45, 45);
-        primaryPanel.add(uiElements.exitButton);
-        uiElements.exitButton.setForeground(textColor);
+        GuiElements.addExitButton();
+        GuiElements.exitButton.setBounds(755, 0, 45, 45);
+        primaryPanel.add(GuiElements.exitButton);
+        GuiElements.exitButton.setForeground(textColor);
 
         // #endregion
 
@@ -522,7 +522,7 @@ public class AdminGui {
         randomizeVoucherButton.setForeground(textColor);
         randomizeVoucherButton.setFont(Oswald);
         randomizeVoucherButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        randomizeVoucherButton.setBorder(new uiElements.RoundedBorder(25));
+        randomizeVoucherButton.setBorder(new GuiElements.RoundedBorder(25));
         randomizeVoucherButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -549,7 +549,7 @@ public class AdminGui {
         createVoucherButton.setForeground(textColor);
         createVoucherButton.setFont(Oswald);
         createVoucherButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        createVoucherButton.setBorder(new uiElements.RoundedBorder(25));
+        createVoucherButton.setBorder(new GuiElements.RoundedBorder(25));
         
         generalPanel.add(voucherNumText);
         generalPanel.add(randomizeVoucherButton);
@@ -735,7 +735,7 @@ public class AdminGui {
         addUserButton.setForeground(textColor);
         addUserButton.setFont(Oswald);
         addUserButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        addUserButton.setBorder(new uiElements.RoundedBorder(25));
+        addUserButton.setBorder(new GuiElements.RoundedBorder(25));
         
         generalPanel.add(customerIdLabel);
         generalPanel.add(customerIdText);

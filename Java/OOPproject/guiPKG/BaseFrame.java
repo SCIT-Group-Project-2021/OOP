@@ -13,9 +13,9 @@ import java.awt.*;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
-import OOPproject.guiPKG.uiElements.FrameDragListener;
+import OOPproject.guiPKG.GuiElements.FrameDragListener;
 
-public class aseFrame {
+public class BaseFrame {
 
     // #region Constants
 
