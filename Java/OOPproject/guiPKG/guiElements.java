@@ -2,7 +2,7 @@
 // File Name   : GuiElements.java
 // Author      : Gabriel Tickle Garcia
 // ID#         : 2007394
-// Description : Primary guiElements class // TODO Lmao make a better description
+// Description : Primary guiElements class //@todo TODO Lmao make a better description
 //============================================================================
 
 package OOPproject.guiPKG;
@@ -18,7 +18,7 @@ import javax.swing.border.Border;
 
 public class guiElements {
 
-    // TODO Does this empty method need to be here? Let me know if you get rid of it
+    //@todo TODO Does this empty method need to be here? Let me know if you get rid of it
     public guiElements() {
 
     }
