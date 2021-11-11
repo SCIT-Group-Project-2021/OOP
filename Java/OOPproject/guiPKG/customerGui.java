@@ -54,6 +54,9 @@ public class customerGui {
     private static JTextField voucherNumText;
     private static JTextField balanceMMIText;
 
+    private static JLabel addCreditLabel;
+    private static JLabel balanceMMILabel;
+
     private JFrame parentFrame;
 
     Customer cus;
@@ -229,8 +232,6 @@ public class customerGui {
             @Override
             public void actionPerformed(ActionEvent e) {
                 showCheckBalance();
-                // TODO add checkbalance value
-                setCheckBalance("Value");
             }
         });
     }
@@ -256,6 +257,14 @@ public class customerGui {
         catch (ParseException e) {
             e.getStackTrace();
         }
+
+        addCreditLabel = new JLabel("Add Credit MMI Code:");
+        addCreditLabel.setBounds(0, 210, 200, 40);
+        addCreditLabel.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 0, textColor));
+        addCreditLabel.setOpaque(false);
+        addCreditLabel.setBackground(null);
+        addCreditLabel.setForeground(textColor);
+        addCreditLabel.setFont(Oswald);
 
         voucherNumText.setBounds(0, 240, 200, 40);
         voucherNumText.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, textColor));
@@ -295,7 +304,7 @@ public class customerGui {
         
         generalPanel.add(voucherNumText);
         generalPanel.add(useVoucherButton);
-
+        generalPanel.add(addCreditLabel);
         useVoucherButton.repaint();
 
         useVoucherButton.addActionListener(new ActionListener() {
@@ -322,6 +331,8 @@ public class customerGui {
         primaryPanel.remove(generalPanel);
         primaryPanel.repaint();
         
+
+        // TODO We can remove this label since it's using a pop instead
         CheckBalance = new JLabel("Balance Text");
         CheckBalance.setBounds(0, 240, 200, 40);
         CheckBalance.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, textColor));
@@ -330,8 +341,8 @@ public class customerGui {
         CheckBalance.setForeground(textColor);
         CheckBalance.setFont(Oswald);
                 
-        refreshCheckBalance = new JButton("Refresh");
-        refreshCheckBalance.setBounds(0, 440, 200, 40);
+        refreshCheckBalance = new JButton("Check Balance");
+        refreshCheckBalance.setBounds(0, 440, 250, 40); //width used to be 200
         refreshCheckBalance.setOpaque(true);
         refreshCheckBalance.setFocusPainted(false);
         refreshCheckBalance.setContentAreaFilled(false);
@@ -346,11 +357,19 @@ public class customerGui {
             fmt.setValidCharacters("0123456789*#");
             fmt.setPlaceholder("*120*8760000000#");
             balanceMMIText = new JFormattedTextField(fmt);  
-            //balanceMMIText.setText("*120*0000000000#");   
         } 
         catch (ParseException e) {
             e.getStackTrace();
         }
+
+        balanceMMILabel = new JLabel("Check Balance MMI Code:");
+        balanceMMILabel.setBounds(0, 150, 200, 40);
+        balanceMMILabel.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 0, textColor));
+        balanceMMILabel.setOpaque(false);
+        balanceMMILabel.setBackground(null);
+        balanceMMILabel.setForeground(textColor);
+        balanceMMILabel.setFont(Oswald);
+        
 
         balanceMMIText.setBounds(0, 180, 200, 40);
         balanceMMIText.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, textColor));
@@ -377,7 +396,8 @@ public class customerGui {
             }
         });
         generalPanel.add(balanceMMIText);
-        generalPanel.add(CheckBalance);
+        //generalPanel.add(CheckBalance);
+        generalPanel.add(balanceMMILabel);
         generalPanel.add(refreshCheckBalance);
         
         
@@ -385,13 +405,14 @@ public class customerGui {
             @Override
             public void actionPerformed(ActionEvent e) {
                float creditBalance = 0;
-               // setCheckBalance("Value");
                try {
                 creditBalance = cus.checkBalance(balanceMMIText.getText());
-            } catch (InvalidMMICode | InvalidTelephoneNumber e1) {
-                JOptionPane.showMessageDialog(parentFrame,e1.getMessage(),"Error",JOptionPane.ERROR_MESSAGE);
-            }
-               setCheckBalance("$" + Float.toString(creditBalance) + "0");
+                } 
+                catch (InvalidMMICode | InvalidTelephoneNumber e1) {
+                    JOptionPane.showMessageDialog(parentFrame,e1.getMessage(),"Error",JOptionPane.ERROR_MESSAGE);
+                }
+                JOptionPane.showMessageDialog(parentFrame," Your balance is $"+creditBalance + "0.","Current Balance",JOptionPane.INFORMATION_MESSAGE);
+               //setCheckBalance("$" + Float.toString(creditBalance) + "0");
             }
         });
 

@@ -12,7 +12,6 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
-import java.util.prefs.*;
 
 public class Flow extends ServiceProvider {
 	private String parentCompanyName;
@@ -37,7 +36,7 @@ public class Flow extends ServiceProvider {
 	public void setParentCompanyName(String parentCompanyName) {
 		this.parentCompanyName = parentCompanyName;
 	}
-
+	@SuppressWarnings({"unused"})
 	public static int getFlowCustomerCount() {
 		Scanner inFileStream = null;
 		String custID = "";
@@ -56,7 +55,7 @@ public class Flow extends ServiceProvider {
 				address = inFileStream.nextLine();
 				flowCustomerCount++;
 			}	
-			//savePreferences(flowCustomerCount);
+			
 			return flowCustomerCount;
 		} 
 		catch (FileNotFoundException e) {
@@ -82,18 +81,6 @@ public class Flow extends ServiceProvider {
 	public static void setFlowCustomerCount(int flowCustomerCount) {
 		Flow.flowCustomerCount = flowCustomerCount;
 	}
-
-	// #TODO savePreferences and readPreferences override service providor and make it so totalCustomerCount is overridden
-	/* Used to store customer count value persistently without using a file
-	public static void savePreferences(int value) {
-		Preferences prefs = Preferences.userNodeForPackage(Flow.class);                
-		prefs.putInt("flowCustomerCount", value); 
-	}
-
-	 public static int readPreferences() {
-		Preferences prefs = Preferences.userNodeForPackage(Flow.class);
-		return prefs.getInt("flowCustomerCount", 0);  
-	}  */
 
 	// TODO change parameter type in OOAD
 	@SuppressWarnings({"unused"})
@@ -159,6 +146,7 @@ public class Flow extends ServiceProvider {
 		try {
 			inFileStream = new Scanner(new File("Flow_CardInformation.txt"));
 			
+			// Counts the number of records in the credit information file to make the array
 			while (inFileStream.hasNext()) {
 				creditNum = inFileStream.next();
 				balance = inFileStream.nextFloat();
@@ -212,7 +200,7 @@ public class Flow extends ServiceProvider {
 	}
 
 	
-	public String addCustomer(Customer c) throws UniqueValueException { 
+	public boolean addCustomer(Customer c) throws UniqueValueException { 
 		FileWriter outFileStream = null;
 		try {
 			outFileStream = new FileWriter(new File("Flow_Customers.txt"), true);
@@ -224,10 +212,6 @@ public class Flow extends ServiceProvider {
 				System.out.println("Inside UniqueValueException addCustomer() method");
 				throw e;
 			}
-
-			if(c.getCustID().length() != 11){
-				return "TRN is invalid - Length: " + c.getCustID().length();
-			}
 			
 			String newCustomer = c.getCustID() + "\t" + c.getName() + "\t" + c.getCreditBalance() + "\t" + c.getTelephone().toString() + "\t" +  c.getAddress() +  "\n";	
 			outFileStream.write(newCustomer);
@@ -235,12 +219,11 @@ public class Flow extends ServiceProvider {
 			super.addCustomer(c);
 			flowCustomerCount++;
 			setFlowCustomerCount(flowCustomerCount);
-			return("");
-			
+			return true;
 		}
 		catch(IOException e){
 			e.getStackTrace();
-			return("\nAn unexpected error occured.");
+			return false;
 		}
 		
 		finally {
@@ -340,6 +323,41 @@ public class Flow extends ServiceProvider {
 		}
 		
 		return data;
+	}
+
+	@SuppressWarnings({"unused"})
+	public boolean checkVoucherValidity(long voucherNum) throws UniqueValueException{
+		Scanner inFileStream = null;
+		String creditNum = "";
+		float recordBal = 0;
+		String status = "";
+		try {
+			inFileStream = new Scanner(new File("Flow_CardInformation.txt"));
+
+			while (inFileStream.hasNext()) {
+				creditNum = inFileStream.next();
+				recordBal = inFileStream.nextFloat();
+				status = inFileStream.next();
+
+				if (creditNum.equals(Long.toString(voucherNum))) {
+					throw new UniqueValueException("Voucher number already exists.");
+				}
+			}
+			return true;
+		}
+		catch (FileNotFoundException e) {
+			e.printStackTrace();
+			return false;
+		} 
+		finally{
+			if(inFileStream != null){
+				try {
+					inFileStream.close();
+				}catch(Exception e) {
+					System.err.println("\nAn unexpected error occured.");
+				}	
+			}
+		}
 	}
 
 	@Override

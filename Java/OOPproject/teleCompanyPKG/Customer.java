@@ -92,22 +92,7 @@ public class Customer {
 		this.creditBalance = creditBalance;
 	}
 	
-	// TODO Add this to the UI? If not, remove it as well as the checkBalancePrompt
-	public void addCreditPrompt() {
-		System.out.println("\nIf you wish to add credit, enter the following information.");
-		System.out.println("\n*121* followed by the 13-digit card number followed by '*' then your telphone number.");
-		System.out.println("\nlastly, enter the number sign(#). That is: *121*[card number]*[customer telephone number]#e.g. *121*123456789012*000000000#.");		
-	}
-	
-
-	public void checkBalancePrompt() {
-		System.out.println("\nIf you wish to check your balance enter the following information or enter ### to exit.");
-		System.out.println("\n*120* followed by your telephone number then enter the number sign(#).");
-		System.out.println ("\nThat is *120*[customer telephone number]# e.g., *120*3012345678#.\n");	
-	}
-	
-	
-	// TODO Remove checks with exception throws
+	// TODO Discuss whether or not using the check == true is the best way to execute this method
 	@SuppressWarnings({"unused"})
 	public float addCredit(String mmiCode, Customer c) throws InvalidTelephoneNumber, InvalidVoucherNumber, InvalidMMICode{
 		String voucherNum = "", digicelPrefixArray[] = {"301", "302", "303", "304"};  
@@ -115,15 +100,16 @@ public class Customer {
 		String addCreditPin = "*121*", endSpecifier = "#", midSpecifier = "*";
 		File creditFile = new File(""), customerFile = new File("");
 		int length;
-		//Scanner input = null;
+
 		Scanner inFileStream = null;
 		float voucherBalance = 0;
 		
 		boolean numCheck = false;
 		boolean vouchCheck = false;
-		// TODO I added these two other chack values because you were just continously overriding the check value and it wasnt doing anything
+
 		boolean check = false;
 		String userTeleNumber = "";
+
 		try{		
 			length = mmiCode.length();
 
@@ -155,6 +141,7 @@ public class Customer {
 					}
 				}
 			}
+			// TODO Is there an easier way around not having to make an else or every id statement for this error?
 			else{
 				throw new InvalidMMICode("Invalid MMI code");
 			}
@@ -211,7 +198,6 @@ public class Customer {
 				
 			}
 
-			// TODO Did the multiple checks to stop credit being added because check was passed
 			if (numCheck == true) {
 				if (vouchCheck == true) {
 					updateCreditFile(voucherNum, creditFile);
@@ -333,7 +319,6 @@ public class Customer {
 		}
 	}
 
-	// TODO Create exceptions f
 	@SuppressWarnings({"unused"})
 	public float checkBalance(String balanceChecker) throws InvalidMMICode, InvalidTelephoneNumber{
 		String TelNumber = "000000000", prefix, areaCode = "876", checkBalancePin = "*120*", endSpecifier = "#";
@@ -342,52 +327,44 @@ public class Customer {
 		//Scanner input = null;
 		Scanner inFileStream = null;
 		try {
-			//input = new Scanner(System.in);
-			//checkBalancePrompt();
-			//balanceChecker = input.nextLine();
-			// TODO Remove length if statement
-			if(balanceChecker.length() == 16){//Checking if the length of the numbers entered is the same as this -> *120*8760000000#
-				if(checkBalancePin.equals(balanceChecker.substring(0,5))) {//Checking for *120*
-					if(areaCode.equals(balanceChecker.substring(5,8))) {//Checking for area code 876
-						if(endSpecifier.equals(Character.toString(balanceChecker.charAt(balanceChecker.length()- 1)))){//Checking for the #
-							TelNumber = balanceChecker.substring(5,15);//Assigning index 5 to 14 of the input which should resemble this -> *120*8760000000# where index 5 to 14 is 8760000000
-							prefix = balanceChecker.substring(8,11); //Assigning index 8 to 10 of the input which to the prefix variable
-							for(int i = 0; i < 4; i++) {
-								if(prefix.equals(digicelPrefixes[i])) {
-									inFileStream = new Scanner(new File("Digicel_Customers.txt"));
-									break;
-								}
-								else if(prefix.equals(flowPrefixes[i])) {
-									inFileStream = new Scanner(new File ("Flow_Customers.txt"));
-									break;
-								}				
+			if(checkBalancePin.equals(balanceChecker.substring(0,5))) {//Checking for *120*
+				if(areaCode.equals(balanceChecker.substring(5,8))) {//Checking for area code 876
+					if(endSpecifier.equals(Character.toString(balanceChecker.charAt(balanceChecker.length()- 1)))){//Checking for the #
+						TelNumber = balanceChecker.substring(5,15);//Assigning index 5 to 14 of the input which should resemble this -> *120*8760000000# where index 5 to 14 is 8760000000
+						prefix = balanceChecker.substring(8,11); //Assigning index 8 to 10 of the input which to the prefix variable
+						for(int i = 0; i < 4; i++) {
+							if(prefix.equals(digicelPrefixes[i])) {
+								inFileStream = new Scanner(new File("Digicel_Customers.txt"));
+								break;
 							}
-							if(inFileStream == null){
-								throw new InvalidTelephoneNumber("The telephone number is invalid");
-							}
-							while(inFileStream.hasNext()) {
-								String custID = inFileStream.next();
-								String lastName = inFileStream.next();
-								float creditBalance = inFileStream.nextFloat();
-								String telephone = inFileStream.next();
-								String address = inFileStream.nextLine();
+							else if(prefix.equals(flowPrefixes[i])) {
+								inFileStream = new Scanner(new File ("Flow_Customers.txt"));
+								break;
+							}				
+						}
+						if(inFileStream == null){
+							throw new InvalidTelephoneNumber("The telephone number is invalid");
+						}
+						while(inFileStream.hasNext()) {
+							String custID = inFileStream.next();
+							String lastName = inFileStream.next();
+							float creditBalance = inFileStream.nextFloat();
+							String telephone = inFileStream.next();
+							String address = inFileStream.nextLine();
 
-								if(TelNumber.equals(telephone)){ 
-									balance = creditBalance;
-								}
-								else{
-									throw new InvalidTelephoneNumber("The telephone number entered does not exist");
-								}
+							if(TelNumber.equals(telephone)){ 
+								balance = creditBalance;
+							}
+							else{
+								throw new InvalidTelephoneNumber("The telephone number entered does not exist");
 							}
 						}
 					}
 				}
 			}
-			else{
+
+			if(inFileStream == null){
 				throw new InvalidMMICode("Invalid MMI code");
-				
-				//checkBalancePrompt();
-				//balanceChecker = input.nextLine();
 			}
 		}
 		catch(FileNotFoundException e){
@@ -396,9 +373,6 @@ public class Customer {
 			return balance;
 		}
 		finally {
-			/*if(input != null) {
-				input.close();
-			}*/
 			if (inFileStream!= null) {
 				inFileStream.close();
 			}
@@ -406,10 +380,9 @@ public class Customer {
 		return balance;
 	}
 
-	// TODO Check for telephone being taken in as a string (needs to be changed from int)
 	// TODO Should this stay static or would using it on the object make more sense?
 	// If so the if statement when customer is found would have to be changed
-	//TODO Update it so that capital/common letters do not interfere with the log in
+	// TODO Update it so that capital/common letters do not interfere with the log in
 	@SuppressWarnings({"unused"})
 	public static Customer search(int provider, String lastNameEntered, String tele){
 		boolean bool = false;

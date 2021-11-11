@@ -10,6 +10,7 @@ package OOPproject.guiPKG;
 import java.awt.*;
 import java.awt.event.*;
 import java.text.ParseException;
+import java.util.Random;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -87,7 +88,6 @@ public class AdminGui {
     private static JComboBox <String>voucherValueComboBox;
     private static String[] voucherValues = { "100", "200", "500", "1000" };
 
-    private int phoneProvider;
     private JFrame parentFrame;
 
     ServiceProvider adminUser;
@@ -99,7 +99,6 @@ public class AdminGui {
 
         createPanel();
         parentFrame = frame;
-        phoneProvider = provider;
         // #region Are for variables to be assigned
         // Should i just leave this as the values and remove the individual rgb constants
         // or not?
@@ -379,7 +378,7 @@ public class AdminGui {
 
     public void showAllUsersTable() {
 
-        // TODO button to initialize Customer re-count
+        totalNumberCheck();
         
         generalPanel.removeAll();
         generalPanel.revalidate();
@@ -501,7 +500,6 @@ public class AdminGui {
             }
         });
 
-        // TODO Create randomize function (Add function to parent and accept the file from child classes as a parameter?)
         randomizeVoucherButton = new JButton("Randomize Voucher Number");
         randomizeVoucherButton.setBounds(300, 100, 250, 40);
         randomizeVoucherButton.setOpaque(true);
@@ -511,6 +509,12 @@ public class AdminGui {
         randomizeVoucherButton.setFont(Oswald);
         randomizeVoucherButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         randomizeVoucherButton.setBorder(new guiElements.RoundedBorder(25));
+        randomizeVoucherButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                voucherNumText.setText(Long.toString(randomVoucherNumber()));
+            }
+        });
 
         
         // Creates Combo Box to select Service Providor account
@@ -587,7 +591,6 @@ public class AdminGui {
             e.getStackTrace();
         }
 
-        // TODO Create labels for textboxes
         customerIdText.setBounds(60, 100, 200, 40);
         customerIdText.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, textColor));
         customerIdText.setOpaque(false);
@@ -740,16 +743,10 @@ public class AdminGui {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Customer c;
-                String returnString = "";
                 if(!customerIdText.getText().equals("   -   -   ") && !lastNameText.getText().equals("User Last Name") && !addressText.getText().equals("Address") && !phoneText.getText().equals("876-000-0000")){
                     try{
                         c = new Customer(customerIdText.getText(), lastNameText.getText(), addressText.getText(), new Telephone(Integer.parseInt(phoneText.getText().substring(0,3)), Integer.parseInt(phoneText.getText().substring(4,7)), Integer.parseInt(phoneText.getText().substring(8,12))));
-                        returnString = adminUser.addCustomer(c);
-                        if(returnString != ""){
-                            // TODO Check if this is still necessary
-                            JOptionPane.showMessageDialog(parentFrame,returnString,"Form Error",JOptionPane.ERROR_MESSAGE);
-                        }
-                        else{
+                        if(adminUser.addCustomer(c)){
                             JOptionPane.showMessageDialog(parentFrame,"Information Saved!","Form Submitted",JOptionPane.INFORMATION_MESSAGE);
                         }
                     }
@@ -767,5 +764,23 @@ public class AdminGui {
         });
 
         primaryPanel.add(generalPanel);
+    }
+
+    
+    private long randomVoucherNumber(){
+        long min = 1000000000000L; //13 digits inclusive
+        long max = 10000000000000L; //14 digits exclusive
+        Random random = new Random();
+        long number = min+((long)(random.nextDouble()*(max-min)));
+        boolean check = false;
+        try{
+            while(check == false){
+                check = adminUser.checkVoucherValidity(number);
+            }
+        }
+        catch(UniqueValueException e){
+            e.getMessage();
+        }
+        return number;
     }
 }

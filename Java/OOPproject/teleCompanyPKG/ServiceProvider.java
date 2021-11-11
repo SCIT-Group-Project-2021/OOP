@@ -7,7 +7,6 @@
 
 package OOPproject.teleCompanyPKG;
 
-import java.util.prefs.*;
 
 @SuppressWarnings({"unused"})
 public abstract class ServiceProvider {
@@ -55,26 +54,13 @@ public abstract class ServiceProvider {
 
 	//Displays the total number of customers across all service providers
 	public static int getTotalCustomerCount() {
-		//totalCustomerCount = readPreferences();
 		return totalCustomerCount;
 	}
 
 	// TODO figure out a better way to implement this
 	public int getProvidorCustomerCount() {
-		//totalCustomerCount = readPreferences();
 		return totalCustomerCount;
 	}
-
-	/* Used to store customer count value persistently without using a file
-	public static void savePreferences(int value) {
-		Preferences prefs = Preferences.userNodeForPackage(ServiceProvider.class);                
-		prefs.putInt("totalCustomerCount", value); 
-	}
-
-	 public static int readPreferences() {
-		Preferences prefs = Preferences.userNodeForPackage(ServiceProvider.class);
-		return prefs.getInt("totalCustomerCount", 0);  
-	}  */
 	
 	//Displays the total number of customers across all service providers
 	// TODO Create a button for this in admin GUI and remove from this class
@@ -83,11 +69,13 @@ public abstract class ServiceProvider {
 	}
 	
 	//Add customer method, will be overrided in child classes
-	public String addCustomer(Customer c) throws UniqueValueException {
+	public boolean addCustomer(Customer c) throws UniqueValueException {
 		totalCustomerCount++;
 		setTotalCustomerCount(totalCustomerCount);
-		return "";
+		return true;
 	}
+
+	public abstract boolean checkVoucherValidity(long voucherNum) throws UniqueValueException;
 	
 	//Phone Credit Creation Method, will be overrided in child classes
 	public abstract void createPhoneCredit(String cardNum, float balance) throws UniqueValueException;

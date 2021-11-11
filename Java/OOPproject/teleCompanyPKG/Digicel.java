@@ -17,7 +17,6 @@ public class Digicel extends ServiceProvider {
 
 	private static int numOfBranches = 0;
 	private static int digicelCustomerCount = 0;
-	private static int digicelCreditRecordCount = 0;
 
 	// Default Constructor
 	public Digicel() {
@@ -38,6 +37,7 @@ public class Digicel extends ServiceProvider {
 		Digicel.numOfBranches = numOfBranches;
 	}
 
+	@SuppressWarnings({"unused"})
 	public static int getDigicelCustomerCount() {
 		Scanner inFileStream = null;
 		String custID = "";
@@ -82,19 +82,6 @@ public class Digicel extends ServiceProvider {
 	public static void setDigicelCustomerCount(int digicelCustomerCount) {
 		Digicel.digicelCustomerCount = digicelCustomerCount;
 	}
-
-	// #TODO savePreferences and readPreferences override service providor and make it so totalCustomerCount is overridden
-	// Used to store customer count value persistently without using a file
-	/* TODO Remove prefreferences sinces it checks everytime admin is opened?
-	public static void savePreferences(int value) {
-		Preferences prefs = Preferences.userNodeForPackage(Digicel.class);                
-		prefs.putInt("digicelCustomerCount", value); 
-	}
-
-	 public static int readPreferences() {
-		Preferences prefs = Preferences.userNodeForPackage(Digicel.class);
-		return prefs.getInt("digicelCustomerCount", 0);  
-	}  */
 
 	public void saveCreditRecordsCount(int value) {
 		Preferences prefs = Preferences.userNodeForPackage(Digicel.class);                
@@ -160,6 +147,42 @@ public class Digicel extends ServiceProvider {
 	}
 
 	@SuppressWarnings({"unused"})
+	public boolean checkVoucherValidity(long voucherNum) throws UniqueValueException{
+		Scanner inFileStream = null;
+		String creditNum = "";
+		float recordBal = 0;
+		String status = "";
+		try {
+			inFileStream = new Scanner(new File("Digicel_CardInformation.txt"));
+
+			while (inFileStream.hasNext()) {
+				creditNum = inFileStream.next();
+				recordBal = inFileStream.nextFloat();
+				status = inFileStream.next();
+
+				if (creditNum.equals(Long.toString(voucherNum))) {
+					throw new UniqueValueException("Voucher number already exists.");
+				}
+			}
+			return true;
+			
+		}
+		catch (FileNotFoundException e) {
+			e.printStackTrace();
+			return false;
+		} 
+		finally{
+			if(inFileStream != null){
+				try {
+					inFileStream.close();
+				}catch(Exception e) {
+					System.err.println("\nAn unexpected error occured.");
+				}	
+			}
+		}
+	}
+
+	@SuppressWarnings({"unused"})
 	public String[][] viewPhoneCredit() {
 		Scanner inFileStream = null;
 		String creditNum = "";
@@ -168,6 +191,8 @@ public class Digicel extends ServiceProvider {
 		int i = 0;
 		int recordCount = 0;
 		String data[][] = null;
+
+		// Counts the number of records in the credit information file to make the array
 		try {
 			inFileStream = new Scanner(new File("Digicel_CardInformation.txt"));
 			
@@ -196,7 +221,6 @@ public class Digicel extends ServiceProvider {
 					data[i][1] = Float.toString(inFileStream.nextFloat());
 					data[i][2] = inFileStream.next();
 					i++;
-					
 				}
 			}
 			catch (FileNotFoundException e) {
@@ -218,7 +242,7 @@ public class Digicel extends ServiceProvider {
 	}
 
 	
-	public String addCustomer(Customer c) throws UniqueValueException { 
+	public boolean addCustomer(Customer c) throws UniqueValueException { 
 		FileWriter outFileStream = null;
 		try {
 			outFileStream = new FileWriter(new File("Digicel_Customers.txt"), true);
@@ -237,11 +261,11 @@ public class Digicel extends ServiceProvider {
 			super.addCustomer(c);
 			digicelCustomerCount++;
 			setDigicelCustomerCount(digicelCustomerCount);
-			return("");
+			return true;
 		}
 		catch(IOException e){
 			e.getStackTrace();
-			return("\nAn unexpected error occured.");
+			return false;
 		}
 		
 		finally {
