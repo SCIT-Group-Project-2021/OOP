@@ -164,14 +164,16 @@ public class LoginGui {
         MaskFormatter fmt;
         try {
             fmt = new MaskFormatter("876-###-####");
+            fmt.setPlaceholder("876-111-1111");
             phoneText = new JFormattedTextField(fmt);
-            phoneText.setText("876-111-1111");
+            //phoneText.setText("876-111-1111");
         } catch (ParseException e1) {
             e1.printStackTrace();
         }
 
         phoneText.setText("User Phone number");
         phoneText.setBounds(125, 270, 250, uih);
+        phoneText.setHorizontalAlignment(SwingConstants.CENTER);
         phoneText.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.white));
         phoneText.setBackground(null);
         phoneText.setForeground(Color.white);
@@ -188,10 +190,10 @@ public class LoginGui {
             @Override
             public void focusLost(FocusEvent e) {
 
-                if (phoneText.getText().equals("876-   -    ")) {
+               /* if (phoneText.getText().equals("876-   -    ")) {
                     phoneText.setText("876-111-1111");
 
-                }
+                }*/
 
             }
 
@@ -202,6 +204,7 @@ public class LoginGui {
         userText = new JTextField(25);
         userText.setText("User Last Name");
         userText.setBounds(125, 350, 250, uih);
+        userText.setHorizontalAlignment(SwingConstants.CENTER);
         userText.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.white));
         userText.setBackground(null);
         userText.setForeground(Color.white);
