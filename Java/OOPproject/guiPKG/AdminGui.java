@@ -413,7 +413,7 @@ public class AdminGui {
         totalCustomers.setFont(Oswald);
         generalPanel.add(totalCustomers);
 
-        providorCustomers = new JLabel("Total " + providerName + " Customers: " + adminUser.getProvidorCustomerCount());
+        providorCustomers = new JLabel("Total " + providerName + " Customers: " + adminUser.getProviderCustomerCount());
         providorCustomers.setBounds(400, 450, 200, 40);
         providorCustomers.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, textColor));
         providorCustomers.setOpaque(false);

@@ -56,8 +56,7 @@ public abstract class ServiceProvider {
 		return totalCustomerCount;
 	}
 
-	// @todo TODO Spell Provider properly please lmao, let me know if you change it
-	public int getProvidorCustomerCount() {
+	public int getProviderCustomerCount() {
 		return totalCustomerCount;
 	}
 	

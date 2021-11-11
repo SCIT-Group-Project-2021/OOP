@@ -2,7 +2,7 @@
 // File Name   : GuiElements.java
 // Author      : Gabriel Tickle Garcia
 // ID#         : 2007394
-// Description : Primary guiElements class //@todo TODO Lmao make a better description
+// Description : General guiElements class
 //============================================================================
 
 package OOPproject.guiPKG;
