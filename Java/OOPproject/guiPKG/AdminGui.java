@@ -91,6 +91,7 @@ public class AdminGui {
     private JFrame parentFrame;
 
     private String providerName = "";
+    private int phoneProvider = 0;
 
     ServiceProvider adminUser;
     // #endregion
@@ -101,6 +102,7 @@ public class AdminGui {
 
         createPanel();
         parentFrame = frame;
+        phoneProvider = provider;
         // #region Are for variables to be assigned
         // Should i just leave this as the values and remove the individual rgb constants
         // or not?
@@ -755,7 +757,7 @@ public class AdminGui {
                 Customer c;
                 if(!customerIdText.getText().equals("   -   -   ") && !lastNameText.getText().equals("User Last Name") && !addressText.getText().equals("Address") && !phoneText.getText().equals("876-000-0000")){
                     try{
-                        c = new Customer(customerIdText.getText(), lastNameText.getText(), addressText.getText(), new Telephone(Integer.parseInt(phoneText.getText().substring(0,3)), Integer.parseInt(phoneText.getText().substring(4,7)), Integer.parseInt(phoneText.getText().substring(8,12))));
+                        c = new Customer(customerIdText.getText(), lastNameText.getText(), addressText.getText(), new Telephone(Integer.parseInt(phoneText.getText().substring(0,3)), Integer.parseInt(phoneText.getText().substring(4,7)), Integer.parseInt(phoneText.getText().substring(8,12)), phoneProvider));
                         if(adminUser.addCustomer(c)){
                             JOptionPane.showMessageDialog(parentFrame,"Information Saved!","Form Submitted",JOptionPane.INFORMATION_MESSAGE);
                         }

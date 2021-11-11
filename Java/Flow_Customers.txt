@@ -1,4 +1,5 @@
-123-151-651	Garcia	100.0	8766012423		Home Address
-512-761-731	Wuiiliam	100.0	8766014561		Lets Address
-635-251-234	Deans	100.0	8766015171		Lets Address
-465-365-644	Moon	200.0	8766024534		Pain Street, I hate this City
+123-151-651	Garcia	100.0	8766012423			Home Address
+512-761-731	Wiiliam	100.0	8766014561			Lets Address
+635-251-234	Deans	100.0	8766015171			Lets Address
+465-365-644	Moon	300.0	8766024534			Pain Street, I hate this City
+645-643-452	Miller	100.0	8766032442		Homey Town
