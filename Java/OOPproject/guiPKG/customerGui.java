@@ -14,7 +14,7 @@ import java.text.ParseException;
 import java.awt.geom.RoundRectangle2D;
 
 public class customerGui {
-    final int panelw = 1000/2;
+    final int panelw = 1000;
     final int panelh = 600;
     final int uih = 25;
     final int spButtons = 220;
@@ -127,7 +127,7 @@ public class customerGui {
         createCheckBalanceButton();
         addLogOutButton(frame);
         guiElements.addExitButton();
-        guiElements.exitButton.setBounds(255, 0, 45, 45);
+        guiElements.exitButton.setBounds(755, 0, 45, 45);
         primaryPanel.add(guiElements.exitButton);
         guiElements.exitButton.setForeground(textColor);
 
@@ -164,7 +164,7 @@ public class customerGui {
         // adds Base panel to the background frame for everything else to be mounted to
         // frame.add(customerPanel);
 
-        customerPanel.setBounds(0, 0, 1000/2, 600);
+        customerPanel.setBounds(0, 0, panelw, panelh);
         customerPanel.setLayout(new BorderLayout());
         customerPanel.setBackground(Color.black);
 
@@ -259,14 +259,16 @@ public class customerGui {
         }
 
         addCreditLabel = new JLabel("Add Credit MMI Code:");
-        addCreditLabel.setBounds(0, 210, 200, 40);
+        addCreditLabel.setBounds(250, 210, 200, 40);
+        addCreditLabel.setHorizontalAlignment(SwingConstants.CENTER);
         addCreditLabel.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 0, textColor));
         addCreditLabel.setOpaque(false);
         addCreditLabel.setBackground(null);
         addCreditLabel.setForeground(textColor);
         addCreditLabel.setFont(Oswald);
 
-        voucherNumText.setBounds(0, 240, 200, 40);
+        voucherNumText.setBounds(220, 240, 260, 40);
+        voucherNumText.setHorizontalAlignment(SwingConstants.CENTER);
         voucherNumText.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, textColor));
         voucherNumText.setOpaque(false);
         voucherNumText.setBackground(null);
@@ -293,7 +295,7 @@ public class customerGui {
         });
         
         useVoucherButton = new JButton("Use Voucher");
-        useVoucherButton.setBounds(0, 440, 200, 40);
+        useVoucherButton.setBounds(250, 440, 200, 40);
         useVoucherButton.setOpaque(true);
         useVoucherButton.setFocusPainted(false);
         useVoucherButton.setContentAreaFilled(false);
@@ -334,7 +336,8 @@ public class customerGui {
 
         // TODO We can remove this label since it's using a pop instead
         CheckBalance = new JLabel("Balance Text");
-        CheckBalance.setBounds(0, 240, 200, 40);
+        CheckBalance.setBounds(250, 240, 200, 40);
+        CheckBalance.setHorizontalAlignment(SwingConstants.CENTER);
         CheckBalance.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, textColor));
         CheckBalance.setOpaque(false);
         CheckBalance.setBackground(null);
@@ -342,7 +345,7 @@ public class customerGui {
         CheckBalance.setFont(Oswald);
                 
         refreshCheckBalance = new JButton("Check Balance");
-        refreshCheckBalance.setBounds(0, 440, 250, 40); //width used to be 200
+        refreshCheckBalance.setBounds(225, 440, 250, 40); //width used to be 200
         refreshCheckBalance.setOpaque(true);
         refreshCheckBalance.setFocusPainted(false);
         refreshCheckBalance.setContentAreaFilled(false);
@@ -363,7 +366,8 @@ public class customerGui {
         }
 
         balanceMMILabel = new JLabel("Check Balance MMI Code:");
-        balanceMMILabel.setBounds(0, 150, 200, 40);
+        balanceMMILabel.setBounds(250, 150, 200, 40);
+        balanceMMILabel.setHorizontalAlignment(SwingConstants.CENTER);
         balanceMMILabel.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 0, textColor));
         balanceMMILabel.setOpaque(false);
         balanceMMILabel.setBackground(null);
@@ -371,7 +375,8 @@ public class customerGui {
         balanceMMILabel.setFont(Oswald);
         
 
-        balanceMMIText.setBounds(0, 180, 200, 40);
+        balanceMMIText.setBounds(250, 180, 200, 40);
+        balanceMMIText.setHorizontalAlignment(SwingConstants.CENTER);
         balanceMMIText.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, textColor));
         balanceMMIText.setOpaque(false);
         balanceMMIText.setBackground(null);
