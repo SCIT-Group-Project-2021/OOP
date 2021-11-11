@@ -345,7 +345,7 @@ public class Flow extends ServiceProvider {
 		}
 		catch (FileNotFoundException e) {
 			e.printStackTrace();
-			return false;
+			return true;
 		} 
 		finally{
 			if(inFileStream != null){
