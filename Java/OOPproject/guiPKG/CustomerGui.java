@@ -20,7 +20,7 @@ import java.awt.event.*;
 import java.text.ParseException;
 import java.awt.geom.RoundRectangle2D;
 
-public class ustomerGui {
+public class CustomerGui {
     final int panelw = 1000;
     final int panelh = 600;
     final int uih = 25;
@@ -69,7 +69,7 @@ public class ustomerGui {
     Customer cus = new Customer();
 
     // @todo TODO Change all class names to capital letters (Must follow the Java naming schemes)
-    public ustomerGui(/*int provider,*/ JFrame frame){
+    public CustomerGui(/*int provider,*/ JFrame frame){
 
         parentFrame = frame;
 
