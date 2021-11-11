@@ -108,7 +108,7 @@ public class customerGui {
             // #region set Panel Backgrounds
             sidePanel.setBackground(new Color(65, 108, 163));
             primaryPanel.setBackground(flowColor);
-            textColor = Color.decode("#Fffff");
+            textColor = Color.decode("#ffffff");
             // #endregion
 
             break;
