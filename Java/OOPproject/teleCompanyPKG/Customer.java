@@ -117,7 +117,7 @@ public class Customer {
 
 			// using customer prefix instead because we cant add credit from flow to digicel and vice versa
 			// TODO Might have to remove customer log in
-			String prefix = Integer.toString(c.getTelephone().getPrefix()); // mmiCode.substring(22, 25);
+			String prefix = mmiCode.substring(22, 25);
 			
 			//Checking if the mmi code is valid
 			if(addCreditPin.equals(mmiCode.substring(0,5))) {

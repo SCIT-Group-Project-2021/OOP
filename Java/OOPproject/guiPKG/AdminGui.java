@@ -363,7 +363,7 @@ public class AdminGui {
 
         jt.setRowHeight(40);
         jt.setOpaque(false);
-        jt.setEnabled(false);
+        jt.setEnabled(true);
 
         JTextField tf = new JTextField();
         tf.setEditable(false);
