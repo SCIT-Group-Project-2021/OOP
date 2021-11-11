@@ -324,7 +324,6 @@ public class Customer {
 		String TelNumber = "000000000", prefix, areaCode = "876", checkBalancePin = "*120*", endSpecifier = "#";
 		String digicelPrefixes[] = {"301", "302", "303", "304"}, flowPrefixes[] = {"601", "602", "603", "604"};  
 		float balance = 0;
-		//Scanner input = null;
 		Scanner inFileStream = null;
 		try {
 			if(checkBalancePin.equals(balanceChecker.substring(0,5))) {//Checking for *120*
@@ -354,10 +353,11 @@ public class Customer {
 
 							if(TelNumber.equals(telephone)){ 
 								balance = creditBalance;
+								break;
 							}
-							else{
-								throw new InvalidTelephoneNumber("The telephone number entered does not exist");
-							}
+						}
+						if(balance == 0){
+							throw new InvalidTelephoneNumber("The telephone number entered does not exist");
 						}
 					}
 				}
