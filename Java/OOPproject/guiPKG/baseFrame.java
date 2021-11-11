@@ -42,7 +42,7 @@ public class baseFrame {
 
         frame = new JFrame();
 
-        mainIcon = ImageIO.read(getClass().getResource("/OOPproject/Images/tech2.png"));
+        mainIcon = ImageIO.read(getClass().getResource("/OOPproject/Images/tech6.png"));
 
         frame.setIconImage(mainIcon);
 
