@@ -68,7 +68,6 @@ public class CustomerGui {
 
     Customer cus = new Customer();
 
-    // @todo TODO Change all class names to capital letters (Must follow the Java naming schemes)
     public CustomerGui(/*int provider,*/ JFrame frame){
 
         parentFrame = frame;
