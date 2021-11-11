@@ -44,6 +44,7 @@ public class customerGui {
 
     private static Icon digicelLogoIcon;
     private static Icon flowLogoIcon;
+    private static Icon defaultLogoIcon;
 
     private static JButton addCreditButton;
     private static JButton checkBalanceButton;
@@ -87,6 +88,7 @@ public class customerGui {
         // Assigns default image to variable
 
         switch (provider) {
+            
         case 1:
             digicelLogoIcon = new ImageIcon(
                     new ImageIcon(AdminGui.class.getResource("/OOPproject/Images/Digicel-Logo.png")).getImage()
@@ -113,7 +115,17 @@ public class customerGui {
 
             break;
         default:
-            break;
+            defaultLogoIcon = new ImageIcon(
+                    new ImageIcon(AdminGui.class.getResource("/OOPproject/Images/Tech6.png")).getImage()
+                            .getScaledInstance(100, 100, Image.SCALE_DEFAULT));
+            Logo = new JLabel(defaultLogoIcon);
+            textColor = Color.decode("#ffffff");
+            // #region set Panel Backgrounds
+            sidePanel.setBackground(Color.decode("#404040"));
+            primaryPanel.setBackground(Color.decode("#202020"));
+            // #endregion
+
+    break;
         }
 
         // sets layout to be null, to allow for free placement of JAttributes

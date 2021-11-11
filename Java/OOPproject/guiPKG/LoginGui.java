@@ -263,8 +263,8 @@ public class LoginGui {
         });
         // #endregion
 
-        mainPanel.add(phoneText);
-        mainPanel.add(userText);
+        //mainPanel.add(phoneText);
+        //mainPanel.add(userText);
         mainPanel.add(passwordText);
 
     }
@@ -332,7 +332,7 @@ public class LoginGui {
     public void addLoginButton(JFrame frame) {
 
         loginButton = new JButton("Login");
-        loginButton.setBounds(200, 440, 100, uih);
+        loginButton.setBounds(200, 340, 100, uih);
         mainPanel.add(loginButton);
         loginButton.setOpaque(false);
         loginButton.setFocusPainted(false);
@@ -347,12 +347,17 @@ public class LoginGui {
 
                 if (panelStatus == customer) {
                     
-                    String username = userText.getText();
-                    String phone = phoneText.getText().substring(0,3) + phoneText.getText().substring(4,7) + phoneText.getText().substring(8,12);
-                    int provider;
+                    //String username = userText.getText();
+                    //String phone = phoneText.getText().substring(0,3) + phoneText.getText().substring(4,7) + phoneText.getText().substring(8,12);
+                    int provider = 0;
                     Customer c = new Customer();
                     
-                    try{
+                    loginPanel.setVisible(false);
+                    loginPanel.removeAll();
+                    frame.remove(loginPanel);
+                    new customerGui(provider, frame, c);
+
+                    /*try{
                         provider = Telephone.isValidTelephone(phone);
                         c = Customer.search(provider, username, phone);
                         if(c != null){
@@ -367,10 +372,10 @@ public class LoginGui {
                     }
                     catch(InvalidTelephoneNumber e1){
                         JOptionPane.showMessageDialog(frame,e1.getMessage(),"Unable to Log In",JOptionPane.ERROR_MESSAGE);
-                    }
+                    }*/
 
 
-                    System.out.println("Customer Information\n" + "Customer ID (TRN):\t" + c.getCustID() + "\n" + "User Name:\t" + c.getName() + "\n" + "Phone Number:\t" + c.getTelephone().toString() + "\n" +  "Credit Balance:\t" + c.getCreditBalance() + "\n");
+                    //System.out.println("Customer Information\n" + "Customer ID (TRN):\t" + c.getCustID() + "\n" + "User Name:\t" + c.getName() + "\n" + "Phone Number:\t" + c.getTelephone().toString() + "\n" +  "Credit Balance:\t" + c.getCreditBalance() + "\n");
 
                 } else if (panelStatus == admin) {
 
@@ -424,11 +429,12 @@ public class LoginGui {
 
         if (state == ItemEvent.SELECTED) {
 
-            phoneText.setVisible(false);
-            userText.setVisible(false);
+            //phoneText.setVisible(false);
+            //userText.setVisible(false);
             passwordText.setVisible(true);
             passwordText.setBounds(125, 350, 250, uih);
             providerBox.setVisible(true);
+            loginButton.setBounds(200, 440, 100, uih);
 
             picLabel.setBounds(-20, 0, 500, 600);
             imagePanel.setBackground(adminPicColor);
@@ -444,11 +450,12 @@ public class LoginGui {
             panelStatus = admin;
 
         } else {
-            phoneText.setVisible(true);
-            userText.setVisible(true);
+            //phoneText.setVisible(true);
+            //userText.setVisible(true);
             passwordText.setVisible(false);
             passwordText.setBounds(125, 370, 250, uih);
             providerBox.setVisible(false);
+            loginButton.setBounds(200, 340, 100, uih);
 
             picLabel.setBounds(0, 0, 500, 600);
             imagePanel.setBackground(userPicColor);
