@@ -1,5 +1,5 @@
 //============================================================================
-// File Name   : mainGUI.java
+// File Name   : MainGUI.java
 // Author      : Gabriel Tickle Garcia
 // ID#         : 2007394
 // Description : Primary GUI class
@@ -21,7 +21,7 @@ public class mainGUI {
     final int admin = 1;
     final int customer = 0;
     final int adminsetX = 140;
-    final int adminsetY = 520;// was 470
+    final int adminsetY = 520;
     final int adminoffsetX = adminsetX + 60;
     final int adminoffsetY = adminsetY + 9;
     // #endregion

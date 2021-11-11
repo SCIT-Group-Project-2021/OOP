@@ -1,8 +1,8 @@
 //============================================================================
 // File Name   : AdminGui.java
-// Author      : Gabriel Tickle Garcia
-// ID#         : 2007394
-// Description : Primary AdminGui class
+// Author(s)   : Gabriel Tickle Garcia, Ashley Deans
+// ID#(s)      : 2007394, 2007275
+// Description : Displays the Admin panel and its functions
 //============================================================================
 
 package OOPproject.guiPKG;
@@ -24,7 +24,7 @@ import OOPproject.teleCompanyPKG.UniqueValueException;
 import OOPproject.teleCompanyPKG.Digicel;
 import OOPproject.teleCompanyPKG.Customer;
 
-//Changed file name to fix mainGUI issue
+
 public class AdminGui {
 
     // #region Constants
@@ -576,8 +576,6 @@ public class AdminGui {
         });
 
         primaryPanel.add(generalPanel);
-
-        
     }
 
     private void showNewUserForm() {
@@ -793,5 +791,7 @@ public class AdminGui {
             e.getMessage();
         }
         return number;
+        // got from
+        // https://stackoverflow.com/a/24037880/11250687
     }
 }

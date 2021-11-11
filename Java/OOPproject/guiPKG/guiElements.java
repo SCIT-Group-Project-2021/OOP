@@ -1,8 +1,8 @@
 //============================================================================
-// File Name   : guiElements.java
+// File Name   : GuiElements.java
 // Author      : Gabriel Tickle Garcia
 // ID#         : 2007394
-// Description : Primary guiElements class
+// Description : Primary guiElements class // TODO Lmao make a better description
 //============================================================================
 
 package OOPproject.guiPKG;
@@ -18,6 +18,7 @@ import javax.swing.border.Border;
 
 public class guiElements {
 
+    // TODO Does this empty method need to be here? Let me know if you get rid of it
     public guiElements() {
 
     }
@@ -97,6 +98,7 @@ public class guiElements {
         // https://stackoverflow.com/questions/8515601/java-swing-rounded-border-for-jtextfield
     }
 
+    // Allows the program to be dragged across the screen
     public static class FrameDragListener extends MouseAdapter {
 
         private final JFrame frame;

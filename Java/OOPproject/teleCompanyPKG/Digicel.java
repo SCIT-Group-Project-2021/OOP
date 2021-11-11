@@ -83,7 +83,6 @@ public class Digicel extends ServiceProvider {
 		Digicel.digicelCustomerCount = digicelCustomerCount;
 	}
 
-	// TODO change parameter type in OOAD
 	@SuppressWarnings({"unused"})
 	public void createPhoneCredit(String voucherNum, float balance) throws UniqueValueException{
 		Scanner inFileStream = null;

@@ -82,7 +82,6 @@ public class Flow extends ServiceProvider {
 		Flow.flowCustomerCount = flowCustomerCount;
 	}
 
-	// TODO change parameter type in OOAD
 	@SuppressWarnings({"unused"})
 	public void createPhoneCredit(String voucherNum, float balance) throws UniqueValueException{
 		Scanner inFileStream = null;
@@ -301,7 +300,6 @@ public class Flow extends ServiceProvider {
 					data[i][3] = inFileStream.next();
 					data[i][4] = inFileStream.nextLine();
 					i++;
-					//System.out.println(custID + "\t" + name + "\t" + creditBalance + "\t" + telephone + "\t" + address);
 				}
 				
 			}

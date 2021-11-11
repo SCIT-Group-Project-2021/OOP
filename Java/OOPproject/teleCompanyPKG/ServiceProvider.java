@@ -12,7 +12,6 @@ package OOPproject.teleCompanyPKG;
 public abstract class ServiceProvider {
 	protected String companyID;
 	protected String address;
-	//Should this be private or protected?
 	private static int totalCustomerCount = 0;
 	//Here to be inherited
 	private Customer customer;
@@ -57,6 +56,7 @@ public abstract class ServiceProvider {
 		return totalCustomerCount;
 	}
 
+	// TODO Spell Provider properly please lmao, let me know if you change it
 	public int getProvidorCustomerCount() {
 		return totalCustomerCount;
 	}
@@ -69,7 +69,7 @@ public abstract class ServiceProvider {
 	}
 
 	public abstract boolean checkVoucherValidity(long voucherNum) throws UniqueValueException;
-	
+
 	//Phone Credit Creation Method, will be overrided in child classes
 	public abstract void createPhoneCredit(String cardNum, float balance) throws UniqueValueException;
 	

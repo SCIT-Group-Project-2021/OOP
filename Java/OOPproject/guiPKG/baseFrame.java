@@ -1,5 +1,5 @@
 //============================================================================
-// File Name   : baseFrame.java
+// File Name   : BaseFrame.java
 // Author      : Gabriel Tickle Garcia
 // ID#         : 2007394
 // Description : Primary baseFrame class

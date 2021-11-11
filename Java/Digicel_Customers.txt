@@ -1,2 +1,2 @@
-252-553-533	Deans	6000.0	8763016121			Montego Bay, St. James
-489-237-504	Rose	300.0	8763032534			James Street
+252-553-533	Deans	6200.0	8763016121				Montego Bay, St. James
+489-237-504	Rose	300.0	8763032534				James Street

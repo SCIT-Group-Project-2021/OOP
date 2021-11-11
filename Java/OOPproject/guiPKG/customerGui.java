@@ -1,3 +1,10 @@
+//============================================================================
+// File Name   : CustomerGui.java
+// Author(s)   : Gabriel Tickle Garcia, Ashley Deans
+// ID#(s)      : 2007394, 2007275
+// Description : Displays customer side gui and its functions
+//============================================================================
+
 package OOPproject.guiPKG;
 
 import javax.swing.*;
@@ -331,7 +338,7 @@ public class customerGui {
             public void actionPerformed(ActionEvent e) {
                 float creditBalance = 0;
                 try {
-                    creditBalance = cus.addCredit(voucherNumText.getText(), cus);
+                    creditBalance = cus.addCredit(voucherNumText.getText());
                     JOptionPane.showMessageDialog(parentFrame,"$"+creditBalance + "0 has been added to your balance!","Credit Added Successfully",JOptionPane.INFORMATION_MESSAGE);
                 } catch (InvalidTelephoneNumber | InvalidVoucherNumber | InvalidMMICode e1) {
                     JOptionPane.showMessageDialog(parentFrame,e1.getMessage(),"Error",JOptionPane.ERROR_MESSAGE);

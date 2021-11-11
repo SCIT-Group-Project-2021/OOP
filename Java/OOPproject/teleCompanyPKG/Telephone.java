@@ -64,7 +64,6 @@ public class Telephone {
     }
 
 	//Copy Constructor
-    //Is this really necessary? We wouldnt want duplicate telephone numbers
 	public Telephone(Telephone TelNum) {
 		this.areacode = TelNum.areacode;
 		this.prefix = TelNum.prefix;

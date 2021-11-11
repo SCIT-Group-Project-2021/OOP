@@ -33,6 +33,7 @@ public class Customer {
 		this.telephone = telephone;
 		this.creditBalance = 100;
 	}
+
 	//Primary Constructor - for existing customers
 	public Customer(String custID, String name, String address, Telephone telephone, float creditBalance){
 		this.custID = custID;
@@ -42,7 +43,7 @@ public class Customer {
 		this.creditBalance = creditBalance;
 	}
 	
-	//Copy constructor - Is this necessary?
+	//Copy constructor 
 	public Customer(Customer ctmr) {
 		this.custID = ctmr.custID;
 		this.name = ctmr.name;
@@ -93,7 +94,7 @@ public class Customer {
 	}
 	
 	@SuppressWarnings({"unused"})
-	public float addCredit(String mmiCode, Customer c) throws InvalidTelephoneNumber, InvalidVoucherNumber, InvalidMMICode{
+	public float addCredit(String mmiCode) throws InvalidTelephoneNumber, InvalidVoucherNumber, InvalidMMICode{
 		String voucherNum = "", digicelPrefixArray[] = {"301", "302", "303", "304"};  
 		String flowPrefixArray[] = {"601", "602", "603", "604"}; 
 		String addCreditPin = "*121*", endSpecifier = "#", midSpecifier = "*";
