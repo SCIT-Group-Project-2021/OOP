@@ -28,8 +28,8 @@ public class customerGui {
 
     // #region Variables
 
-    private static Color flowColor;
-    private static Color digicelColor;
+    //private static Color flowColor;
+    //private static Color digicelColor;
     private static Color textColor;
 
     private static Font Oswald;
@@ -40,10 +40,9 @@ public class customerGui {
     private static JPanel customerPanel;
 
     private static JLabel Logo;
-    private static JLabel CheckBalance;
 
-    private static Icon digicelLogoIcon;
-    private static Icon flowLogoIcon;
+    // private static Icon digicelLogoIcon;
+    // private static Icon flowLogoIcon;
     private static Icon defaultLogoIcon;
 
     private static JButton addCreditButton;
@@ -60,12 +59,10 @@ public class customerGui {
 
     private JFrame parentFrame;
 
-    Customer cus;
+    Customer cus = new Customer();
 
     // TODO Change all class names to capital letters (Must follow the Java naming schemes)
-    // TODO Add a customer welcome homepage? Like with Hello [Customer Name] or smth smth
-    // TODO Make customer frame wider
-    public customerGui(int provider, JFrame frame, Customer c){
+    public customerGui(/*int provider,*/ JFrame frame){
 
         parentFrame = frame;
 
@@ -73,11 +70,10 @@ public class customerGui {
         frame.setSize(panelw, panelh);
         createPanel();
         // #region Are for variables to be assigned
-        // Shoul i just leave this as the values and remove the individual rgb constants
-        // or not?
-        cus = new Customer(c);
-        flowColor = new Color(48, 60, 120);
-        digicelColor = Color.decode("#F3f3f3"); //250, 253, 255
+
+        // Obsolete because customer side is now neutral (Independant of Service provider)
+        //flowColor = new Color(48, 60, 120);
+        //digicelColor = Color.decode("#F3f3f3");
         
         Oswald = new Font("Oswald", Font.TYPE1_FONT, 15);
 
@@ -86,7 +82,17 @@ public class customerGui {
         primaryPanel = new JPanel();
 
         // Assigns default image to variable
+        defaultLogoIcon = new ImageIcon(
+                    new ImageIcon(AdminGui.class.getResource("/OOPproject/Images/Tech7.png")).getImage()
+                            .getScaledInstance(100, 100, Image.SCALE_DEFAULT));
+        Logo = new JLabel(defaultLogoIcon);
+        textColor = Color.decode("#303030");
+        // #region set Panel Backgrounds
+        sidePanel.setBackground(new Color(190, 71, 11));
+        primaryPanel.setBackground(new Color(207, 209, 219));
+            // #endregion
 
+        /* Switch to check provider (Obsolete)
         switch (provider) {
             
         case 1:
@@ -124,9 +130,8 @@ public class customerGui {
             sidePanel.setBackground(new Color(190, 71, 11));
             primaryPanel.setBackground(new Color(207, 209, 219));
             // #endregion
-
-    break;
-        }
+            break;
+        }*/
 
         // sets layout to be null, to allow for free placement of JAttributes
         sidePanel.setLayout(null);
@@ -344,17 +349,6 @@ public class customerGui {
         generalPanel.repaint();
         primaryPanel.remove(generalPanel);
         primaryPanel.repaint();
-        
-
-        // TODO We can remove this label since it's using a pop instead
-        CheckBalance = new JLabel("Balance Text");
-        CheckBalance.setBounds(250, 240, 200, 40);
-        CheckBalance.setHorizontalAlignment(SwingConstants.CENTER);
-        CheckBalance.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, textColor));
-        CheckBalance.setOpaque(false);
-        CheckBalance.setBackground(null);
-        CheckBalance.setForeground(textColor);
-        CheckBalance.setFont(Oswald);
                 
         refreshCheckBalance = new JButton("Check Balance");
         refreshCheckBalance.setBounds(250, 440, 200, 40); //width used to be 200
@@ -423,21 +417,16 @@ public class customerGui {
             public void actionPerformed(ActionEvent e) {
                float creditBalance = 0;
                try {
-                creditBalance = cus.checkBalance(balanceMMIText.getText());
+                    creditBalance = cus.checkBalance(balanceMMIText.getText());
                 } 
                 catch (InvalidMMICode | InvalidTelephoneNumber e1) {
                     JOptionPane.showMessageDialog(parentFrame,e1.getMessage(),"Error",JOptionPane.ERROR_MESSAGE);
                 }
                 JOptionPane.showMessageDialog(parentFrame," Your balance is $"+creditBalance + "0.","Current Balance",JOptionPane.INFORMATION_MESSAGE);
-               //setCheckBalance("$" + Float.toString(creditBalance) + "0");
             }
         });
 
         primaryPanel.add(generalPanel);
-    }
-
-    public void setCheckBalance(String checkBalance) {
-        CheckBalance.setText(checkBalance);
     }
 }
 

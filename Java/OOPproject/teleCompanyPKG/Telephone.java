@@ -37,8 +37,7 @@ public class Telephone {
 		System.out.println(this.toString());
 	}
 
-    //Checks if the prefix is valid
-	// TODO Remove provider from telephone parameters
+    // Checks if the prefix is valid
     public static void checkPrefix(int p) throws InvalidTelephoneNumber{
 		int digicelPrefixArray[] = {301, 302, 303, 304};
 		int flowPrefixArray[] = {601, 602, 603, 604};    
@@ -64,6 +63,7 @@ public class Telephone {
 
     }
 
+	/* TODO Should be removed because customer log in no longer happens
 	public static int isValidTelephone(String tele) throws InvalidTelephoneNumber{
 		int digicelPrefixArray[] = {301, 302, 303, 304};
 		int flowPrefixArray[] = {601, 602, 603, 604};    
@@ -87,7 +87,7 @@ public class Telephone {
 
 		System.out.println("Prefix is valid");
 		return check;
-    }
+    }*/
 
 	//Copy Constructor
     //Is this really necessary? We wouldnt want duplicate telephone numbers

@@ -12,7 +12,7 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
-import java.util.prefs.*;
+
 public class Digicel extends ServiceProvider {
 
 	private static int numOfBranches = 0;
@@ -82,16 +82,6 @@ public class Digicel extends ServiceProvider {
 	public static void setDigicelCustomerCount(int digicelCustomerCount) {
 		Digicel.digicelCustomerCount = digicelCustomerCount;
 	}
-
-	public void saveCreditRecordsCount(int value) {
-		Preferences prefs = Preferences.userNodeForPackage(Digicel.class);                
-		prefs.putInt("digicelCreditRecordsCount", value); 
-	}
-
-	 public int readCreditRecordsCount() {
-		Preferences prefs = Preferences.userNodeForPackage(Digicel.class);
-		return prefs.getInt("digicelCreditRecordsCount", 0);  
-	}  
 
 	// TODO change parameter type in OOAD
 	@SuppressWarnings({"unused"})

@@ -92,7 +92,6 @@ public class Customer {
 		this.creditBalance = creditBalance;
 	}
 	
-	// TODO Discuss whether or not using the check == true is the best way to execute this method
 	@SuppressWarnings({"unused"})
 	public float addCredit(String mmiCode, Customer c) throws InvalidTelephoneNumber, InvalidVoucherNumber, InvalidMMICode{
 		String voucherNum = "", digicelPrefixArray[] = {"301", "302", "303", "304"};  
@@ -115,8 +114,6 @@ public class Customer {
 
 			voucherNum = mmiCode.substring(5,18); //this should assign the voucher number to the variable credit 
 
-			// using customer prefix instead because we cant add credit from flow to digicel and vice versa
-			// TODO Might have to remove customer log in
 			String prefix = mmiCode.substring(22, 25);
 			
 			//Checking if the mmi code is valid
@@ -141,12 +138,7 @@ public class Customer {
 					}
 				}
 			}
-			// TODO Is there an easier way around not having to make an else or every id statement for this error?
-			else{
-				throw new InvalidMMICode("Invalid MMI code");
-			}
-
-			//Check if the voucher number and telephone number is valid
+			
 			if(check == true) {
 				String creditNumber = "";
 				String status = "";
@@ -157,7 +149,6 @@ public class Customer {
 						voucherBalance = inFileStream.nextFloat();
 						status = inFileStream.next();
 						
-						// Changed this from check to vouchCheck because if you use check your just overriding everything else
 						if(voucherNum.equals(creditNumber)) {
 							if(status.equals("Available") || status.equals("available")) {
 								vouchCheck = true;
@@ -183,7 +174,6 @@ public class Customer {
 						telephone = inFileStream.next();
 						address = inFileStream.nextLine();
 						
-						// Changed this from check to numcheck because if you use check your just overriding everything else
 						userTeleNumber =  mmiCode.substring(19,29);
 						if(userTeleNumber.equals(telephone)){ 
 							numCheck = true;
@@ -196,6 +186,9 @@ public class Customer {
 					e.getMessage();
 				}
 				
+			}
+			else{
+				throw new InvalidMMICode("Invalid MMI code");
 			}
 
 			if (numCheck == true) {
@@ -380,9 +373,7 @@ public class Customer {
 		return balance;
 	}
 
-	// TODO Should this stay static or would using it on the object make more sense?
-	// If so the if statement when customer is found would have to be changed
-	// TODO Update it so that capital/common letters do not interfere with the log in
+	/* Customer Search (obsolete)
 	@SuppressWarnings({"unused"})
 	public static Customer search(int provider, String lastNameEntered, String tele){
 		boolean bool = false;
@@ -411,10 +402,8 @@ public class Customer {
 		catch(FileNotFoundException e){
 			e.printStackTrace();
 		} catch (NumberFormatException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (InvalidTelephoneNumber e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		finally{
@@ -429,7 +418,8 @@ public class Customer {
 		}
 
 		return c;
-	}
+	}*/
+	
 	public String toString() {
 		return "\nCustomer ID: " + getCustID() + "\nSurname: " + getName() + "\nAddress: " + getAddress() + "\nTelephone: " + getTelephone() + "\nCredit Balance: " + getCreditBalance();
 	}

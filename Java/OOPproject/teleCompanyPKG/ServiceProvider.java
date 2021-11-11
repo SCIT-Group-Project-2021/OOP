@@ -57,15 +57,8 @@ public abstract class ServiceProvider {
 		return totalCustomerCount;
 	}
 
-	// TODO figure out a better way to implement this
 	public int getProvidorCustomerCount() {
 		return totalCustomerCount;
-	}
-	
-	//Displays the total number of customers across all service providers
-	// TODO Create a button for this in admin GUI and remove from this class
-	public void displayTotalCustomerCount() {
-		System.out.println("The total number of customer across all service providers is "+ totalCustomerCount);
 	}
 	
 	//Add customer method, will be overrided in child classes

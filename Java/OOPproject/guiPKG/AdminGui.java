@@ -90,6 +90,8 @@ public class AdminGui {
 
     private JFrame parentFrame;
 
+    private String providerName = "";
+
     ServiceProvider adminUser;
     // #endregion
 
@@ -127,7 +129,7 @@ public class AdminGui {
             sidePanel.setBackground(Color.decode("#a5141f"));
             primaryPanel.setBackground(digicelColor);
             // #endregion
-
+            providerName = "Digicel";
             break;
 
         case 2:
@@ -141,7 +143,7 @@ public class AdminGui {
             sidePanel.setBackground(new Color(65, 108, 163));
             primaryPanel.setBackground(flowColor);
             // #endregion
-
+            providerName = "Flow";
             break;
         default:
             break;
@@ -409,7 +411,7 @@ public class AdminGui {
         totalCustomers.setFont(Oswald);
         generalPanel.add(totalCustomers);
 
-        providorCustomers = new JLabel("Total Digicel Customers: " + adminUser.getProvidorCustomerCount());
+        providorCustomers = new JLabel("Total " + providerName + " Customers: " + adminUser.getProvidorCustomerCount());
         providorCustomers.setBounds(400, 450, 200, 40);
         providorCustomers.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, textColor));
         providorCustomers.setOpaque(false);

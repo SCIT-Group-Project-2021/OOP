@@ -49,7 +49,8 @@ public class LoginGui {
     private static JPanel mainPanel;
     private static JPanel loginPanel;
 
-    private static JLabel Welcome;
+    private static JLabel welcomeLabel;
+    private static JLabel welcomeCustomerLabel;
     private static JLabel picLabel;
 
     private static Icon tech;
@@ -125,15 +126,21 @@ public class LoginGui {
         addLoginButton(frame);
         // #endregion
 
-        // #region For Welcome Message
-        // Creates and defines Welcome! message
-        Welcome = new JLabel("WELCOME!", SwingConstants.CENTER);
-        Welcome.setBounds(150, 150, 200, 50);
-        Welcome.setForeground(Color.white);
-        Welcome.setFont(new Font("Oswald", Font.TYPE1_FONT, 34));
+        // #region For welcomeLabel Message
+        // Creates and defines welcomeLabel! message
+        welcomeLabel = new JLabel("WELCOME", SwingConstants.CENTER);
+        welcomeLabel.setBounds(150, 150, 200, 50);
+        welcomeLabel.setForeground(Color.white);
+        welcomeLabel.setFont(new Font("Oswald", Font.TYPE1_FONT, 34));
 
-        // adds Welcome! message and adds picture to left panel
-        mainPanel.add(Welcome);
+        welcomeCustomerLabel = new JLabel("CUSTOMER!", SwingConstants.CENTER);
+        welcomeCustomerLabel.setBounds(150, 200, 200, 50);
+        welcomeCustomerLabel.setForeground(Color.white);
+        welcomeCustomerLabel.setFont(new Font("Oswald", Font.TYPE1_FONT, 34));
+
+        // adds welcomeLabel! message and adds picture to left panel
+        mainPanel.add(welcomeLabel);
+        mainPanel.add(welcomeCustomerLabel);
         imagePanel.add(picLabel);
         // #endregion
 
@@ -347,35 +354,11 @@ public class LoginGui {
 
                 if (panelStatus == customer) {
                     
-                    //String username = userText.getText();
-                    //String phone = phoneText.getText().substring(0,3) + phoneText.getText().substring(4,7) + phoneText.getText().substring(8,12);
-                    int provider = 0;
-                    Customer c = new Customer();
-                    
                     loginPanel.setVisible(false);
                     loginPanel.removeAll();
                     frame.remove(loginPanel);
-                    new customerGui(provider, frame, c);
+                    new customerGui(/*provider,*/ frame);
 
-                    /*try{
-                        provider = Telephone.isValidTelephone(phone);
-                        c = Customer.search(provider, username, phone);
-                        if(c != null){
-                            loginPanel.setVisible(false);
-                            loginPanel.removeAll();
-                            frame.remove(loginPanel);
-                            new customerGui(provider, frame, c);
-                        }
-                        else{
-                            JOptionPane.showMessageDialog(frame,"Username/Telephone Number is incorrect","Unable to Log In",JOptionPane.ERROR_MESSAGE);
-                        }
-                    }
-                    catch(InvalidTelephoneNumber e1){
-                        JOptionPane.showMessageDialog(frame,e1.getMessage(),"Unable to Log In",JOptionPane.ERROR_MESSAGE);
-                    }*/
-
-
-                    //System.out.println("Customer Information\n" + "Customer ID (TRN):\t" + c.getCustID() + "\n" + "User Name:\t" + c.getName() + "\n" + "Phone Number:\t" + c.getTelephone().toString() + "\n" +  "Credit Balance:\t" + c.getCreditBalance() + "\n");
 
                 } else if (panelStatus == admin) {
 
@@ -431,6 +414,7 @@ public class LoginGui {
 
             //phoneText.setVisible(false);
             //userText.setVisible(false);
+            welcomeCustomerLabel.setVisible(false);
             passwordText.setVisible(true);
             passwordText.setBounds(125, 350, 250, uih);
             providerBox.setVisible(true);
@@ -444,7 +428,7 @@ public class LoginGui {
 
             picLabel.setIcon(server);
 
-            Welcome.setText("Admin Panel");
+            welcomeLabel.setText("Admin Panel");
             adminSwap.setText("Are you a Customer at either service providor?");
 
             panelStatus = admin;
@@ -452,6 +436,7 @@ public class LoginGui {
         } else {
             //phoneText.setVisible(true);
             //userText.setVisible(true);
+            welcomeCustomerLabel.setVisible(true);
             passwordText.setVisible(false);
             passwordText.setBounds(125, 370, 250, uih);
             providerBox.setVisible(false);
@@ -465,7 +450,7 @@ public class LoginGui {
 
             picLabel.setIcon(tech);
 
-            Welcome.setText("Welcome!");
+            welcomeLabel.setText("WELCOME");
             adminSwap.setText("Are you an Admin user at either service providor?");
 
             panelStatus = customer;
