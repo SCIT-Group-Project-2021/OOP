@@ -63,32 +63,6 @@ public class Telephone {
 
     }
 
-	/* TODO Should be removed because customer log in no longer happens
-	public static int isValidTelephone(String tele) throws InvalidTelephoneNumber{
-		int digicelPrefixArray[] = {301, 302, 303, 304};
-		int flowPrefixArray[] = {601, 602, 603, 604};    
-        int check = -1;
-		int p = Integer.parseInt(tele.substring(3,6));
-			
-		for(int i = 0; i < 4; i++) {
-			if(p == digicelPrefixArray[i]) {
-				check = 1;
-				break;
-			}
-			else if(p == flowPrefixArray[i]) {
-				check = 2;
-				break;
-			}				
-		}
-
-        if(check == -1){
-			throw new InvalidTelephoneNumber("Prefix is invalid"); 
-        }
-
-		System.out.println("Prefix is valid");
-		return check;
-    }*/
-
 	//Copy Constructor
     //Is this really necessary? We wouldnt want duplicate telephone numbers
 	public Telephone(Telephone TelNum) {
