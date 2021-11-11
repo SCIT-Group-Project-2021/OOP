@@ -11,7 +11,7 @@ import java.io.IOException;
 
 import javax.swing.*;
 
-public class mainGUI {
+public class ainGUI {
 
     // #region Constants
 
@@ -32,13 +32,13 @@ public class mainGUI {
 
     // #endregion
 
-    public mainGUI() {
+    public ainGUI() {
 
         // #region Try Catch block For frame creation
         // Calls Function To create main background Plate
 
         try {
-            baseFrame baseFrame = new baseFrame();
+            aseFrame baseFrame = new aseFrame();
             frame = baseFrame.getBaseFrame();
         } catch (IOException e) {
             e.printStackTrace();

@@ -16,10 +16,10 @@ import javax.swing.*;
 
 import javax.swing.border.Border;
 
-public class guiElements {
+public class uiElements {
 
     //@todo TODO Does this empty method need to be here? Let me know if you get rid of it
-    public guiElements() {
+    public uiElements() {
 
     }
 

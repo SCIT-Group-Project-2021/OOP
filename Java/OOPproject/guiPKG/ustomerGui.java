@@ -20,7 +20,7 @@ import java.awt.event.*;
 import java.text.ParseException;
 import java.awt.geom.RoundRectangle2D;
 
-public class customerGui {
+public class ustomerGui {
     final int panelw = 1000;
     final int panelh = 600;
     final int uih = 25;
@@ -69,7 +69,7 @@ public class customerGui {
     Customer cus = new Customer();
 
     // @todo TODO Change all class names to capital letters (Must follow the Java naming schemes)
-    public customerGui(/*int provider,*/ JFrame frame){
+    public ustomerGui(/*int provider,*/ JFrame frame){
 
         parentFrame = frame;
 
@@ -150,10 +150,10 @@ public class customerGui {
         createAddCreditButton();
         createCheckBalanceButton();
         addLogOutButton(frame);
-        guiElements.addExitButton();
-        guiElements.exitButton.setBounds(755, 0, 45, 45);
-        primaryPanel.add(guiElements.exitButton);
-        guiElements.exitButton.setForeground(textColor);
+        uiElements.addExitButton();
+        uiElements.exitButton.setBounds(755, 0, 45, 45);
+        primaryPanel.add(uiElements.exitButton);
+        uiElements.exitButton.setForeground(textColor);
 
         // #endregion
 
@@ -326,7 +326,7 @@ public class customerGui {
         useVoucherButton.setForeground(textColor);
         useVoucherButton.setFont(Oswald);
         useVoucherButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        useVoucherButton.setBorder(new guiElements.RoundedBorder(25));
+        useVoucherButton.setBorder(new uiElements.RoundedBorder(25));
         
         generalPanel.add(voucherNumText);
         generalPanel.add(useVoucherButton);
@@ -365,7 +365,7 @@ public class customerGui {
         refreshCheckBalance.setForeground(textColor);
         refreshCheckBalance.setFont(Oswald);
         refreshCheckBalance.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        refreshCheckBalance.setBorder(new guiElements.RoundedBorder(25));
+        refreshCheckBalance.setBorder(new uiElements.RoundedBorder(25));
 
         try {
             MaskFormatter fmt;

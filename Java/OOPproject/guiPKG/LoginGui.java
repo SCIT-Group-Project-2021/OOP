@@ -85,9 +85,9 @@ public class LoginGui {
 
         Oswald = new Font("Oswald", Font.TYPE1_FONT, 15);
 
-        tech = new ImageIcon(new ImageIcon(mainGUI.class.getResource("/OOPproject/Images/tech6.png")).getImage()
+        tech = new ImageIcon(new ImageIcon(ainGUI.class.getResource("/OOPproject/Images/tech6.png")).getImage()
                 .getScaledInstance(500, 550, Image.SCALE_DEFAULT));
-        server = new ImageIcon(new ImageIcon(mainGUI.class.getResource("/OOPproject/Images/server6.png")).getImage()
+        server = new ImageIcon(new ImageIcon(ainGUI.class.getResource("/OOPproject/Images/server6.png")).getImage()
                 .getScaledInstance(500, 380, Image.SCALE_DEFAULT));
 
         loginPanel.setLayout(new GridLayout(1, 2));
@@ -112,9 +112,9 @@ public class LoginGui {
 
         // #region Calling other methods to build ui
         // Calls Function To create and add Exit Button
-        guiElements.addExitButton();
-        guiElements.exitButton.setBounds(455, 0, 45, 45);
-        mainPanel.add(guiElements.exitButton);
+        uiElements.addExitButton();
+        uiElements.exitButton.setBounds(455, 0, 45, 45);
+        mainPanel.add(uiElements.exitButton);
 
         // Calls Function To create and add User Login interface
         addUserLogin();
@@ -346,7 +346,7 @@ public class LoginGui {
         loginButton.setContentAreaFilled(false);
         loginButton.setForeground(Color.white);
         loginButton.setFont(Oswald);
-        loginButton.setBorder(new guiElements.RoundedBorder(25));
+        loginButton.setBorder(new uiElements.RoundedBorder(25));
         loginButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         loginButton.addActionListener(new ActionListener() {
             @Override
@@ -357,7 +357,7 @@ public class LoginGui {
                     loginPanel.setVisible(false);
                     loginPanel.removeAll();
                     frame.remove(loginPanel);
-                    new customerGui(/*provider,*/ frame);
+                    new ustomerGui(/*provider,*/ frame);
 
 
                 } else if (panelStatus == admin) {

@@ -13,9 +13,9 @@ import java.awt.*;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
-import OOPproject.guiPKG.guiElements.FrameDragListener;
+import OOPproject.guiPKG.uiElements.FrameDragListener;
 
-public class baseFrame {
+public class aseFrame {
 
     // #region Constants
 
@@ -38,7 +38,7 @@ public class baseFrame {
 
     // #endregion
 
-    public baseFrame() throws IOException {
+    public aseFrame() throws IOException {
 
         frame = new JFrame();
 
