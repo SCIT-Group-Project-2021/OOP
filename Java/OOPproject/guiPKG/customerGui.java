@@ -119,10 +119,10 @@ public class customerGui {
                     new ImageIcon(AdminGui.class.getResource("/OOPproject/Images/Tech6.png")).getImage()
                             .getScaledInstance(100, 100, Image.SCALE_DEFAULT));
             Logo = new JLabel(defaultLogoIcon);
-            textColor = Color.decode("#ffffff");
+            textColor = Color.decode("#303030");
             // #region set Panel Backgrounds
-            sidePanel.setBackground(Color.decode("#404040"));
-            primaryPanel.setBackground(Color.decode("#202020"));
+            sidePanel.setBackground(new Color(190, 71, 11));
+            primaryPanel.setBackground(new Color(207, 209, 219));
             // #endregion
 
     break;
@@ -357,7 +357,7 @@ public class customerGui {
         CheckBalance.setFont(Oswald);
                 
         refreshCheckBalance = new JButton("Check Balance");
-        refreshCheckBalance.setBounds(225, 440, 250, 40); //width used to be 200
+        refreshCheckBalance.setBounds(250, 440, 200, 40); //width used to be 200
         refreshCheckBalance.setOpaque(true);
         refreshCheckBalance.setFocusPainted(false);
         refreshCheckBalance.setContentAreaFilled(false);
@@ -378,7 +378,7 @@ public class customerGui {
         }
 
         balanceMMILabel = new JLabel("Check Balance MMI Code:");
-        balanceMMILabel.setBounds(250, 150, 200, 40);
+        balanceMMILabel.setBounds(250, 210, 200, 40);
         balanceMMILabel.setHorizontalAlignment(SwingConstants.CENTER);
         balanceMMILabel.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 0, textColor));
         balanceMMILabel.setOpaque(false);
@@ -387,7 +387,7 @@ public class customerGui {
         balanceMMILabel.setFont(Oswald);
         
 
-        balanceMMIText.setBounds(250, 180, 200, 40);
+        balanceMMIText.setBounds(250, 240, 200, 40);
         balanceMMIText.setHorizontalAlignment(SwingConstants.CENTER);
         balanceMMIText.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, textColor));
         balanceMMIText.setOpaque(false);

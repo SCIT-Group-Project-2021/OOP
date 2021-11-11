@@ -365,6 +365,11 @@ public class AdminGui {
         jt.setOpaque(false);
         jt.setEnabled(false);
 
+        JTextField tf = new JTextField();
+        tf.setEditable(false);
+        DefaultCellEditor editor = new DefaultCellEditor( tf );
+        jt.setDefaultEditor(Object.class, editor);
+
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment( JLabel.CENTER );
 
@@ -440,7 +445,12 @@ public class AdminGui {
 
         jt.setRowHeight(40);
         jt.setOpaque(false);
-        jt.setEnabled(false);
+        jt.setEnabled(true);
+
+        JTextField tf = new JTextField();
+        tf.setEditable(false);
+        DefaultCellEditor editor = new DefaultCellEditor( tf );
+        jt.setDefaultEditor(Object.class, editor);
 
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment( JLabel.CENTER );
@@ -765,7 +775,6 @@ public class AdminGui {
 
         primaryPanel.add(generalPanel);
     }
-
     
     private long randomVoucherNumber(){
         long min = 1000000000000L; //13 digits inclusive
