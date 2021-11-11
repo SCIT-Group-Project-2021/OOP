@@ -38,7 +38,7 @@ public class MainGUI {
         // Calls Function To create main background Plate
 
         try {
-            aseFrame baseFrame = new aseFrame();
+            BaseFrame baseFrame = new BaseFrame();
             frame = baseFrame.getBaseFrame();
         } catch (IOException e) {
             e.printStackTrace();

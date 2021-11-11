@@ -38,7 +38,7 @@ public class BaseFrame {
 
     // #endregion
 
-    public aseFrame() throws IOException {
+    public BaseFrame() throws IOException {
 
         frame = new JFrame();
 
