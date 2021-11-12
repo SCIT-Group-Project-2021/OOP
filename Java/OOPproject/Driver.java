@@ -2,7 +2,7 @@ package OOPproject;
 
 import OOPproject.guiPKG.MainGUI;
 
-public class driver {
+public class Driver {
 
     public static void main(String[] args) {
 
