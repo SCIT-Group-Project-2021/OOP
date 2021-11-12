@@ -2,7 +2,7 @@
 // File Name   : GuiElements.java
 // Author      : Gabriel Tickle Garcia
 // ID#         : 2007394
-// Description : General guiElements class
+// Description : Custom GUI classes and functions
 //============================================================================
 
 package OOPproject.guiPKG;
@@ -17,11 +17,6 @@ import javax.swing.*;
 import javax.swing.border.Border;
 
 public class GuiElements {
-
-    //@todo TODO Does this empty method need to be here? Let me know if you get rid of it
-    public GuiElements() {
-
-    }
 
     public static JButton exitButton;
 

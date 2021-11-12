@@ -74,7 +74,7 @@ public class Flow extends ServiceProvider {
 		}
 	}
 	
-	public int getProvidorCustomerCount() {
+	public int getProviderCustomerCount() {
 		return flowCustomerCount;
 	}
 

@@ -66,7 +66,7 @@ public class LoginGui {
     private static JToggleButton adminButton;
     private static JButton loginButton;
 
-    private static String[] providors = { "Digicel", "Flow" };
+    private static String[] providers = { "Digicel", "Flow" };
     // #endregion
 
     public LoginGui(JFrame frame) {
@@ -318,8 +318,8 @@ public class LoginGui {
             }
         });
 
-        // Creates Combo Box to select Service Providor account
-        providerBox = new JComboBox<String>(providors);
+        // Creates Combo Box to select Service Provider account
+        providerBox = new JComboBox<String>(providers);
         // Sets the ComboBox to the style of the ui
         providerBox.setBounds(125, 270, 250, uih);
         providerBox.setVisible(false);

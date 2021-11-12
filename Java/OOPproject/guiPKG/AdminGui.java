@@ -55,7 +55,7 @@ public class AdminGui {
     private static JPanel generalPanel;
     private static JPanel adminPanel;
     private static JLabel totalCustomers;
-    private static JLabel providorCustomers;
+    private static JLabel providerCustomers;
 
     private static JLabel Logo;
 
@@ -413,14 +413,14 @@ public class AdminGui {
         totalCustomers.setFont(Oswald);
         generalPanel.add(totalCustomers);
 
-        providorCustomers = new JLabel("Total " + providerName + " Customers: " + adminUser.getProviderCustomerCount());
-        providorCustomers.setBounds(400, 450, 200, 40);
-        providorCustomers.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, textColor));
-        providorCustomers.setOpaque(false);
-        providorCustomers.setBackground(null);
-        providorCustomers.setForeground(textColor);
-        providorCustomers.setFont(Oswald);
-        generalPanel.add(providorCustomers);
+        providerCustomers = new JLabel("Total " + providerName + " Customers: " + adminUser.getProviderCustomerCount());
+        providerCustomers.setBounds(400, 450, 200, 40);
+        providerCustomers.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, textColor));
+        providerCustomers.setOpaque(false);
+        providerCustomers.setBackground(null);
+        providerCustomers.setForeground(textColor);
+        providerCustomers.setFont(Oswald);
+        generalPanel.add(providerCustomers);
 
         JTable jt=new JTable(data,columns);    
         jt.setBounds(0,0,700,500);  

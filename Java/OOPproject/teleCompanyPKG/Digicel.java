@@ -75,7 +75,7 @@ public class Digicel extends ServiceProvider {
 		}
 	}
 
-	public int getProvidorCustomerCount() {
+	public int getProviderCustomerCount() {
 		return digicelCustomerCount;
 	}
 
