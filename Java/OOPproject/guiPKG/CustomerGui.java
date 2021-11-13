@@ -74,6 +74,7 @@ public class CustomerGui {
 
         frame.setShape(new RoundRectangle2D.Double(0, 0, panelw, panelh, 30, 30));
         frame.setSize(panelw, panelh);
+        frame.setLayout(new BorderLayout());
         createPanel();
         // #region Are for variables to be assigned
 
@@ -88,9 +89,7 @@ public class CustomerGui {
         primaryPanel = new JPanel();
 
         // Assigns default image to variable
-        defaultLogoIcon = new ImageIcon(
-                    new ImageIcon(AdminGui.class.getResource("/OOPproject/Images/Tech7.png")).getImage()
-                            .getScaledInstance(100, 100, Image.SCALE_DEFAULT));
+        defaultLogoIcon = new ImageIcon();
         Logo = new JLabel(defaultLogoIcon);
         textColor = Color.decode("#303030");
         // #region set Panel Backgrounds
@@ -188,6 +187,8 @@ public class CustomerGui {
         // frame.add(customerPanel);
 
         customerPanel.setBounds(0, 0, panelw, panelh);
+        customerPanel.setLocation(0, 0);
+        customerPanel.setSize(panelw, panelh);
         customerPanel.setLayout(new BorderLayout());
         customerPanel.setBackground(Color.black);
 
