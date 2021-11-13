@@ -103,9 +103,8 @@ public class AdminGui {
         createPanel();
         parentFrame = frame;
         phoneProvider = provider;
+
         // #region Are for variables to be assigned
-        // Should i just leave this as the values and remove the individual rgb constants
-        // or not?
 
         flowColor = new Color(48, 60, 120);
         digicelColor = Color.decode("#F3f3f3"); //250, 253, 255
@@ -197,16 +196,12 @@ public class AdminGui {
 
     public void totalNumberCheck(){
         int totalTeleCount = Digicel.getDigicelCustomerCount() + Flow.getFlowCustomerCount();
-        //ServiceProvider.savePreferences(totalTeleCount);
         ServiceProvider.setTotalCustomerCount(totalTeleCount);
     }
 
     public void createPanel() {
 
         adminPanel = new JPanel();
-        // adds Base panel to the background frame for everything else to be mounted to
-        // frame.add(adminPanel);
-
         adminPanel.setBounds(0, 0, 1000, 600);
         adminPanel.setLayout(new BorderLayout());
         adminPanel.setBackground(Color.black);
@@ -245,7 +240,6 @@ public class AdminGui {
         viewAllCustomerButton.setContentAreaFilled(false);
         viewAllCustomerButton.setForeground(Color.white);
         viewAllCustomerButton.setFont(Oswald);
-        //viewAllCustomerButton.setBorder(new guiElements.RoundedBorder(25));
         viewAllCustomerButton.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.white));
         viewAllCustomerButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
@@ -332,7 +326,6 @@ public class AdminGui {
         primaryPanel.remove(generalPanel);
         primaryPanel.repaint();
         
-        //getCustID() + "\t" + c.getName() + "\t" + c.getCreditBalance() + "\t" + c.getTelephone() + "\t" +  c.getAddress() +  "\n";	
         String columns[] = {"Voucher #", "Value", "Status"};
         String data[][] = null;
         data = adminUser.viewPhoneCredit();
@@ -778,6 +771,7 @@ public class AdminGui {
         primaryPanel.add(generalPanel);
     }
     
+    // Generates a random voucher number
     private long randomVoucherNumber(){
         long min = 1000000000000L; //13 digits inclusive
         long max = 10000000000000L; //14 digits exclusive
@@ -786,7 +780,8 @@ public class AdminGui {
         boolean check = false;
         try{
             while(check == false){
-                check = adminUser.checkVoucherValidity(number);
+                // Checks that the number generated doesnt already exist in the file
+                check = adminUser.checkVoucherValidity(Long.toString(number));
             }
         }
         catch(UniqueValueException e){

@@ -13,7 +13,6 @@ public abstract class ServiceProvider {
 	protected String companyID;
 	protected String address;
 	private static int totalCustomerCount = 0;
-	//Here to be inherited
 	private Customer customer;
 	
 	//Primary Constructor
@@ -28,7 +27,7 @@ public abstract class ServiceProvider {
 		this.address = address;
 	}
 	
-	//Getters and Setters for the class' attributes
+	// #region Getters and Setters for the class' attributes
 	public String getCompanyID() {
 		return companyID;
 	}
@@ -59,20 +58,21 @@ public abstract class ServiceProvider {
 	public int getProviderCustomerCount() {
 		return totalCustomerCount;
 	}
+
+	// #endregion
 	
-	//Add customer method, will be overrided in child classes
+	// Method to create a new customer, will be overrided in child classes
 	public boolean addCustomer(Customer c) throws UniqueValueException {
 		totalCustomerCount++;
-		setTotalCustomerCount(totalCustomerCount);
 		return true;
 	}
 
-	public abstract boolean checkVoucherValidity(long voucherNum) throws UniqueValueException;
+	public abstract boolean checkVoucherValidity(String voucherNum) throws UniqueValueException;
 
 	//Phone Credit Creation Method, will be overrided in child classes
 	public abstract void createPhoneCredit(String cardNum, float balance) throws UniqueValueException;
 	
-	//Abstract method which will be made concrete in the child classes
+	//Abstract methods which will be made concrete in the child classes
 	public abstract String[][] viewPhoneCredit();
 	
 	public abstract String[][] viewCustomerBase();

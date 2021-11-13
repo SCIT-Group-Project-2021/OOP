@@ -275,8 +275,6 @@ public class CustomerGui {
             fmt.setValidCharacters("0123456789*#");
             fmt.setPlaceholder("*121*0000000000000*8760000000#");
             voucherNumText = new JFormattedTextField(fmt);  
-            //Commented Out because im using Placeholder Text instead
-            //voucherNumText.setText("*121*0000000000000*8760000000#");   
         } 
         catch (ParseException e) {
             e.getStackTrace();
@@ -339,7 +337,7 @@ public class CustomerGui {
                 float creditBalance = 0;
                 try {
                     creditBalance = cus.addCredit(voucherNumText.getText());
-                    JOptionPane.showMessageDialog(parentFrame,"$"+creditBalance + "0 has been added to your balance!","Credit Added Successfully",JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(parentFrame,"$" + creditBalance + "0 has been added to your balance!","Credit Added Successfully",JOptionPane.INFORMATION_MESSAGE);
                 } catch (InvalidTelephoneNumber | InvalidVoucherNumber | InvalidMMICode e1) {
                     JOptionPane.showMessageDialog(parentFrame,e1.getMessage(),"Error",JOptionPane.ERROR_MESSAGE);
                 } 
@@ -358,7 +356,7 @@ public class CustomerGui {
         primaryPanel.repaint();
                 
         refreshCheckBalance = new JButton("Check Balance");
-        refreshCheckBalance.setBounds(250, 440, 200, 40); //width used to be 200
+        refreshCheckBalance.setBounds(250, 440, 200, 40); 
         refreshCheckBalance.setOpaque(true);
         refreshCheckBalance.setFocusPainted(false);
         refreshCheckBalance.setContentAreaFilled(false);
@@ -414,7 +412,6 @@ public class CustomerGui {
             }
         });
         generalPanel.add(balanceMMIText);
-        //generalPanel.add(CheckBalance);
         generalPanel.add(balanceMMILabel);
         generalPanel.add(refreshCheckBalance);
         
@@ -425,11 +422,12 @@ public class CustomerGui {
                float creditBalance = 0;
                try {
                     creditBalance = cus.checkBalance(balanceMMIText.getText());
+                    JOptionPane.showMessageDialog(parentFrame," Your balance is $"+creditBalance + "0.","Current Balance",JOptionPane.INFORMATION_MESSAGE);
                 } 
                 catch (InvalidMMICode | InvalidTelephoneNumber e1) {
                     JOptionPane.showMessageDialog(parentFrame,e1.getMessage(),"Error",JOptionPane.ERROR_MESSAGE);
                 }
-                JOptionPane.showMessageDialog(parentFrame," Your balance is $"+creditBalance + "0.","Current Balance",JOptionPane.INFORMATION_MESSAGE);
+                
             }
         });
 
