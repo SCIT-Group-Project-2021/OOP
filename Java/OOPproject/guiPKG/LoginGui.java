@@ -43,6 +43,7 @@ public class LoginGui {
 
     private static Font Oswald;
 
+    // Admin mode or customer mode
     private int panelStatus = 0;
 
     private static JPanel imagePanel;
@@ -150,9 +151,6 @@ public class LoginGui {
         // #endregion
 
         frame.add(loginPanel);
-
-        
-
     }
 
     public void createPanel(JFrame frame) {

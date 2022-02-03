@@ -79,8 +79,8 @@ public class CustomerGui {
         // #region Are for variables to be assigned
 
         // Obsolete because customer side is now neutral (Independant of Service provider)
-        //flowColor = new Color(48, 60, 120);
-        //digicelColor = Color.decode("#F3f3f3");
+        // flowColor = new Color(48, 60, 120);
+        // digicelColor = Color.decode("#F3f3f3");
         
         Oswald = new Font("Oswald", Font.TYPE1_FONT, 15);
 

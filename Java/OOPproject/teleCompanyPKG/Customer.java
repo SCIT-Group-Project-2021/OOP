@@ -1,3 +1,12 @@
+/*============================================================================
+// Name        : Telephone.java
+// Author      : Tyrien Gilpin - 2003893
+// Editor/s	   : Damain Rose - 2002580
+// Version     : 2
+// Description : Telephone class whose main function is to allows a admin to create 
+//				 create a telephone number
+============================================================================*/
+
 package OOPproject.teleCompanyPKG;
 
 import java.util.Scanner;
@@ -359,8 +368,9 @@ public class Customer {
 							else if(prefix.equals(flowPrefixes[i])) {
 								inFileStream = new Scanner(new File ("Flow_Customers.txt"));
 								break;
-							}				
+							}		
 						}
+						
 						if(inFileStream == null){
 							throw new InvalidTelephoneNumber("The telephone number is invalid");
 						}

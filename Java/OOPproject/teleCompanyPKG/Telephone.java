@@ -1,11 +1,11 @@
-//============================================================================
+/*============================================================================
 // Name        : Telephone.java
 // Author      : Tyrien Gilpin - 2003893
 // Editor/s	   : Ashley Deans - 2007275
 // Version     : 2
 // Description : Telephone class whose main function is to allows a admin to create 
-//create a telephone number
-//============================================================================
+//				 create a telephone number
+============================================================================*/
 
 package OOPproject.teleCompanyPKG;
 
@@ -64,7 +64,6 @@ public class Telephone {
         }
 
 		System.out.println("Prefix is valid");
-
     }
 
 	//Copy Constructor

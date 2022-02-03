@@ -26,6 +26,7 @@ public class Digicel extends ServiceProvider {
 	// Primary Constructor
 	public Digicel(String companyID, String address) {
 		super(companyID, address);
+		numOfBranches++;
 	}
 
 	// #region Getters and Setters 
@@ -148,8 +149,8 @@ public class Digicel extends ServiceProvider {
 				}
 			}
 			return true;
-			
 		}
+
 		catch (FileNotFoundException e) {
 			e.printStackTrace();
 			return true;
@@ -186,12 +187,12 @@ public class Digicel extends ServiceProvider {
 				status = inFileStream.next();
 				recordCount++;
 			}
-			
 		} 
 		catch (FileNotFoundException e) {
 			e.printStackTrace();
 			return data;
 		} 
+
 		finally{
 			if(inFileStream != null){
 				try {
@@ -214,6 +215,7 @@ public class Digicel extends ServiceProvider {
 					i++;
 				}
 			}
+
 			catch (FileNotFoundException e) {
 				e.printStackTrace();
 			} catch (Exception e) {
@@ -302,6 +304,7 @@ public class Digicel extends ServiceProvider {
 		} 
 		catch (FileNotFoundException e) {
 			e.printStackTrace();
+			
 		} 
 		finally{
 			if(inFileStream != null) {
@@ -314,7 +317,7 @@ public class Digicel extends ServiceProvider {
 		}
 	}
 
-	// 
+	
 	@SuppressWarnings({"unused"})
 	public String[][] viewCustomerBase() {
 		Scanner inFileStream = null;

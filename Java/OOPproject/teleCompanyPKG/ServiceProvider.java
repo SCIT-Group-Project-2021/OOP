@@ -15,7 +15,7 @@ public abstract class ServiceProvider {
 	private static int totalCustomerCount = 0;
 	private Customer customer;
 	
-	//Primary Constructor
+	//Default Constructor
 	public ServiceProvider() {
 		this.companyID = "";
 		this.address = "";
@@ -31,7 +31,6 @@ public abstract class ServiceProvider {
 	public String getCompanyID() {
 		return companyID;
 	}
-
 
 	public void setCompanyID(String companyID) {
 		this.companyID = companyID;
@@ -61,13 +60,16 @@ public abstract class ServiceProvider {
 
 	// #endregion
 	
+
 	// Method to create a new customer, will be overrided in child classes
 	public boolean addCustomer(Customer c) throws UniqueValueException {
 		totalCustomerCount++;
 		return true;
 	}
 
+
 	public abstract boolean checkVoucherValidity(String voucherNum) throws UniqueValueException;
+
 
 	//Phone Credit Creation Method, will be overrided in child classes
 	public abstract void createPhoneCredit(String cardNum, float balance) throws UniqueValueException;
@@ -82,6 +84,5 @@ public abstract class ServiceProvider {
 	public String toString() {
 		return "Company ID:" + companyID + "\nAddress: " + address + "\n";
 	}
-	
 	
 }

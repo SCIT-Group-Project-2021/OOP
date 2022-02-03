@@ -312,7 +312,7 @@ public class AdminGui {
         LogOutButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                frame.remove(adminPanel);;
+                frame.remove(adminPanel);
                 new LoginGui(frame);
             }
         });
@@ -336,9 +336,8 @@ public class AdminGui {
          
         JTable jt=new JTable(data,columns);    
         jt.setBounds(0,0,700,500);  
-        jt.setShowGrid(true);
         jt.setShowVerticalLines(true);        
-        JScrollPane sp=new JScrollPane();  
+        JScrollPane sp = new JScrollPane();  
 
         sp.getViewport().add(jt);
         sp.setOpaque(false);
@@ -363,13 +362,16 @@ public class AdminGui {
         jt.setEnabled(true);
 
         JTextField tf = new JTextField();
+        // makes it read only
         tf.setEditable(false);
-        DefaultCellEditor editor = new DefaultCellEditor( tf );
+        // makes the table cells read only
+        DefaultCellEditor editor = new DefaultCellEditor(tf);
         jt.setDefaultEditor(Object.class, editor);
 
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment( JLabel.CENTER );
 
+        // makes each individual cell centered in the table
         for (int i = 0; i < jt.getColumnModel().getColumnCount(); i++) {
             jt.getColumnModel().getColumn(i).setCellRenderer( centerRenderer );
         }
@@ -475,8 +477,6 @@ public class AdminGui {
             fmt = new MaskFormatter("#############");
             voucherNumText = new JFormattedTextField(fmt);  
             voucherNumText.setText("0000000000000");
-
-            
         } 
         catch (ParseException e) {
             e.getStackTrace();
@@ -743,7 +743,6 @@ public class AdminGui {
         addressText.repaint();
         addUserButton.repaint();
 
-        
         addUserButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
